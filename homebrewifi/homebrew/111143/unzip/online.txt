@@ -1,0 +1,278 @@
+ZXDS Online Access documentation
+================================
+
+ZXDS online access is based on a virtual directory scheme. Each server is
+added as another directory node within the normal directory tree.
+Whenever the user browses within this directory, ZXDS queries the server
+about the directory content so it can display it, and whenever the user
+activates a file, it downloads the corresponding file from the server and
+then executes it the same way as if it was available locally.
+
+All downloaded files are cached locally, and are re-downloaded only when
+necessary. The size of the cache is 32MB by default, but can be adjusted by
+setting cache_size in the ZXDS.cfg. The cache is pruned only every time you
+start ZXDS, so keep this in mind so you don't run out of space. To disable
+pruning entirely, set cache_size to 0. Shall you wish to prune the cache
+manually, simply delete some or all files from /ZXDS/Cache/ directory.
+
+The amount of simultaneous downloads is limited to 8, but beware that some
+sites may have the limits as low as two connections per user, so don't abuse it.
+In either case, if there are any problems with the downloads, please check
+the system log screen, it shall help you figuring out what's going wrong.
+
+Of course, to make this all work, you'll need to have a WiFi online access.
+ZXDS currently connects only via the access points you have configured for
+the Nintendo WFC access in your system config, so make sure you have those set up.
+Again, in case of connectivity problems, refer to the system log.
+
+Finally, the list of the servers you want to use is kept in servers.cfg in
+your ZXDS directory. The ZXDS is shipped with the list of servers which were
+available at the time of the release, but you can always obtain the up-to-date
+version from http://zxds.raxoft.cz/servers.cfg .
+
+And that's about it. Unless you want to mess with the server list or to
+create virtual directories yourself, that's all you need to know and
+you don't have to read any further. Just sit back and enjoy the ZX Spectrum
+online treasure trove at the palm of your hand.
+
+
+
+Server config
+-------------
+
+Each server is configured with several directives, which specify the server
+name, where it appears in the normal directory structure, and where to get
+the directory listings and files from. All of this can be specified
+locally in the servers.cfg, however the latter is usually configured via
+remote config which is downloaded from the server itself.
+
+The server config directives are:
+
+server = <server name>
+node = <node name>
+
+e.g.
+
+server = World of Spectrum
+
+These directives start a virtual directory node configuration. They are
+equivalent, except that servers appear in online_path directory by default,
+while virtual nodes appear in virtual_path directory. The former are
+meant for the remote servers loaded from servers.cfg, while the latter
+may be used for local virtual nodes you can store in virtual.cfg.
+
+mount = <path>
+
+e.g.
+
+mount = /zxds/data/wos
+
+This can be used to override where the virtual directory node appears
+in the directory tree. The default is online_path/<server name> for servers
+and virtual_path/<node name> for virtual nodes.
+
+config = <url>
+
+e.g.
+
+config = http://zxds.raxoft.cz/servers/wos.cfg
+
+This tells ZXDS to download further server configuration directives
+from given URL. This is the preferable way of configuring the remote server
+access, as it makes it easy to keep the access URLs in sync with the actual
+server directory layout.
+
+base = <(prefix of) url or path>
+
+e.g.
+
+base = http://zxds.raxoft.cz/
+
+This can specify a string which is automatically prepended to each of the
+following query strings. Can save some typing if all of them would point to
+the same place anyway, which is very often the case.
+
+root = <url or path>
+
+e.g.
+
+root = http://zxds.raxoft.cz/servers/wos/root.txt
+
+This tells ZXDS where to obtain the directory listing of the root
+directory from. In case it is not set, it will use the normal directory
+query string, using an empty directory name.
+
+dir = <url or path>
+
+e.g.
+
+dir = http://zxds.raxoft.cz/servers/wos/%n.txt
+
+This tells ZXDS where to obtain the directory listings from.
+More about the directory listing format and the possible expansion
+characters you can use in the query strings will follow shortly.
+
+file = <url or path>
+
+e.g.
+
+file = ftp://ftp.worldofspectrum.org/pub/sinclair/%f
+
+This tells ZXDS where to obtain the files themselves.
+The expansion characters you can use are explained below.
+
+URLs and paths
+--------------
+
+Each of the query strings described above may specify either a local path
+or remote URL. Local paths are absolute paths which start with a slash,
+URLs are anything else. The URLs must use either the HTTP or FTP scheme.
+
+As for the %hex encoding, the URL query strings are used as they are, while
+the strings substituted via the character expansion are automatically %hex
+encoded unless explicitly specified otherwise. Of course, such encoding
+never occurs in case of queries pointing to local files.
+
+In case you would need it, both HTTP Basic and FTP login authorization is
+supported, the credentials being encoded in the URL using the standard
+<user>:<password>@<host> scheme. Again, remember to use the %hex encoding
+if necessary.
+
+When querying for files or directories, the following expansion characters
+are available:
+
+%f - expands to the full name of the directory or file in question.
+     In case the query key is provided (see below), it is used instead.
+%n - expands to the base name of the directory or file in question.
+     In case the query key is provided (see below), it is used instead.
+%k - expands to the query key provided (see below).
+     The substituted key is NOT %hex encoded in this case,
+     except for characters which would be out of the legal URL character range.
+%q - expands to either "dir" or "file" depending on the query type.
+     Handy if you want to use something like "download.cgi?%q=%f" in your base query string.
+
+Directory listings
+------------------
+
+The content of each virtual directory node is described by the associated
+directory listing. Some servers will do with a single directory listing
+for all of its content, while others choose to use multiple listings.
+The reason for this may be to either keep the directory listing sizes
+reasonable, or to create more complex directory hierarchy, allowing
+to enter some directories from multiple places.
+
+In either case, the format of the directory listing looks like this:
+
+file
+file//size
+
+e.g.
+
+Screens/J/Jet-Pac.scr
+Screens/J/Jet-Pac.scr//6912
+
+This lists the files the directory contains and where they are located
+within the directory. Providing the file size is not mandatory, but it is
+highly recommended, otherwise the user won't see how large the files are.
+The files will be retrieved by resolving the file query string.
+
+dir/
+
+e.g.
+
+Screens/J/
+
+This can be used to explicitly list directories. May come handy if you have
+directories with no files but you still want them to appear in the listing.
+
+dir//
+
+e.g.
+
+Games/G//
+
+This is used to list the directories whose listing is obtained via the
+dir query string. This is how to split the listing into multiple files 
+or how to create more complex directory listing structure.
+
+file//=key
+file//size=key
+dir//:key
+
+e.g.
+
+Screens/J/Jet-Pac.scr//6912=screens/jetpac.scr
+Games/G//:games_g
+
+This may be used to substitute the file or directory name with the provided
+key string when creating the query. This is often the case if your listing
+is not a simple 1:1 mapping.
+
+file//>key
+file//size>key
+
+e.g.
+
+Screens/Random.scr//6912>http://zxds.raxoft.cz/random-screen.cgi
+
+This may be used to skip the query expansion entirely, using the provided
+key directly instead. The key is not %hex encoded in this case either.
+Generally not recommended, but might be handy in some rare cases.
+
+// comment
+
+The comment lines are simply ignored, as are any empty lines.
+
+
+The file and directory names are considered case sensitive, although you
+shall try to avoid entries which differ in case only to avoid confusing the
+user. It is preferable if the entries are alphabetically sorted, but if they
+are not, they must at least appear in the depth-first order. Shall you fail
+to do this, users might see duplicate directory entries in the directory listing.
+
+Any trailing whitespace is stripped from each line before parsing. Apart
+from this, the file and directory names may contain any characters, except
+\0 and \n. The use of / is limited to the path separator, and the two slashes
+are implicitly disallowed. The ZXDS will treat the names as UTF-8 strings,
+falling back to ISO-8859-1 if necessary (however note that it currently
+won't display anything beyond basic ASCII). The keys may contain any
+character except \0 and \n, and apart from applying %hex encoding when
+necessary as described above, ZXDS gives them no meaning at all.
+
+The amount of directory entries in each directory is not limited, neither is the
+listing file size. It is advised to keep the latter less than say 100KB, though.
+The listing may be compressed with gzip, which ZXDS decompresses transparently.
+As for the string size limits, the listing line size is currently about 1000 bytes,
+the entire path size about 300 bytes, and each path component about 60 bytes.
+This limits the length of the directory keys as well, as they are internally
+combined with the final path component; the file keys are not limited this way.
+The expanded query strings are limited to about 300 bytes as well. 
+All these limits are mentioned just to give you a rough idea, you don't really
+have to worry much about it, as anything too long will be happily ignored.
+
+
+Server side considerations
+--------------------------
+
+When setting up the server, there are few other things you might want to be
+aware of:
+
+ZXDS uses the HTTP If-Modified-Since request, and SIZE and MDTM FTP commands
+to avoid downloading the files whenever possible. You may want to make sure your
+server supports these (most do) and that you touch your files when they change
+and that you don't touch them very often when they don't change.
+
+ZXDS honors the Expires: HTTP headers. You may want to make sure your server
+generates these properly to reduce the bandwidth usage.
+
+ZXDS uses the User-Agent: HTTP header and FTP anonymous login password to
+identify itself. You may want to use this in some way or another.
+
+ZXDS backs off for 5 minutes in case of HTTP 4xx client errors or FTP 5xx
+permanent errors, and for 1 minute for other HTTP and FTP status errors.
+You may want to be aware of this when testing your server.
+
+
+
+And that's all. Good luck setting up your own virtual directory server,
+and consider sharing it with the rest of the world once you get it going.

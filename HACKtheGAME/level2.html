@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Hack the game</title>
+		<link rel=stylesheet href=style.css>
+	</head>
+	<body>
+		<div class=left>
+      <canvas id=background width=600 height=600></canvas>
+      <canvas id=canvas width=600 height=600>Update your browser!</canvas>
+    </div>
+		</div>
+		<div class=right id=code>
+		
+<textarea id=code1>/******************************************************************************
+  Now let's animate all this!
+  The code uses Paul Irish's cross-browser polyfill for requestAnimationFrame
+  (http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/)
+  LEVEL 2: Add the gravity! Make the hero fall!
+******************************************************************************/
+
+/* Game initialization */
+
+// Canvas
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext("2d");
+
+// Global vars
+var g = 5;                        // gravity acceleration (in px)
+var preloading = 2;               // assets to preload
+
+// Hero
+var hero = {};
+hero.width = 30;                  // width
+hero.height = 30;                 // height
+hero.x = 275;                     // horizontal position
+hero.y = 275;                     // vertical position
+hero.xspeed = 0;                  // horizontal speed
+hero.yspeed = 0;                  // vertical speed
+hero.state = "fall";              // current state
+hero.idle = new Image();          // image for "idle" state
+hero.idle.src = "idle.png";       // image source
+hero.idle.onload = preload;       // image preload
+hero.fall = new Image();          // image for "fall" state
+hero.fall.src = "fall.png";       // image source
+hero.fall.onload = preload;       // image preload
+
+// Preload images
+function preload(){
+  preloading--;                   // a new asset is loaded
+  if(preloading === 0){           // if all assets are loaded
+    loop();                       // start the game loop
+  }
+}
+
+// Game loop
+function loop(){
+  ctx.clearRect(0, 0, 600, 600);  // reset the canvas
+  gravity();                      // apply gravity
+  draw();                         // draw the current frame
+  requestAnimationFrame(loop);    // wait for next frame
+}
+
+// Draw the scene
+function draw(){
+  ctx.drawImage(                  // display the hero
+    hero[hero.state],             // at current state
+    hero.x,                       // and position
+    hero.y
+  );
+}
+
+// Gravity</textarea>
+<div class=edit>
+<textarea id=code2>// Write the gravity function here
+function gravity(){}</textarea>
+</div>
+      <br>
+      <br>
+		</div>
+		<a class=help href=HTML5_Canvas_Cheat_Sheet.png target=_blank>Help</a>
+		<script src=libs.js></script>
+		<script src=level2.js></script>
+	</body>
+</html>

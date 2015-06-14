@@ -1,0 +1,241 @@
+
+★ PPHP: Postprocessing Preprocessed HTML with PHP ★
+
+
+
+
+➢ HOW TO USE IT:
+
+1) Include PPHP.php in your page: <?php require_once("pphp.php"); ?>
+2) Write PPHP code in your page (or echo it with PHP)
+3) Visit your page: it's now in perfect HTML5
+
+
+
+
+➢ HOW TO WRITE IT:
+
+1) Text lines are displayed as-is.
+2) // PPHP comments begin with two slashes. (nothing is displayed)
+3) :: Lines beginning with two colons generate HTML.
+
+
+
+
+➢ HOW TO GENERATE HTML:
+
+[ In this file, brackets mean "optional" and are not part of the PPHP syntax. ]
+
+1) To write a standalone element (like IMG), write this:
+::element_name [attr1] [attr2] [attr3]
+
+2) To write a container element (like DIV), write this:
+::element_name [attr1] [attr2] [attr3]
+  : Content: text or other PPHP elements. Consider option 3 if it's just text. To end the container, use :: in a new line.
+::
+
+3) To open a container, fill it with text only and close it (for example TITLE), you can use this short form with two colons:
+::element_name [attr1] [attr2] [attr3] :: Text inside the container; it can be empty.
+
+
+
+
+➢ HOW TO WRITE HTML ELEMENTS ATTRIBUTES:
+
+1) Any attribute (global, specific) can be written after the tag, like this:
+::element_name attr1="value" attr2="value"
+(List of global attributes: http://dev.w3.org/html5/spec-author-view/spec.html#accesskey)
+
+2) Shortcuts:
+
+To set an id, use "#"
+::element #id_name
+
+To set a class, use "."
+::element .class_name
+
+Both can be combined
+::element #id .class1 .class2
+
+You don't need to write the most common attribute names. The next paragraph explains how PPHP understands them.
+For example, for the IMG tag, you can see "::img src alt [width] [height] [...]"
+It indicates the attributes order (src, alt, width, height), which are mandatory (src, alt), which are not ([width], [height]), and if other attributes exist ([...]).
+So, the following PPHP lines are correct:
+::img "images/test.png" "alternative text"
+::img "images/test.png" "alternative text" 100
+::img "images/test.png" "alternative text" 100 200
+::img #id .class "images/test.png" "alternative text" 100 200
+::img #id .class "images/test.png" "alternative text" 100 200 onclick="js_code();"
+::img id="id" class="class" src="images/test.png" alt="alternative text" width="100" height="200" onclick="js_code();"
+
+3) To skip an optional parameter, use !.
+For example, to specify only the IMG height:
+::img "images/test.png" "alternative text" ! 200
+
+
+
+
+➢ SUPPORTED HTML5 TAGS AND SPECIFIC ATTRIBUTES:
+[ "a | b" means "a or b". ~ More info about HTML5 tags on http://dev.w3.org/html5/spec-author-view/spec.html#semantics ]
+
+// Doctype is automatic
+
+::html [manifest] [lang]
+  ::head
+
+    // Regular head elements
+
+    ::meta charset | name content | http-equiv content
+    ::base [href] [target]
+    ::link rel href [type] [media] [...]
+    ::style [type] [media] [...]::
+    ::script [type] [src] [...]::
+    ::noscript::
+    ::title::
+
+    // PPHP shortcuts
+
+    ::css src [browser=IE|!IE|IE6|IE7|IE8|IE9|IE10|LTIE7|LTIE8|LTIE9|LTIE10|FF|CHROME|OPERA|SAFARI] [device=PC|IPHONE|IPAD|ANDROID|WP]
+    ::js src [browser] [device]::
+    ::favicon [href]
+    ::rss [href]    
+  ::
+  ::body
+
+    // Body elements
+
+    ::section::
+    ::nav::
+    ::article::
+    ::aside::
+    ::h1::
+    ::h2::
+    ::h3::
+    ::h4::
+    ::h5::
+    ::h6::
+    ::hgroup::
+    ::header::
+    ::footer::
+    ::address::
+    ::p::
+    ::hr
+    ::pre::
+    ::blockquote [cite]::
+    ::ol [reversed] [start] [type]
+      ::li [value]::
+    ::
+    ::ul
+      ::li::
+    ::
+    ::dl
+     ::dt::
+     ::dd::
+    ::
+    ::figure
+      ::figcaption::
+    ::
+    ::a [href] [target] [rel] [...]::
+    ::em::
+    ::strong::
+    ::small::
+    ::s::
+    ::cite::
+    ::q::
+    ::dfn::
+    ::abbr::
+    ::time [datetime] [pubdate]::
+    ::code::
+    ::var::
+    ::samp::
+    ::kbd::
+    ::sub::
+    ::sup::
+    ::i::
+    ::b::
+    ::u::
+    ::mark::
+    ::ruby
+      ::rp::
+      ::rt::
+    ::
+    ::bdi [dir]::
+    ::bdo [dir]::
+    ::span::
+    ::br
+    ::wbr
+    ::ins [cite]::
+    ::del [cite]::
+    ::img src alt [width] [height] [...]
+    ::iframe [src] [...]::
+    ::embed [src] [type] [width] [height]::
+    ::object [data] [type] [...]
+      ::param name value
+    ::
+    ::video [src] [width] [height] [preload] [autoplay] [controls] [...] 
+      ::source src [type] [media]
+      ::track kind src srclang [label] [default]
+    ::
+    ::audio [src] [preload] [autoplay] [controls] [...]
+      ::source src [type] [media]
+    ::
+    ::canvas [width] [height]::
+    ::map name
+      ::area [alt] [shape] [coords] [href] [target] [rel] [...]
+    ::
+    ::table
+      ::caption::
+      ::colgroup [span]
+        ::col span::
+      ::
+      ::thead
+        ::tr
+          ::th [colspan] [rowspan] [headers] [scope]::
+          ::td [colspan] [rowspan] [headers]::
+        ::
+      ::
+      ::tbody
+        ::tr
+          ::th [colspan] [rowspan] [headers] [scope]::
+          ::td [colspan] [rowspan] [headers]::
+        ::
+      ::
+      ::tfoot
+        ::tr
+          ::th [colspan] [rowspan] [headers] [scope]::
+          ::td [colspan] [rowspan] [headers]::
+        ::
+      ::
+    ::
+    ::form method action name [enctype] [target] [...]
+      ::fieldset [disabled] [...]
+        ::legend::
+        ::label [for] [form]::
+        ::input type name [value] [disabled] [...]
+        ::button name [value] [disabled] [...]
+        ::select name [multiple] [size] [disabled] [...]
+          ::optgroup label [disabled]
+            ::option label value [selected] [disabled]
+          ::
+        ::
+        ::datalist::
+        ::textarea name [placeholder] [cols] [rows] [disabled] [...]::
+      ::
+    ::
+    ::keygen name [disabled] [...]::
+    ::output name::
+    ::progress value max::
+    ::meter value min max [...]::
+    ::details [open]
+      ::summary::
+    ::
+    ::menu [type] [label]
+      ::command [type] [label] [icon] [disabled] [...] 
+    ::
+  ::
+::
+
+
+
+
+➢ Happy PPHP-ing!

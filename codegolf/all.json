@@ -1,0 +1,20 @@
+entries = 
+[
+  {
+    title: "MiniCraft",
+    author: "Matthieu Henri",
+    date: "11/2013",
+    description: "Tribute to MINECRAFT, voxel flyby in 252 bytes of HTML5.",
+    size: "252 bytes",
+    tags: ["demo","256b"],
+    link: "http://www.p01.org/releases/minicraft/minicraft.htm",
+  },
+  {
+    title: "world1k",
+    author: "Martin Kleppe",
+    date: "11/2013",
+    description: "Spinning globe embedded in JavaScript code",
+    size: "1000 bytes",
+    tags: ["demo","1kb"],
+    link: "http://aem1k.com/world1k",
+  },

@@ -1,0 +1,26 @@
+ZXDS itself is written by Patrik Rak, however credit is due as it would not
+have happened without the following people and their software:
+
+- devkitProARM toolchain maintained by Dave Murphy et al.
+- libnds by Michael Noland, Jason Rogers, Dave Murphy, et al.
+- libfat by Michael Chisholm.
+- dswifi by Stephen Stair.
+- zlib by Jean-loup Gailly and Mark Adler.
+
+Furthermore, ZXDS comes with several copyrighted ROM images built in:
+
+- ZX Spectrum 48k Basic ROM by Steve Vickers and Ian Logan, owned by Amstrad.
+  Note that Amstrad have kindly given their permission for the redistribution
+  of their copyrighted material but retain that copyright.
+- ZX Spectrum 128k Editor ROM by Martin Brennan, Steve Berry, Andrew Cummins,
+  Rupert Goodwins and Kevin Males, also owned by Amstrad.
+- TR-DOS ROM by Technology Research.
+
+Finally, the following software was also helpful during the development:
+
+- no$gba by Martin Korth.
+- Pro Motion by Jan Zimmermann.
+
+Thanks to everyone involved!
+
+Patrik Rak

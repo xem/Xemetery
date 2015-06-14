@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Reader</title>
+</head>
+<body>
+  <div id="menu">
+    <span>Hide</span>
+    <br>
+    <br>
+    <input id="newFeedUrl" value="http://xkcd.com/rss.xml"> <span id="addFeed">Add feed</span>
+    <br>
+    <br>
+    http://feeds.feedburner.com/CssTricks
+    <br>
+    <br>
+    http://www.alistapart.com/feed/rss.xml
+    <br>
+    <br>
+    <span>Import OPML</span>
+    <br>
+    <br>
+    <h2>My feeds</h2>
+    <br>
+    <div id="feeds">
+    &bull; <span data-url="all">All feeds</span>
+    <br>
+    </div>
+  </div>
+  <div id="articles">
+    
+  </div>
+  
+  <script>
+  // Initialization 
+  /*
+  for(var i in localStorage){
+    localStorage.removeItem(i);
+  }*/
+  </script>
+  <script src="https://www.google.com/jsapi"></script>
+  <script src="https://www.google.com/uds/?file=feeds&v=1"></script>
+  <script src="reader.js"></script>
+  <script src="feeds.js"></script>
+  <script src="articles.js"></script>
+  <script>
+  //reader.addFeed();
+  //setTimeout(function(){reader.showFeed('http://xkcd.com/rss.xml')},1000);
+  </script>
+</body>
+</html>

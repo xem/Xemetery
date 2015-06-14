@@ -1,0 +1,21 @@
+#summary UNDER Framework Overview
+
+= Introduction =
+
+This is a underscore-based PHP framework that will help you writing web-pages easily.
+
+It brings you very simple and intuitive shortcuts to write perfect cross-browser HTML in no time, but also to do PHP and MySQL most useful actions.
+
+
+= Details =
+
+UNDER framework :
+
+  * Writes all the HTML 5 code you need in your pages (and even more) - just write what you need.
+  * Includes your favourite Javascript frameworks, hosted on google servers: Script.aculo.us, Prototype, Mootools, JQuery, Dojo
+  * Takes care of cross-browser compatibility for you (cross-browser compatibility CSS and Javascript are automatically included in your pages)
+    * Tricks included: CSS reset, ability to style HTML5 elements on old browsers, ability to style "input file" elements, css3pie (to activate it, just use the CSS class .pie)
+
+  * Eases all the annoying PHP and MySQL processes.
+  * Provides an interface with handy tools to help you developing your pages (see into the /admin/ directory).
+  * Comes with a bunch of super-intuitive underscore-prefixed shortcut functions for all your needs (to use them, just configure and include _.php in your project).

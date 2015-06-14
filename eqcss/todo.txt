@@ -1,0 +1,5 @@
+basic $parent suppport div $parent { }
++ separate old-IE and non-old-IE                  ok, to test
++ use mutation observers on non-old-IE (for perf) ok
++ suport regular css in eqcss code
++ handle timeout in apply() not in the listeners

@@ -1,0 +1,8 @@
+html { background: #789ABC; margin: 0; padding: 0; }
+body { width: 650px; margin: 20px auto; padding: 20px; background: #fff; text-align: center; font: normal 14px Verdana, Arial; box-shadow: 0 0 10px #aaa; z-index: 2; }
+nav { width: 700px; background: #123456; position: relative; right: 30px; padding: 5px; color: #fff; }
+nav a { color: #fff; font: normal 16px Verdana; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+section { width:650px; text-align: left; border-bottom: 1px dotted black; }
+form textarea { width: 315px; height: 250px; font-size: 12px; }
+form input { margin: 20px auto; display: block; }

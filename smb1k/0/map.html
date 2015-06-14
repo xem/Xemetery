@@ -1,0 +1,15 @@
+<table border id=t>
+<script>
+h="";
+for(i=-1;i<14;i++){
+  h+="<tr><td>"+(i<0?"":i);
+  for(j=0;j<212;j++){
+    h+=i<0?"<td>"+j:"<td>&nbsp;";
+  }
+}
+t.innerHTML=h;
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-moz-box-sizing:border-box;}
+table{table-layout:fixed;border-collapse:collapse;background:url(final.gif) no-repeat 15px 15px #000}
+td{width:15px;min-width:15px;max-width:15px;height:16px;font:7px/7px arial;color:#fff;text-align:center}

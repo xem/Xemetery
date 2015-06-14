@@ -1,0 +1,731 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset=UTF-8>
+  <style>
+    :root { background: #eee; }
+    h1, h2 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 5px; border: 1px solid #555; }
+    th { background: #ccc; }
+    #top { background: #fff; width: 900px; margin: 0 auto; padding: 20px; box-shadow: #aaa 0 0 10px; }
+    #html5 .col1 { width: 220px; }
+    #html5 .col4 { width: 290px; }
+    #html5 #test-shim div { width: 25px; height: 25px; margin: 3px; display: inline-block; *display: inline; *zoom: 1; position: relative; overflow: hidden; background: red; font-size: 0px; }
+    #html5 #test-shim div * { position: absolute; top: 0; width: 25px; height: 25px; background: green; }
+    #html5 #test-audio audio { width: 280px; }
+    #html4 .col1, #html4 .col4 { width: 180px; }
+    #html4 #test-img img:hover { background: yellow; }
+    #css-selectors th { width: 860px; }
+    #css-selectors .col2, #css-selectors .col3 { width: 80px; }
+    #css-selectors div, #css-selectors p { background: red; color: white; display: inline-block; *display: inline; *zoom: 1; width: 50px; height: 20px; padding: 15px 0; text-align: center; margin: 3px; }
+    #css-selectors #gt > div { background: green; }
+    #css-selectors #plus p + div { background: green; }
+    #css-selectors #tild p ~ div { background: green; }
+    #css-selectors #multiple-classes div.red { background: red; }
+    #css-selectors #multiple-classes div.green.red { background: green; }
+    #css-selectors #hover div { width: 120px; }
+    #css-selectors #hover div:hover { background: green; }
+    #css-selectors #first-child div:first-child { background: green; }
+    #css-selectors #attr div[green] { background: green; }
+    #css-selectors #attr-equal div[green="yes"] { background: green; }
+    #css-selectors #attr-tild-equal div[green~="yes"] { background: green; }
+    #css-selectors #attr-pipe-equal div[green|="yes"] { background: green; }
+    #css-selectors #attr-circ-equal div[green^="y"] { background: green; }
+    #css-selectors #attr-dollar-equal div[green$="s"] { background: green; }
+    #css-selectors #attr-star-equal div[green*="e"] { background: green; }
+    #css-selectors #after { height: 60px; }
+    #css-selectors #after span { background: red; color: white; }
+    #css-selectors #after span:after { display: inline; background: green; content: "green"; color: white; padding: 15px 0; }
+    #css-selectors #before { height: 60px; }
+    #css-selectors #before span { background: red; color: white; }
+    #css-selectors #before span:before { display: inline; background: green; content: "green"; color: white; padding: 15px 0; }
+    #css-selectors #active input:active { background: green; color: white; }
+    #css-selectors #focus input:focus { background: green; color: white; }
+    #css-selectors #lang p:lang(en) { background: green; }
+    #css-selectors #checked input:checked + span { background: green; color: white; }
+    #css-selectors #disabled input { background: red; }
+    #css-selectors #disabled input:disabled { background: green; }
+    #css-selectors #empty div { width: 180px; }
+    #css-selectors #empty div:empty { width: 25px; height: 25px; padding: 0; background: green; }
+    #css-selectors #enabled input { background: red; }
+    #css-selectors #enabled input:enabled { background: green; }
+    #css-selectors #indeterminate input:indeterminate + span { background: green; color: white; }
+    #css-selectors #first-of-type div:first-of-type { background: green; }
+    #css-selectors #last-child div:last-child { background: green; }
+    #css-selectors #last-of-type div:last-of-type { background: green; }
+    #css-selectors #not div:not(:first-child) { background: green; }
+    #css-selectors #nth-child div:nth-child(2) { background: green; }
+    #css-selectors #nth-last-child div:nth-last-child(2) { background: green; }
+    #css-selectors #nth-last-of-type div:nth-last-of-type(2) { background: green; }
+    #css-selectors #nth-of-type div:nth-of-type(2) { background: green; }
+    #css-selectors #only-child div:only-child { background: green; }
+    #css-selectors #only-of-type p:only-of-type { background: green; }
+    #css-selectors #target div:target { background: green; }
+    #css-properties { border: 1px solid black; }
+    #css-properties th { width: 700px; }
+    #css-properties .col2, #css-properties .col3 { width: 100px; }
+    #css-properties div { width: 100px; height: 100px; margin: auto; }
+    #css-properties #linear-gradient div { border: 1px solid; background: linear-gradient(45deg, #000, #fff); -pie-background: linear-gradient(45deg, #000, #fff); }
+    #css-properties #multiple-backgrounds { height: 100px; }
+    #css-properties #multiple-backgrounds div { width: 100%; height: 100px; position: relative; z-index: 1; }
+    #css-properties #multiple-backgrounds div div { width: 100%; height: 100px; text-align: center; background: url(border-test.png) no-repeat left top, url(border-test.png) no-repeat right bottom; -pie-background: url(border-test.png) no-repeat scroll left top, url(border-test.png) no-repeat scroll right bottom; }
+    #css-properties #rgba div { background: rgba(0,255,0,0.5); -pie-background: rgba(0,255,0,0.5); margin: auto; text-align: center; }
+    #css-properties #border-image div { border-image:url(border-test.png) 30 30 stretch; }
+    #css-properties #border-radius div { border-radius: 50% 10px; border: 2px solid; }
+    #css-properties #box-shadow div { background: #fff; border: 2px solid; box-shadow: #555 10px 10px 10px; margin-bottom: 10px; }
+    #css-properties #background-attachment div { overflow: scroll; background: url(test.png); background-attachment: fixed; border: 1px solid; width: 130px; height: 130px; }
+    #css-properties #background-image div { background: url(test.png) no-repeat; border: 1px solid; }
+    #css-properties #background-image:hover { background: yellow; }
+    #css-properties #pointer { cursor: pointer; text-align: center; }
+    #css-properties #list-item { padding-left: 20px; }
+    #css-properties #list-item span { display: list-item; }
+    #css-properties #font-size { font-size: x-large; }
+    #css-properties #margin div { width: 100%; height: 20px; }
+    #css-properties #margin div div { width: 130px; border: 1px solid; margin: auto; text-align: center; }
+    #css-properties #bottom { height: 80px; background: linear-gradient(green 40%, white 60%); -pie-background: linear-gradient(green 40%, white 60%); }
+    #css-properties #bottom div { width: 150px; height: 20px; position: relative; bottom: 25px; border: 1px solid; background: #fff; text-align: center; }
+    #css-properties #max-height div { width: 200px; height: 60px; overflow: hidden; border: 1px solid; margin: auto; }
+    #css-properties #max-width table { width: 250px; height: 100px; margin: auto; }
+    #css-properties #max-width table td { border: 1px solid; }
+    #css-properties #max-width table td#max-width-td { width: 50px; max-width: 50px; }
+    #css-properties #min-height div { height: auto; min-height: 50px; border: 1px solid black; }
+    #css-properties #min-width table { width: 250px; height: 100px; margin: auto; }
+    #css-properties #min-width table td { border: 1px solid; }
+    #css-properties #min-width table td#min-width-td { min-width: 100px; }
+    #css-properties #overflow { height: 180px; vertical-align: top; }
+    #css-properties #overflow div { width: 250px; height: 100px; border: 1px solid; overflow: visible; margin: auto; }
+    #css-properties #position a { position: fixed; right: 5px; bottom: 5px; background: white; width: 100px; text-align: center; }
+    #css-properties #right { position: relative; height: 40px; }
+    #css-properties #right div { height: auto; position: relative; right: 130px; border: 1px solid; text-align: left; }
+    /* #css-properties #border-spacing table { border-collapse: separate; border-spacing: 10px; }
+    #css-properties #border-spacing table td { border: 1px solid; } */
+    #css-properties #content a[href]:after { background-color: green; color: white;  content: " ( " attr(href) " ) "; }
+    /* #css-properties #inherit { background: #fff; }
+    #css-properties #inherit div { background: red; display: inline-block; margin: 3px; border: 1px solid; width: 50px; height: 20px; padding: 15px 0; text-align: center; }
+    #css-properties #inherit div#inherit-div { background: inherit; } */
+    #css-properties #opacity { background: green; color: white; text-align: center; opacity: 0.5; }
+  </style>
+  <title>test</title>
+  <script src="http://b-c.googlecode.com/hg/bin/bc.js"></script>
+</head>
+<body lang="en-US">
+  <div id=top>
+    <h1>Browse-Crosser Test Page</h1>
+    <hr>
+    <h2>HTML</h2>
+    <h3>HTML5</h3>
+    <table id=html5>
+      <tr>
+        <th class=col1>Elements</th>
+        <th class=col2>Problem</th>
+        <th class=col3>Solution in BC</th>
+        <th class=col4>Demo</th>
+      </tr>
+      <tr>
+        <td>abbr, article, aside, audio, bdi, canvas, data, details, figcaption, figure, footer, header, hgroup, mark, meter, nav, output, progress, section, subline, summary, time, video</td>
+        <td>Unknown and not well printed on IE&lt;9</td>
+        <td>html5shim.js, normalize.css</td>
+        <td id=test-shim>
+          <div><abbr></abbr></div>
+          <div><article></article></div>
+          <div><aside></aside></div>
+          <div><audio controls></audio></div>
+          <div><bdi></bdi></div>
+          <div><canvas></canvas></div>
+          <div><data></data></div>
+          <div><details></details></div>
+          <br>
+          <div><figcaption></figcaption></div>
+          <div><figure></figure></div>
+          <div><footer></footer></div>
+          <div><header></header></div>
+          <div><hgroup></hgroup></div>
+          <div><mark></mark></div>
+          <div><meter></meter></div>
+          <div><nav></nav></div>
+          <br>
+          <div><output></output></div>
+          <div><progress value=1></progress></div>
+          <div><section></section></div>
+          <div><subline></subline></div>
+          <div><summary></summary></div>
+          <div><time></time></div>
+          <div><video controls></video></div>
+          <script>document.getElementById("test-shim").appendChild(document.createElement("div")).innerHTML="<article></article>";</script>
+          <!--[if IE]><p>(These squares should be green)</p><![endif]-->
+        </td>
+      </tr>
+       <tr>
+        <td>abbr</td>
+        <td>Not styled on IE, bug on IE&lt;7</td>
+        <td>Normalize.css, IE7.js</td>
+        <td><abbr title="HyperText Markup Language">HTML</abbr></td>
+      </tr>
+      <tr>
+        <td>audio <sup>[1]</sup></td>
+        <td>Unknown on IE&lt;9, inconsistent support</td>
+        <td>Flash fallback (flowplayer) by html5media.js</td>
+        <td id=test-audio>
+          <audio src="test.mp3" controls></audio>
+        </td>
+      </tr>
+      <tr>
+        <td>canvas</td>
+        <td>Unknown on IE&lt;9</td>
+        <td>Flash fallback by FlashCanvas.js</td>
+        <td>
+          <script>function windowReady(){var a=document.getElementById("simpleCanvas").getContext("2d");var b=125;var c=100;var d=20;a.beginPath();a.moveTo(d+b/2,d);a.lineTo(d+b,c+d);a.lineTo(d,c+d);a.closePath();var e=a.createLinearGradient(0,0,0,c);e.addColorStop(0,primaryColor);e.addColorStop(1,secondaryColor);a.shadowBlur=10;a.shadowColor="black";a.lineWidth=lineWidth*2;a.lineJoin="round";a.strokeStyle=e;a.stroke();a.shadowColor="transparent";a.fillStyle=e;a.fill();e=a.createLinearGradient(0,d,0,d+c);e.addColorStop(0,"transparent");e.addColorStop(.5,"transparent");e.addColorStop(.5,tertiaryColor);e.addColorStop(1,secondaryColor);a.fillStyle=e;a.fill();a.lineWidth=lineWidth;a.lineJoin="round";a.strokeStyle="#333";a.stroke();a.textAlign="center";a.textBaseline="middle";a.font="bold 60px 'Times New Roman', Times, serif";a.fillStyle="#333";try{a.fillText("!",d+b/2,d+c/1.5)}catch(f){}}var canvasWidth=200;var canvasHeight=267;var width=125;var height=105;var padding=25;var lineWidth=8;var innerBorder=5;var primaryColor="#ffc821";var secondaryColor="#faf100";var tertiaryColor="#dcaa09";window.onload=windowReady</script>
+          <canvas id=simpleCanvas width=200 height=135></canvas>
+          (<a href="www.williammalone.com">source</a>)
+        </td>
+      </tr>
+      <tr>
+        <td>form</td>
+        <td>Old browsers don't support the "novalidate" attribute and dont validate automatically on submit</td>
+        <td rowspan=2>H5F.js</td>
+        <td rowspan=2>
+          <form method="post" action="#">
+            <label>Valid e-mail*:<br><input type="email" required placeholder="your@email.com"></label>
+            <br><br>
+            <label>Valid URL*:<br><input type="url" required placeholder="yourwebsite.com"></label>
+            <br><br>
+            <label>Age (18-99)*:<br><input type="number" required min=18 max=99 step=1 pattern="\d{2}"></label>
+            <br><br>
+            <label>Comment:<br><textarea placeholder="type here"></textarea></label>
+            <br><br>
+            <input type="submit">
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>input, select, textarea</td>
+        <td>Old browsers don't know the input types url, email, etc. and the attributes pattern, placeholder, min, max, step, required</td>
+      </tr>
+      <!-- soon
+      <tr>
+        <td>progress</td>
+        <td>Unknown on IE&lt;10</td>
+        <td>(soon)</td>
+        <td>
+          <progress value=0.5></progress>
+        </td>
+      </tr-->
+      <tr>
+        <td>video <sup>[1]</sup></td>
+        <td>Unknown on IE&lt;10, inconsistent support</td>
+        <td>Flash fallback (flowplayer) by html5media.js</td>
+        <td>
+          <video width=300 height=200 controls src="test.mp4"></video>
+        </td>
+      </tr>
+    </table>
+    <h3>HTML4</h3>
+    <table id=html4>
+      <tr>
+        <th class=col1>Element</th>
+        <th class=col2>Problem</th>
+        <th class=col3>Solution in BC</th>
+        <th class=col4>Demo</th>
+      </tr>
+      <tr>
+        <td>img</td>
+        <td>PNG transparency bug on IE&lt;7, bad resizing on IE&lt;8</td>
+        <td>IE7.js PNG fix, Normalize.css</td>
+        <td id=test-img>
+          <img src=test.png alt="PNG fix" width=50>
+        </td>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td>Click not bound to first child on IE&lt;7</td>
+        <td>IE7.js</td>
+        <td>
+          <label>Click the label text - <input type=checkbox value=test></label>
+        </td>
+      </tr>
+      <tr>
+        <td>button type=submit</td>
+        <td>Doesn't submit value but innerText on IE&lt;8</td>
+        <td>IE8.js</td>
+        <td>
+          <form method=post action="http://dean.edwards.name/test/look.php" target=_blank>
+            <button value=ok type=submit name=submit>Submit my "ok" value</button>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>object type="image/*"</td>
+        <td>Unknown by IE&lt;8</td>
+        <td>IE8.js</td>
+        <td>
+          <object width=150 height=150 title=test data=test.png type="image/png">Fallback text</object>
+        </td>
+      </tr>
+    </table>
+    <h2>CSS</h2>
+    <h3>CSS selectors</h3>
+    <table id=css-selectors>
+      <tr>
+        <th class=col1>Selector</th>
+        <th class=col2>Problem</th>
+        <th class=col3>Solution in BC</th>
+        <th class=col4>Demo<br><sub>Each item indicates its expected color</sub></th>
+      </tr>
+      <tr>
+        <td>parent > child</td>
+        <td rowspan=12>Unknown on IE&lt;7</td>
+        <td rowspan=12>IE7.js</td>
+        <td id=gt>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>adjacent + sibling</td>
+        <td id=plus>
+          <p>red</p>
+          <div>green</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>adjacent ~ general sibling</td>
+        <td id=tild>
+          <p>red</p>
+          <div>green</div>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>.multiple.classes</td>
+        <td id=multiple-classes>
+          <div class="red green">green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:hover</td>
+        <td id=hover>
+          <div>green on hover</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:first-child</td>
+        <td id=first-child>
+          <div>green</div>
+          <div>red</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr]</td>
+        <td id=attr>
+          <div green=yes>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr="value"]</td>
+        <td id=attr-equal>
+          <div green=yes>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr~="value"]</td>
+        <td id=attr-tild-equal>
+          <div green="no yes maybe">green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr|="value"]</td>
+        <td id=attr-pipe-equal>
+          <div green="yes-no">green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr^="value"]</td>
+        <td id=attr-circ-equal>
+          <div green=yes>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>[attr$="value"]</td>
+        <td id=attr-dollar-equal>
+          <div green=yes>green</div>
+        </td>
+      </tr>
+      <!-- bug on old IE versions
+      <tr>
+        <td>[attr*="value"]</td>
+        <td id=attr-star-equal>
+          <div green=yes>green</div>
+        </td>
+      </tr> -->
+      <tr>
+        <td>:after</td>
+        <td rowspan=5>Unknown on IE&lt;8</td>
+        <td rowspan=5>IE8.js</td>
+        <td id=after>
+          <span>red</span>
+        </td>
+      </tr>
+      <tr>
+        <td>:before</td>
+        <td id=before>
+          <span>red</span>
+        </td>
+      </tr>
+      <tr>
+        <td>:active</td>
+        <td id=active>
+          <input value="green on click">
+        </td>
+      </tr>
+      <tr>
+        <td>:focus</td>
+        <td id=focus>
+          <input value="green on focus">
+        </td>
+      </tr>
+      <tr>
+        <td>:lang</td>
+        <td id=lang>
+          <p>green</p>
+          <p lang="fr-Fr">red</p>
+        </td>
+      </tr>
+      <tr>
+        <td>:checked</td>
+        <td rowspan=17>Unknown on IE&lt;9</td>
+        <td rowspan=17>IE9.js</td>
+        <td id=checked>
+          <input type=checkbox checked>
+          <span>green</span> 
+          <input type=radio name=radio checked> 
+          <span>when</span> 
+          <input type=radio name=radio> 
+          <span>checked</span>
+        </td>
+      </tr>
+      <tr>
+        <td>:disabled</td>
+        <td id=disabled>
+          <input value=red>
+          <input disabled value=green>
+        </td>
+      </tr>
+      <tr>
+        <td>:empty</td>
+        <td id=empty>
+          <div>red (and green next)</div>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <td>:enabled</td>
+        <td id=enabled>
+          <input disabled value=red>
+          <input value=green>
+        </td>
+      </tr>
+      <tr>
+        <td>:indeterminate</td>
+        <td id=indeterminate>
+          <input id=indeterminate-checkbox type=checkbox>
+          <span>green</span>
+          <script>document.getElementById('indeterminate-checkbox').indeterminate=true;</script>
+        </td>
+      </tr>
+      <tr>
+        <td>:first-of-type</td>
+        <td id=first-of-type>
+          <div>green</div>
+          <div>red</div>
+          <div>red</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:last-child</td>
+        <td id=last-child>
+          <div>red</div>
+          <div>red</div>
+          <div>red</div>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:last-of-type</td>
+        <td id=last-of-type>
+          <div>red</div>
+          <div>red</div>
+          <div>red</div>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:not(*)</td>
+        <td id=not>
+          <div>red</div>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:nth-child(*)</td>
+        <td id=nth-child>
+          <div>red</div>
+          <div>green</div>
+          <div>red</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:nth-last-child(*)</td>
+        <td id=nth-last-child>
+          <div>red</div>
+          <div>red</div>
+          <div>green</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:nth-last-of-type(*)</td>
+        <td id=nth-last-of-type>
+          <div>red</div>
+          <div>red</div>
+          <div>green</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:nth-of-type(*)</td>
+        <td id=nth-of-type>
+          <div>red</div>
+          <div>green</div>
+          <div>red</div>
+          <div>red</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:only-child</td>
+        <td id=only-child>
+          <div>green</div>
+        </td>
+      </tr>
+      <tr>
+        <td>:only-of-type</td>
+        <td id=only-of-type>
+          <div>red</div>
+          <p>green</p>
+        </td>
+      </tr>
+      <tr>
+        <td>:root</td>
+        <td id=root>
+          the page background should be gray
+        </td>
+      </tr>
+      <tr>
+        <td>:target</td>
+        <td id=target>
+          <div id="target-div">&nbsp;</div>
+          <a href="#target-div">red square, green after clicking here</a>
+        </td>
+      </tr>
+    </table>
+    <h3>CSS properties</h3>
+    <table id=css-properties>
+      <tr>
+        <th class=col1>Property</th>
+        <th class=col2>Problem</th>
+        <th class=col3>Solution in BC</th>
+        <th class=col4>Demo</th>
+      </tr>
+      <tr>
+        <td>background: linear-gradient(*); <sup>[2]</sup></td>
+        <td rowspan=5>Unknown on IE&lt;10, prefixes needed on old browsers</td>
+        <td rowspan=5>CSS3Pie.js, PrefixFree.js</td>
+        <td id=linear-gradient>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <!-- multiple backgrounds bug on old IE versions
+      <tr>
+        <td>background: url(), url(); <sup>[2]</sup></td>
+        <td id=multiple-backgrounds>
+          <div><div>Multiple backgrounds</div></div>
+        </td>
+      </tr> -->
+      <tr>
+        <td>background: rgba(*,*,*,*); <sup>[2]</sup></td>
+        <td id=rgba>
+          <div>I have a green background with 50% alpha</div>
+        </td>
+      </tr>
+      <tr>
+        <td>border-image</td>
+        <td id=border-image>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td>border-radius</td>
+        <td id=border-radius>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td>box-shadow</td>
+        <td id=box-shadow>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td>cursor: pointer;</td>
+        <td rowspan=4>Unknown on IE5.5</td>
+        <td rowspan=4>IE7.js</td>
+        <td id=pointer>Hover this cell</td>
+      </tr>
+       <tr>
+        <td>display: list-item;</td>
+        <td id=list-item>
+          <span>List</span> 
+          <span>items</span>
+        </td>
+      </tr>
+      <tr>
+        <td>font-size: (name);</td>
+        <td id=font-size>
+          I'm x-large
+        </td>
+      </tr>
+      <tr>
+        <td>margin: auto;</td>
+        <td id=margin>
+          <div><div>I'm centered</div></div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>background-attachment:fixed;</td>
+        <td rowspan=10>Unknown on IE&lt;7</td>
+        <td rowspan=10>IE7.js</td>
+        <td id=background-attachment>
+          <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>background-image (with transparent PNG)</td>
+        <td id=background-image>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td>bottom</td>
+        <td id=bottom>
+          <div>I'm in green zone</div>
+        </td>
+      </tr>
+      <tr>
+        <td>max-height</td>
+        <td id=max-height>
+          <div>My max height is 70px. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>max-width</td>
+        <td id=max-width>
+          <table>
+            <tr>
+              <td id=max-width-td>My max width is 50px.</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>min-height</td>
+        <td id=min-height>
+          <div>My min height is 50px</div>
+        </td>
+      </tr>
+      <tr>
+        <td>min-width</td>
+        <td id=min-width>
+        <table>
+            <tr>
+              <td id=min-width-td>My...<br>min...<br>width...<br>is...<br>100px.</td>
+              <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>overflow: visible;</td>
+        <td id=overflow>
+          <div>My max height is 70px. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>position: fixed;</td>
+        <td id=position>
+          The "back to top" link's position is fixed.
+          <a href="#top">Back to top</a>
+        </td>
+      </tr>
+      <tr>
+        <td>right</td>
+        <td id=right>
+          <div>I'm on the left</div>
+        </td>
+      </tr>
+      <tr>
+        <td>box-sizing: content-box; (assumed)</td>
+        <td rowspan=2>Unknown on IE&lt;8</td>
+        <td rowspan=2>IE8.js</td>
+        <td id=box-sizing>
+          <a href="http://ie7-js.googlecode.com/svn/test/box-sizing.html" target="_blank">More info</a></td>
+      </tr>
+      <tr>
+        <td>content: attr() or url();</td>
+        <td id=content>
+          <a href="http://www.example.com/"> link </a> &larr; shown by CSS!
+        </td>
+      </tr>
+      <!-- Using "border-spacing" causes a JS error by IE7.js on old IE versions
+      <tr>
+        <td>border-spacing</td>
+        <td id=border-spacing>
+          <table>
+            <tr>
+              <td>table</td>
+              <td>with</td>
+            </tr>
+            <tr>
+              <td>border</td>
+              <td>spacing</td>
+            </tr>
+          </table>
+        </td>
+      </tr>  -->
+      <!-- Using "inherit" causes a JS error by IE7.js on old IE versions
+      <tr>
+        <td>property: inherit;</td>
+        <td id=inherit>
+          <div id=inherit-div>white</div>
+          <div>red</div>
+        </td>
+      </tr> -->
+      <tr>
+        <td>opacity</td>
+        <td>Unknown on IE&lt;9</td>
+        <td>IE9.js</td>
+        <td id=opacity>I'm green with 50% opacity</td>
+      </tr>
+    </table>
+    <sub>[1] iPod and iPhone only support the mp3 files for audio and mp4 for video, and don't handle the Flash fallback. Using these file formats, you can encode your audio and video files only once.</sub>
+    <br>
+    <sub>[2] Write the background properties twice: "-pie-background" for IE and "background" for other browsers.</sub>
+  </div>
+<body>
+</body>
+</html>

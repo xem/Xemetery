@@ -1,0 +1,451 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>EQCSS features</title>
+<style>
+  * { box-sizing: border-box; font-size: 14px; line-height: 1.2em; }
+  body { font-family: tahoma; text-align: center; max-width: 850px; margin: 0 auto }
+  script[type="text/eqcss"], script[type="text/eqcss-read"], pre { display: inline-block; background: #def; white-space: pre; padding: 0px 20px 20px; margin: 10px 0; text-align: left; font-size: 11px; line-height: 13px; }
+  pre { padding-top: 20px }
+  div { overflow: auto; overflow-x: hidden; display: inline-block; border: 1px solid #000; padding: 30px; background: #fff8f1; max-width: 400px; max-height: 160px }
+  img { margin: 3px; }
+  hr { width: 33%; border: none; border-top: 2px solid #555; margin: 40px auto; }
+  h1 { font-size: 26px; }
+  h2 { font-size: 22px }
+  h3 { font-size: 18px }
+  input,textarea { width: 300px }
+  section { border: 2px solid #def; border-right: 4px solid #def; border-bottom: 4px solid #def; border-radius: 10px; margin: 10px; padding: 10px; width: 400px; height: 380px; display: inline-block; vertical-align: top; }
+  section section { display: inline-block; border: 1px dotted red; border-radius: 0; height: auto; width: auto; }
+@media screen and (min-width: 1700px){
+  body { max-width: 1700px; }
+}
+</style>
+
+<h1>EQCSS features</h1>
+<hr>
+<h2>General</h2>
+
+<section>
+<h3>Install and use EQCSS</h3>
+At the end of the body of your HTML page
+<br>
+<pre>
+&lt;!--[if lt IE 9]>
+  &lt;script src="EQCSS-ie8.js">&lt;/script>
+&lt;![endif]-->
+&lt;script src="EQCSS.js">&lt;/script>
+</pre>
+<br>
+and call this when you want to re-apply your style
+<br>
+<pre>
+EQCSS.apply();
+</pre>
+<br>
+Please note that this is called automatically on load, on resize, on input, on keydown/keyup, on mousedown/mouseup and when the DOM changes. 
+</section>
+
+<section>
+<h3>Write your own EQCSS code</h3>
+in the head or the body, as inline script
+<br>
+<pre>
+&lt;cript type="text/eqcss">
+  /* EQCSS code */
+&lt;/script>
+</pre>
+<br>
+or embedded script
+<br>
+<pre>
+&lt;script type="text/eqcss" src="code.eqcss">
+&lt;/script>
+</pre>
+</section>
+
+<section>
+<h3>Mix regular CSS and EQCSS code</h3>
+in your EQCSS scripts
+<br>
+<pre>
+body { ... }
+
+@element body { 
+  div { ... }
+}
+</pre>
+</section>
+
+<section>
+<h3>You can use comments</h3>
+
+<div class="comments" style="resize: horizontal">
+  class="comments"
+</div>
+<br>
+<script type="text/eqcss">
+/* comment before */
+@element ".comments" and (max-width: 400px){
+  /* comment at the beginning */
+  .comments { background: yellow; }
+  /* comment at the end */
+}
+/* comment after */
+</script>
+</section>
+
+<hr>
+<h2>Element queries</h2>
+
+<section>
+<h3>min-width in pixels</h3>
+<b>(Use mouse)</b>
+<br>
+<br>
+<div class="minwidthpixels" style="resize: horizontal" onresize="alert(1)">
+  class="minwidthpixels"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".minwidthpixels" and (min-width: 250px){
+  .minwidthpixels { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-width in %</h3>
+
+<div class="minwidthpercents" style="resize: horizontal">
+  class="minwidthpercents"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".minwidthpercents" and (min-width: 80%){
+  .minwidthpercents { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-width in px</h3>
+
+<div class="maxwidthpixels" style="resize: horizontal">
+  class="maxwidthpixels"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".maxwidthpixels" and (max-width: 250px){
+  .maxwidthpixels { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-width in %</h3>
+
+<div class="maxwidthpercents" style="resize: horizontal">
+  class="maxwidthpercents"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".maxwidthpercents" and (max-width: 80%){
+  .maxwidthpercents { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-height in pixels</h3>
+
+<div class="minheightpixels" style="resize: vertical">
+  class="minheightpixels"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".minheightpixels" and (min-height: 120px){
+  .minheightpixels { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-height in %</h3>
+
+<section style="height: 150px;">
+  <div class="minheightpercents" style="resize: vertical">
+    class="minheightpercents"
+  </div>
+</section>
+<br>
+<script type="text/eqcss">
+@element ".minheightpercents" and (min-height: 80%){
+  .minheightpercents { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-height in px</h3>
+
+<div class="maxheightpixels" style="resize: vertical">
+  class="maxheightpixels"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".maxheightpixels" and (max-height: 120px){
+  .maxheightpixels { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-height in %</h3>
+
+<section style="height: 150px">
+  <div class="maxheightpercents" style="resize: vertical">
+    class="maxheightpercents"
+  </div>
+</section>
+<br>
+<script type="text/eqcss">
+@element ".maxheightpercents" and (max-height: 80%){
+  .maxheightpercents { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-characters on blocks</h3>
+<b>(Use keyboard)</b>
+<br>
+<br>
+<br>
+
+<div class="mincharacters" contenteditable>
+  class="mincharacters"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".mincharacters" and (min-characters: 30){
+  .mincharacters { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-characters on blocks</h3>
+
+<div class="maxcharacters" contenteditable>
+class="maxcharacters"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".maxcharacters" and (max-characters: 30){
+  .maxcharacters { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-characters on form inputs</h3>
+
+<input class="mincharacters-input" value='class="mincharacters-input"'>
+<br><br>
+<textarea class="mincharacters-textarea">
+class="mincharacters-textarea"
+</textarea>
+<br>
+<script type="text/eqcss">
+@element ".mincharacters-input" and (min-characters: 50){
+  .mincharacters-input { background: yellow; }
+}
+@element ".mincharacters-textarea" and (min-characters: 50){
+  .mincharacters-textarea { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-characters on form inputs</h3>
+
+<input class="maxcharacters-input" value='class="maxcharacters-input"'>
+<br><br>
+<textarea class="maxcharacters-textarea">
+class="maxcharacters-textarea"
+</textarea>
+<br>
+<script type="text/eqcss">
+@element ".maxcharacters-input" and (max-characters: 50){
+  .maxcharacters-input { background: yellow; }
+}
+@element ".maxcharacters-textarea" and (max-characters: 50){
+  .maxcharacters-textarea { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-children</h3>
+<br>
+
+<div class="minchildren" style="white-space: pre-wrap">class="minchildren"
+</div>
+<br>
+<button onclick="document.querySelector('.minchildren').innerHTML += '<img src=//www.placehold.it/20 style>'">Add children</button>
+<br>
+<br>
+<script type="text/eqcss">
+@element ".minchildren" and (min-children: 10){
+  .minchildren { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-children</h3>
+
+<div class="maxchildren" style="white-space: pre-wrap">class="maxchildren"
+</div>
+<br>
+<button onclick="document.querySelector('.maxchildren').innerHTML += '<img src=//www.placehold.it/20>'">Add children</button>
+<br>
+<br>
+<script type="text/eqcss">
+@element ".maxchildren" and (max-children: 10){
+  .maxchildren { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>min-lines</h3>
+<br>
+
+<div class="minlines" contenteditable>
+  class="minlines"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".minlines" and (min-lines: 5){
+  .minlines { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>max-lines</h3>
+
+<div class="maxlines" contenteditable>
+  class="maxlines"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".maxlines" and (max-lines: 5){
+  .maxlines { background: yellow; }
+}
+</script>
+</section>
+
+<hr>
+<h2>Scoping</h2>
+
+<section>
+<h3>Scoped queries ($this)</h3>
+
+<div class="scoped" style="resize: horizontal">
+  class="scoped"
+</div>
+<div class="scoped" style="resize: horizontal">
+  class="scoped"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".scoped" and (min-width: 300px){
+
+  /* Only set background to the elements matching the query */
+  $this { background: yellow; }
+
+}
+</script>
+</section>
+<section>
+<h3>Multiple conditions</h3>
+
+<div class="multiple-conditions" style="resize: both">
+  class="multiple-conditions"
+</div>
+<br>
+<script type="text/eqcss">
+@element ".multiple-conditions" and (min-width: 50%)
+  and (min-height: 150px){
+  .multiple-conditions { background: yellow; }
+}
+</script>
+</section>
+<section>
+<h3>Scoped queries + multiple conditions</h3>
+<div class="scoped-multiple" style="resize: horizontal; padding: 5px;">
+  <b>class="scoped-multiple"</b>
+</div>
+<div class="scoped-multiple" style="resize: horizontal; padding: 5px;">
+  <b>class="scoped-multiple"</b>
+</div>
+<br>
+<script type="text/eqcss">
+@element ".scoped-multiple" and (min-width: 150px)
+  and (max-width: 200px){
+
+  $this { background: yellow; }
+  $this:hover { background: orange; }
+
+  body>$this>b { color: red }
+
+}
+</script>
+</section>
+<hr>
+<h2>Parent selectors</h2>
+<section>
+<h3>$parent</h3>
+<div class="parent" style="resize: horizontal; padding: 5px;">
+todo
+</div>
+<br>
+<script type="text/eqcss">
+todo
+</script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--[if lt IE 9]><script src="EQCSS-ie8.js"></script><![endif]-->
+<script src="EQCSS.js"></script>
+
+<script>
+
+// Apply eqcss on clicks, resizes, inputs
+var EQCSS_resizing = false;
+var EQCSS_timeout = true;
+
+window.addEventListener("keydown", EQCSS.apply);
+
+window.addEventListener("keyup", EQCSS.apply);
+
+window.addEventListener("input", EQCSS.apply);
+
+window.addEventListener("click", EQCSS.apply);
+
+window.addEventListener("mousedown", function(){
+  EQCSS_resizing = true;
+  EQCSS.apply();
+});
+
+window.addEventListener("mouseup", function(){
+  EQCSS_resizing = false;
+  EQCSS.apply();
+});
+
+window.addEventListener("mousemove", function(){
+  if(EQCSS_resizing === true){
+    EQCSS.apply();
+  }
+});
+</script>

@@ -1,0 +1,99 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Code Golf</title>
+<a href=//github.com/xem/codegolf><img style="position:absolute;top:0;right:0;border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<style>
+  * { margin: 0; padding: 0; }
+  body { text-align: center; font: normal 12px Arial; background: #def; background: linear-gradient(#89C8FF, #BFE4FF 100px, #009f21 100px, #000021); }
+  h2, h3 { margin: 5px 0; }
+  .entry { padding: 20px; background: #fff; border: 2px solid #222; border-right: 4px solid #222; border-bottom: 4px solid #222; border-radius: 10px; display: inline-block; margin: 10px; text-align: left; }
+  .entry img { border: 2px solid #555; }
+  .entry a { color: #000; }
+</style>
+<script src=all.json></script>
+<body>
+<br>
+<br>
+<img src=logo.png>
+<br>
+<br>
+<br>
+</body>
+
+<script>
+  for(var i in entries){
+    var entry = entries[i];
+    var html = "";
+    html += "<div class=entry>";
+    html += "  <h2><a href=" + entry.link + " target=_blank>" + entry.title + "</a></h2>";
+    html += "  <h3>" + entry.author + " - " + entry.date + " - " + entry.size + "</h3>";
+    html += "  <img src=" + entry.title + "/screenshot.png>";
+    html += "  <p>" + entry.description + "</p>";
+    html += "</div>";
+    document.body.innerHTML += html;
+  }
+</script>
+
+<!--div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div>
+<div class=entry>
+  <h2>Title</h2>
+  <h3>Author - Date - Size</h3>
+  <img src=//placehold.it/300x150>
+  <p>Description</p>
+  <a href=#>Link</a> - <a href=#>Source code</a>
+</div-->

@@ -1,0 +1,458 @@
+<!doctype html>
+<head>
+<meta charset=utf-8>
+<title>Gomba</title>
+<style>
+  html { background: #ddd; font-family: arial; }
+  body { width: 600px; height: 570px; margin: 5px auto 0; padding: 10px; text-align: center; background: #fff; }
+  h1 { margin: 0; }
+  canvas { background: #000; margin: 10px auto 0; cursor: pointer; position: relative; }
+  div { display: none; }
+  textarea { width: 550px; height: 480px; font-size: 11px; margin: 10px auto 0; }
+</style>
+</head>
+<body>
+<h1>Gomba JS prototype</h1>
+<button id=show_script_editor>Script</button>
+<button id=show_map_editor>Map & object editor</button>
+<button id=show_simulator>Simulator</button>
+<br>
+<div id=script_editor>
+  <textarea id=script_textarea>/** Globals & constants **/
+var MAP_TILES_X = 12;
+var MAP_TILES_Y = 7;
+var objects = [
+  ["hero", "object", 0 /* solid */, 1 /* input */],
+  ["ennemy", "object", 1, 0],
+  ["coin", "object", 1, 0],
+  ["crane", "object", 1, 0],
+  ["wall", "object", 1, 0],
+  ["wall2", "object", 1, 0],
+  ["floor", "object", 0, 0]
+];
+var coins = 0;
+var gameover = 0;
+  
+/** Move the ennemies randomly every second **/
+var s = setInterval(function(){
+
+  var i, ennemies = [], j, direction, position;
+
+  // Find ennemies positions on the map
+  for(i = 0; i < map.length; i++){
+    if(map[i] == 1){
+      ennemies.push(i);
+    }
+  }
+
+  // For each ennemy position
+  for(i = 0; i < ennemies.length; i++){
+  
+      position = ennemies[i];
+    
+      // pick a direction (0-3)
+      direction = Math.floor(Math.random() * 4);
+      
+      // 0: Try to go top
+      if(direction == 0 && position > 12){
+        if(map[position - 12] == 0){
+          gameover = 1;
+        }
+        if(objects[map[position - 12]][2] == 0){
+          map[position] = 6;      // empty floor
+          map[position - 12] = 1; // ennemy
+        }
+      }
+      
+      // 1: Try to go right
+      // If not out-of-bounds and if no solid object on top
+      if(direction == 1 && position % 12 < 11){
+        if(map[position + 1] == 0){
+          gameover = 1;
+        }
+        if(objects[map[position + 1]][2] == 0){
+          map[position] = 6;
+          map[position + 1] = 1;
+        }
+      }
+      
+      // 2: Try to go bottom
+      // If not out-of-bounds and if no solid object on bottom
+      if(direction == 2 && position < 12 * 6){
+        if(map[position + 12] == 0){
+          gameover = 1;
+        }
+        if(objects[map[position + 12]][2] == 0){
+          map[position] = 6;
+          map[position + 12] = 1;
+        }
+      }
+      
+      // 3: Try to go left
+      // If not out-of-bounds and if no solid object on top
+      if(direction == 3 && position % 12 > 0){
+        if(map[position - 1] == 0){
+          gameover = 1;
+        }
+        if(objects[map[position - 1]][2] == 0){
+          map[position] = 6;
+          map[position - 1] = 1;
+        }
+      }
+  }
+  
+  // Game over
+  if(gameover){
+    alert("GAME OVER");
+    clearInterval(s);
+  }
+  
+  // Refresh
+  init_simulator();
+},1000);
+
+/** Move the hero manually **/
+
+// Listen for arrow keys
+onkeyup = function(e){
+
+  // Find hero position
+  var position = map.indexOf(0);
+  
+  if(position != -1){
+    
+    switch(e.keyCode){
+    
+      // Left
+      case 37:
+        
+        // If not out of bounds
+        if(position % 12 > 0){
+
+          // If ennemy on the left
+          if(map[position - 1] == 1){
+            gameover = 1;
+            map[position] = 6;
+          }
+          
+          // If coin on the left
+          else if(map[position - 1] == 2){
+            coins++;
+            map[position] = 6;
+            map[position - 1] = 0;
+          }
+          
+          // If no solid on the left
+          else if(objects[map[position - 1]][2] == 0){
+            map[position] = 6;
+            map[position - 1] = 0;
+          }
+        }
+        
+        break;
+      
+      // Top
+      case 38:
+      
+        // If not out of bounds
+        if(position > 12){
+          
+          // If ennemy on top
+          if(map[position - 12] == 1){
+            gameover = 1;
+            map[position] = 6;
+          }
+          
+          // If coin on top
+          else if(map[position - 12] == 2){
+            coins++;
+            map[position] = 6;
+            map[position - 12] = 0;
+          }
+          
+          // If no solid on top
+          else if(objects[map[position - 12]][2] == 0){
+            map[position] = 6;
+            map[position - 12] = 0;
+          }
+        }
+
+        break;
+      
+      // Right
+      case 39:
+      
+        // If not out of bounds
+        if(position % 12 < 11){
+
+          // If ennemy on right
+          if(map[position + 1] == 1){
+            gameover = 1;
+            map[position] = 6;
+          }
+          
+          // If coin on right
+          else if(map[position + 1] == 2){
+            coins++;
+            map[position] = 6;
+            map[position + 1] = 0;
+          }
+          
+          // If no solid on right
+          else if(objects[map[position + 1]][2] == 0){
+            map[position] = 6;
+            map[position + 1] = 0;
+          }
+        }
+        
+        break;
+        
+      // Bottom
+      case 40:
+      
+        // If not out of bounds
+        if(position < 12 * 6){
+          
+          // If ennemy on bottom
+          if(map[position + 12] == 1){
+            gameover = 1;
+            map[position] = 6;
+          }
+          
+          // If coin on bottom
+          else if(map[position + 12] == 2){
+            coins++;
+            map[position] = 6;
+            map[position + 12] = 0;
+          }
+          
+          // If no solid on bottom
+          else if(objects[map[position + 12]][2] == 0){
+            map[position] = 6;
+            map[position + 12] = 0;
+          }
+        }
+        
+        break;
+    }
+    
+    // Game over
+    if(gameover){
+      alert("GAME OVER");
+      clearInterval(s);
+    }
+    
+    // Refresh
+    init_simulator();
+  }
+}</textarea>
+</div>
+
+<div id=map_editor>
+  <canvas id=map_editor_top width=384 height=224></canvas>
+  <canvas id=map_editor_tileset width=256 height=80></canvas>
+  <br>
+  <br>
+  Name <input id=map_editor_object_name>
+  <br>
+  <br>
+  Type <select>
+    <option>Object</option>
+  </select>
+  <br>
+  <br>
+  <input type=checkbox id=map_editor_solid> Solid
+  <br>
+  <input type=checkbox id=map_editor_input> Input
+</div>
+
+<div id=simulator>
+  <canvas id=simulator_top width=400 height=240></canvas>
+  <canvas id=simulator_bottom width=320 height=240></canvas>
+</div>
+<script>
+
+/** Menu **/
+show_script_editor.onclick=function(){
+  script_editor.style.display="block";
+  map_editor.style.display="none";
+  simulator.style.display="none";
+}
+
+show_map_editor.onclick=function(){
+  script_editor.style.display="none";
+  map_editor.style.display="block";
+  simulator.style.display="none";
+  ctx_map_editor_tileset.drawImage(tileset, 0, 0);
+  init_map_editor();
+}
+
+show_simulator.onclick=function(){
+  script_editor.style.display="none";
+  map_editor.style.display="none";
+  simulator.style.display="block";
+  init_simulator();
+  eval(script_textarea.value);
+}
+
+/** Common data **/
+
+// Canvas
+var
+ctx_map_editor_top = map_editor_top.getContext("2d");
+ctx_map_editor_tileset = map_editor_tileset.getContext("2d");
+ctx_simulator_top = simulator_top.getContext("2d");
+ctx_simulator_bottom = simulator_bottom.getContext("2d");
+
+// Map
+var
+MAP_TILES_X = 12,
+MAP_TILES_Y = 7,
+MAP_TILES_WIDTH = 32,
+MAP_TILES_HEIGHT = 32,
+map = [
+  4,5,5,5,4,6,6,4,5,5,4,6,
+  4,1,6,6,5,5,5,5,6,1,4,6,
+  4,6,6,6,3,6,6,6,6,3,5,4,
+  4,6,6,6,6,6,6,6,6,6,2,4,
+  5,5,5,4,6,6,0,6,6,6,6,4,
+  6,6,6,4,2,6,6,6,6,3,6,4,
+  6,6,6,5,5,5,5,5,5,5,5,5
+];
+
+// Tileset
+var
+tileset = new Image();
+tileset.src = "tileset.png";
+
+// Tileset objects
+var
+objects = [
+  ["hero", "object", 1, 1],
+  ["ennemy", "object", 1, 0],
+  ["coin", "object", 1, 0],
+  ["crane", "object", 1, 0],
+  ["wall", "object", 1, 0],
+  ["wall2", "object", 1, 0],
+  ["floor", "object", 0, 0]
+];
+
+// Simulator
+var
+SIMULATOR_OFFSET_X = 8,
+SIMULATOR_OFFSET_Y = 8;
+
+/** Script editor **/
+
+/** Map editor **/
+
+// Init
+function init_map_editor(){
+  var i, j, index, tile;
+  for(i = 0; i < MAP_TILES_Y; i++){
+    for(j = 0; j < MAP_TILES_X; j++){
+      index = i * MAP_TILES_X + j;
+      tile = map[index];
+      ctx_map_editor_top.drawImage(
+        tileset,
+        tile * MAP_TILES_WIDTH,
+        0,
+        32,
+        32,
+        j * MAP_TILES_WIDTH,
+        i * MAP_TILES_HEIGHT,
+        32,
+        32
+      );
+    }
+  }
+}
+
+// Click on the tileset
+var current_object = -1;
+
+map_editor_tileset.onclick = function(e){
+  ctx_map_editor_tileset.drawImage(tileset, 0, 0);
+  var mouseX, mouseY, tileX, tileY, index;
+  if(e.offsetX) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
+  }
+  else if(e.layerX) {
+    mouseX = e.layerX;
+    mouseY = e.layerY;
+  }
+  tileX = ~~(mouseX / MAP_TILES_WIDTH);
+  tileY = ~~(mouseY / MAP_TILES_HEIGHT);
+  current_object = index = tileY * 8 + tileX;
+  
+  ctx_map_editor_tileset.lineWidth = 3;
+  ctx_map_editor_tileset.strokeStyle = "red";
+  ctx_map_editor_tileset.beginPath();
+  ctx_map_editor_tileset.rect(
+    2 + tileX * MAP_TILES_WIDTH,
+    2 + tileY * MAP_TILES_HEIGHT,
+    31,
+    31
+  );
+  ctx_map_editor_tileset.stroke();
+  
+  if(objects[index]){
+    map_editor_object_name.value = objects[index][0];
+    map_editor_solid.checked = ["","checked"][objects[index][2]];
+    map_editor_input.checked = ["","checked"][objects[index][3]];
+  }
+  else{
+    map_editor_object_name.value = "";
+    map_editor_solid.checked = "";
+    map_editor_input.checked = "";
+  }
+}
+
+// Click on the map
+
+map_editor_top.onclick = function(e){
+  if(current_object == -1){
+    return;
+  }
+  var mouseX, mouseY, tileX, tileY, index;
+  if(e.offsetX) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
+  }
+  else if(e.layerX) {
+    mouseX = e.layerX;
+    mouseY = e.layerY;
+  }
+  tileX = ~~(mouseX / MAP_TILES_WIDTH);
+  tileY = ~~(mouseY / MAP_TILES_HEIGHT);
+  index = tileY * MAP_TILES_X + tileX;
+  map[index] = current_object;
+  init_map_editor();
+}
+
+/** Simulator **/
+function init_simulator(){
+  var i, j, index, tile;
+  for(i = 0; i < MAP_TILES_Y; i++){
+    for(j = 0; j < MAP_TILES_X; j++){
+      index = i * MAP_TILES_X + j;
+      tile = map[index];
+      ctx_simulator_top.drawImage(
+        tileset,
+        tile * MAP_TILES_WIDTH,
+        0,
+        32,
+        32,
+        j * MAP_TILES_WIDTH + SIMULATOR_OFFSET_X,
+        i * MAP_TILES_HEIGHT + SIMULATOR_OFFSET_Y,
+        32,
+        32
+      );
+    }
+  }
+}
+
+
+</script>
+</body>

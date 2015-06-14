@@ -1,0 +1,12 @@
+<!--
+// xem.github.io/miniCodeEditor
+// xem.github.io/sheet/
+// xem.github.io/miniJSperf/
+// xem.github.io/miniMinifier
+// xem.github.io/miniMinifier
+// xem.github.io/hex
+// xem.github.io/miniURI
+-->
+<body id=b>
+
+<script>b.style.textAlign="center";b.innerHTML+="<iframe id=f>";b.innerHTML+="<hr>mini<textarea rows=9 onchange='for(i=5;i--;)value=value.replace(/<!.*?->|<\/[tl].>\s*|[\s/]*(^|$|>)\s*|(\s)\s|<\/p>\s*(?=<p>|$)/gi,\"$1$2\")'placeholder=HTML>";b.innerHTML+="<textarea rows=9 onchange='for(i=5;i--;)value=value.replace(/^\s|\s$|\/\*[^]*?\*\/|\s*;*([^\:\w.#\x27\"\s*-])\s*|(:) /g,\"$1$2\")'placeholder=css>";b.innerHTML+"<hr>hex<input rows=9 onchange='h=\"<pre>\";with(new FileReader)readAsArrayBuffer(files[0]),onload=function(){for(i in u=new Uint8Array(result))h+=(i%16?\" \":\"\n\"+(1e7+(+i)[t=\"toString\"](16)).slice(-8)+\" | \")+(0+u[i][t](16)).slice(-2);outerHTML=h}'type=file><hr>uri<input rows=9 onchange='h=\"<pre>\";with(new FileReader)readAsDataURL(files[0]),onload=function(){outerHTML=h+result}'type=file><hr>sheet";function w(){for($=0;$<2;eval(Array(1e5).join(_4.value+"\n"+($++?_2:_3).value+"\n"+_1.value+"\n")),_0.value+="\n"+$+":"+(new Date-_)+"ms")_=new Date}function c(d){for(j in a)for(i in a)y=a[i]+-~j,d?b.innerHTML+=[["<br>"][i]]+"<input onfocus=value=[c[id]] onblur=c[id]=value;c() id="+y+" placeholder="+y+">":eval(y+(".value"+c[y]).replace(/[a-f]\d/g," +$&.value"))}for(i=3;i--;)f.outerHTML+="<textarea rows=9 id=t"+i+" placeholder='"+["HTML","css","js"][i]+"'>";onchange=function(){f.srcdoc=t0.value+"<script>"+t2.value+"<\/script><style>"+t1.value};c(a="abcdef");b.innerHTML+="<hr><button onclick=w()>jsperf";for(i=5;i--;)b.innerHTML+="<textarea rows=9 id=_"+i+" placeholder='"+["time","clean",2,1,"setup"][i]+"'>"</script>

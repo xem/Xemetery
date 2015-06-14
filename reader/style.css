@@ -1,0 +1,7 @@
+* { margin: 0; padding: 0; box-sizing: border-box; -moz-box-sizing: border-box; }
+html, body { height: 100%; font-family: Arial; }
+li { list-style-position: inside; }
+#menu { width: 300px; height: 100%; padding: 25px; float: left; border-right: 1px solid #000; }
+#articles { height: 100%; padding: 25px; overflow-y: scroll; padding-bottom: 500px; }
+.article { border: 1px solid #000; padding: 25px; margin: 0 0 20px; overflow: hidden; width: 75%; }
+#feeds span, #addFeed { color: #00e; text-decoration: underline; cursor: pointer; }

@@ -1,0 +1,176 @@
+ZXDS 0.9.2 beta 1 (9.11.2010)
+
++ Peer-to-peer WiFi multiplayer for 2 players.
++ SZX snapshots support.
+* RZX playback now supports external snapshots.
+* Save slots now use SZX instead of Z80. Existing Z80 slot files are still loaded, though,
+  and you can delete them manually once you don't need/want to keep them.
+* Save slots now save the associated tape/disk into a separate file if needed as well.
+  Disk is saved once and then only whenever it is modified, tape is saved
+  only once and only if it is not positioned at the begining or the very end.
+* Lot of internal changes (save states cache, icon buffering, bigger file buffer).
+* Few subtle TRDOS fixes (eject during sector write, access to high tracks of SD disks).
+* Subtle changes (2x faster change to parent directory, no cd to zip in zip, WiFi IPC sync).
+* Changed grayscale palette to match the luminance of the real Spectrum.
+! Happy birthday, Martijn.
+
+ZXDS 0.9.1 beta 1 (13.8.2010)
+
++ Memory viewer and disassembler.
++ Tape sound is now audible in normal speed load mode (conveniently forced with R+A).
+* The system log can be saved to a file now, helpful when troubleshooting.
+* Cleaned up the virtual directory code, greatly reducing the amount of required IO accesses.
+* Changed the confusing bouncing logic of previous displays' history to simple LRU.
+* Fixed the annoying sound clicks when sound is temporarily paused (e.g., scrolling in requesters).
+* Minor bugfixes in download code (HTTP continuation lines, last line EOL in listings).
+! Dedicated to the memory of Jonathan Smith. Rest in Peace, Joffa.
+
+ZXDS 0.9.0 beta 2 (20.3.2009)
+
+* Added proper initial FIFO sync which shall make WiFi init work on all cards.
+* Reenabled automatic loading of .cfg and .pok files which was accidentally disabled before.
++ Added early boot message so people can see something is going on if boot takes a bit longer.
+- The r4tf.dldi driver is not patched in, as these cards now support autopatching.
+  Also note that for the same reason and to avoid excess garbage the latest libfat library
+  doesn't include any builtin DLDI drivers anymore, so if you have some older card,
+  you may need to DLDI patch ZXDS yourself even if you hadn't to do that before.
+
+ZXDS 0.9.0 beta 1 (12.3.2009)
+
++ Support for download of files from HTTP and FTP servers over WiFi.
++ Virtual directory system for creating arbitrary listings of both local and remote files.
+  Config for World of Spectrum, RZX Archive and Demotopia data feeds included.
+  See online.txt for how to create the listings and setup your own servers.
+* The data_path, saves_path and screens_path are now configurable.
+* Help now finally uses the variable width font as I always intended.
+* Stick to the Zilog behavior regarding SCF/CCF undocumented flags.
+* Built with the latest devkitPro release, should solve most libfat/DLDI issues.
+
+ZXDS 0.8.1 beta 2 (3.12.2008)
+
+* Tweaked RZX code to work with more nonconformant but commonly available recordings.
+* Worked around sound clamping while keeping the sound loud by throwing dummy sample into the mix.
+  I knew there must have been a reason why I didn't use sound bias 0 alone long time ago.
+
+ZXDS 0.8.1 beta 1 (27.11.2008)
+
++ RZX playback (no SZX snapshot support yet, though).
++ Files stored in ZIP archives can be browsed and loaded directly.
++ Support for poke cheats in POK file format, including autoload.
++ Added log screen for better problem diagnostics, especially those RZX related.
++ Turn off the bottom screen backlight after configurable timeout.
++ Automatically save state and enter sleep mode when the lid is closed.
+* Alternatively boot from saves/boot.z80 instead of last session state.
+* Skip loading of either state upon startup when L/R buttons are held.
+* Replaced few busy loops with inactive waits to further improve battery life.
+* Improved the last menu action to cycle through all recently used views.
+* Extended the range of both AY and speaker samples to make the sound louder.
+* Tweaked the Z80 snapshot loading code to support some less conformant files.
+* The HALT instruction now updates the R register properly.
+
+ZXDS 0.8.0 beta 1 (19.6.2008)
+
++ TR-DOS emulation, allowing loading of TRD/SCL disks (including autoboot).
++ For/next loops in TZX files are now supported.
++ Screenshot support, for SCR/BMP saving and SCR loading.
++ Color/grayscale palette toggle for more nostalgic look.
++ Mode for black and white display of ink/paper only, without attributes.
++ AY ACB and ABC stereo modes and narrow/wide stereo separation.
++ Choice of three relative AY and speaker volume levels.
+* Changed AY volume tables to match the real machine more closely.
+* Implemented fake low-pass AY filter to avoid aliasing issues in some tunes.
+* Fixed setting of AY envelope register even if it doesn't change, fixes few sound effects.
+* Fixed sound clamping when all AY channels played at full volume and speaker was off.
+* Few other subtle changes (initial config autosave, even more safe shutdown).
+
+ZXDS 0.7.0 beta 2 (24.12.2007)
+
++ Implemented normal speed loading, to make loader minigames playable.
+* Quick fix for launchers which don't set the initial display state properly.
+  Should make the bottom screen properly visible for DS Extreme users.
+
+ZXDS 0.7.0 beta 1 (21.12.2007)
+
++ Finally added keyboard graphics, for both 48k and 128k keyboard.
++ Replaced the ad-hoc file requester with proper touch screen version.
++ Configurable button to key/action binding, with 9 predefined customizable settings.
++ Tape browser and manual tape control.
++ Autoload feature, with both tape-loader and USR0 mode support.
++ Skinning support for changing graphics and color of each UI element.
++ Builtin online help.
++ Pentagon emulation (no TR-DOS yet, though).
++ Z80 snapshots are now compressed.
+* Added 1 forgotten T state to EX (SP),* instructions.
+* Fixed #7FFD paging decoding (A15+A1 instead of A14-15+A1), more demos now work.
+* Changed #1F kempston joystick decoding (loose A5 instead of strict A5-A7), more games should work.
+* Disable autoplay when tape end is reached, more flawed tape files should now load.
+* Few other subtle fixes (triple buffering race, halt timing upon requester).
+
+ZXDS 0.6.0 beta 1 (10.10.2007)
+
++ Full memory and IO contention emulation.
++ Proper floating bus emulation.
++ T-state accurate screen sampling.
+= About everything should now work like on real machines, including multicolor effects.
++ Accurate speaker synthesis instead of discrete sampling.
++ Screen is now triple buffered and the LCD refresh rate is synced to 50Hz.
+  This results in extremely smooth and tearing-free display.
+* Fixed opening of files from directories of varying depth. It sometimes
+  failed before due broken chdir(), so full names are used now instead.
+* Few subtle fixes regarding snapshots (#7FFD, IFF2, T counter, tape eject).
+- Dropped the .ds.gba version, as people need to DLDI patch it themselves
+  *before* the loader is appended anyway.
+
+ZXDS 0.5.1 beta 1 (14.8.2007)
+
++ Support for the new PZX tape file format.
++ File requester finally supports directory browsing.
+* Fixed on-screen save slot numbers to match the snapshot names.
++ Included .ds.gba version for people who need it (owners of some Slot-2
+  based cards, like EZFlash IV and SuperCard) yet don't know how to make one.
+
+ZXDS 0.5.0 beta 1 (23.4.2007)
+
++ Both TAP and TZX tape files are now loaded at high speeds whenever possible.
++ Z80 snapshots are now supported.
++ Save state support via in-memory/on-card write-through save slots for 10 Z80 snapshots.
+! Happy birthday, Speccy...
+
+ZXDS 0.0.4 alpha 1 (13.4.2007)
+
++ Sound support, both speaker and AY-3-8912.
+
+ZXDS 0.0.3 alpha 1 (3.4.2007)
+
++ Basic TAP support (no fastloading yet, though).
++ Basic TZX support (no fastloading, missing support for flow control blocks).
++ Primitive border support.
+
+ZXDS 0.0.2 alpha 3 (25.3.2007)
+
+* BIT instructions now set the undocumented flags 5 and 3 properly,
+  with the sole exception of BIT n,(HL), as MEMPTR is intentionally not emulated.
+  These flags were always set before, due to lack of documentation.
++ Instructions IN[ID](R) and OUT[ID](R) now also set the PV flag.
+* Instructions OUT[ID](R) now set the CY and HC flags correctly.
+  They used the IN[ID](R) behavior before, due to lack of documentation.
+= So ZXDS now passes both ZEXDOC and ZEXALL (sans BIT n,(HL) in the latter).
+
+ZXDS 0.0.2 alpha 2 (24.3.2007)
+
+* Fixed silly typo in the macro testing the Half Carry flag,
+  which grossly broke the DAA instruction and affected flags
+  5 and 3 after CP[ID](R) instructions. Bit 4 of H register
+  instead of HC was tested by mistake before.
+
+ZXDS 0.0.2 alpha 1 (21.3.2007)
+
++ Primitive file requester, root dir only.
++ Loads 128k snapshots as well, with interrupts now being enabled properly.
++ Touch screen now shows at least some minimalistic keyboard layout.
+
+ZXDS 0.0.1 alpha 1 (20.3.2007)
+
++ First release.
++ Still pretty incomplete, but boots 128k.
++ Can only load 48k snapshots, though.

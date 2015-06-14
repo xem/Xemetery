@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Hack the game</title>
+		<link rel=stylesheet href=style.css>
+	</head>
+	<body>
+		<div class=left>
+      <canvas id=background width=600 height=600></canvas>
+      <canvas id=canvas width=600 height=600>Update your browser!</canvas>
+    </div>
+		<div class=right id=code>
+		
+<textarea id=code1>/******************************************************************************
+  Welcome to HACK THE GAME!
+  The left page contains a 600 by 600px HTML5 canvas.
+  The right page is the game's code, in JavaScript.
+  In each level, you have to complete the code to reach a new goal.
+  LEVEL 1: display the hero at the center of the canvas.
+******************************************************************************/
+
+/* Game initialization */
+
+// Canvas
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext("2d");
+
+// Hero
+var hero = {};
+hero.width = 30;            // width
+hero.height = 30;           // height
+hero.idle = new Image();    // image for "idle" state
+hero.idle.src = "idle.png"; // image source
+hero.idle.onload = draw;    // draw it when it's loaded</textarea>
+<div class=edit>
+<textarea id=code2>// write the draw function here
+function draw(){}</textarea>
+</div>
+		</div>
+		<a class=help href=HTML5_Canvas_Cheat_Sheet.png target=_blank>Help</a>
+		<script src=libs.js></script>
+		<script src=level1.js></script>
+	</body>
+</html>

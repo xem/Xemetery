@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=no, minimal-ui">
+<title class="title"></title>
+
+<!-- css -->
+<style>
+body { background: #ddd; }
+.container { background: #fff; width: 90%; max-width: 800px; margin: 30px auto; }
+.header { border: 1px dotted red; padding: 30px; text-align: center; }
+.content { border: 1px dotted green; padding: 10px 30px; }
+.sidebar { border: 1px dotted black; float: right; padding: 10px 30px; margin: 0 0 0 30px; }
+.footer { border: 1px dotted blue; padding: 10px 30px; text-align: center; }
+.footer li { display: inline; margin: 0 20px; }
+</style>
+
+<!-- HTML common to all the pages -->
+<div class="container">
+  <div class="header">
+    <h1 class="title"></h1>
+  </div>
+  <div class="content">
+  
+  </div>
+  <div class="footer">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#error">error</a></li>
+      <li><a href="#subfolder/index">subfolder/home</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HTML specific to each page -->
+<script type="text/html" id=html_home>
+<p>This is <strong>home page</strong> content</p>
+</script>
+
+<script type="text/html" id=html_about>
+<div class="sidebar"></div>
+<p>This is the <strong>about page</strong></p>
+</script>
+
+<script type="text/html" id=html_subfolder_home>
+<p>This is the <strong>subfolder index page</strong></p>
+</script>
+
+<script type="text/html" id=html_404>
+<p>Page not found</p>
+</script>
+
+<!-- JSON model -->
+<script>
+var data =
+{
+  "index": {
+    "title":"Home",
+    "content": html_home.innerHTML
+  },
+  "about": {
+    "title":"About",
+    "content": html_about.innerHTML,
+    "sidebar": "sidebar text"
+  },
+  "subfolder/index": {
+    "title":"Subfolder index",
+    "content": html_subfolder_home.innerHTML
+  },
+  "404": {
+    "title":"404",
+    "content": html_404.innerHTML
+  },
+};
+</script>
+
+<!-- JS engine -->
+<script>
+onload = onhashchange = function() {
+  
+  // vars
+  var hash, elems, i, j;
+  
+  // Find current page
+  if(location.hash) hash = location.hash.slice(1);
+  else hash = "index";
+  if(!data[hash]) hash = "404";
+  if(!data[hash]) hash = "index";
+  if(!data[hash]) die;
+  
+  // Process page's data
+  for(i in data[hash]){
+    elems = document.querySelectorAll("."+i);
+    for(j in elems){
+      elems[j].innerHTML=data[hash][i];
+    }
+  }
+}
+</script>

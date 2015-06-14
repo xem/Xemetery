@@ -1,0 +1,11 @@
+* { margin: 0; padding: 0; border: 0; box-sizing: border-box; -moz-box-sizing: border-box }
+html { height: 100%; }
+body { font: 14px arial; max-width: 850px; height: 100%; margin: 0 auto; padding: 200px 0 300px; background: url(logo.png) no-repeat center 30px, linear-gradient(#89C8FF, #BFE4FF 100px, #009f21 100px, #00612E) no-repeat, #00612E; overflow-y: scroll; }
+table { background: #fff; width: 100%; border-collapse: collapse }
+th { background: #222; color: #fff }
+th, td { padding: 10px; border: 1px solid #000; text-align: left }
+iframe { overflow: hidden; }
+.details td { padding: 0 }
+.details td div { max-height: 0; overflow: hidden; transition: max-height 0.5s; text-align: center; }
+.entry:hover  td { background: #FFF3B6 }
+.entry:hover + .details td div, .details:hover td div  { max-height: 500px; }
