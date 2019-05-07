@@ -1,0 +1,32 @@
+﻿<canvas width=422 height=28 id=a>
+<script>
+
+n=2;
+
+// Sky
+c = a.getContext("2d");
+c.fillStyle="#5C94FC";
+c.fillRect(0,0,211*n,14*n);
+
+// Pipes
+for(i of[[28,10],[38,9],[46,8],[57,8],[163,9],[179,9]]){
+c.fillStyle="#80D010";
+c.fillRect(i[0]*n,i[1]*n,2*n,5*n);
+}
+
+
+// Blocks/castle
+
+// Question blocks
+for(i of[[16,8],[20,8],[23,8],[22,4],[78,8],[94,4],[109,4],[106,8],[109,8],[112,8],[129,4],[130,4],[170,8]]){
+c.fillStyle="#FC9838 ";
+c.fillRect(i[0]*n,i[1]*n,1*n,1*n);
+}
+
+// Ground
+c.fillStyle="#C84C0C";
+c.fillRect(0*n,12*n,68*n,2*n);
+c.fillRect(71*n,12*n,14*n,2*n);
+c.fillRect(89*n,12*n,63*n,2*n);
+c.fillRect(155*n,12*n,56*n,2*n);
+</script>

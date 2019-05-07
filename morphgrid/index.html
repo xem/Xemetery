@@ -1,0 +1,562 @@
+﻿<meta content="width=device-width,user-scalable=no" name=viewport>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-capable" content="yes">
+
+<button onclick="setTimeout(function(){size = sizes[level];make();}, 200)">reset</button>
+<br>
+<button onclick="setTimeout(function(){level++;size = sizes[level];make();}, 200)">next</button>
+<br>
+<button id=exp>export</button>
+<br>
+<button onclick=ambiance.play()>music</button>
+<audio src="Ambient1.mp3" loop autoplay id=ambiance></audio>
+<canvas width=768 height=1024 id=a></canvas>
+<img src="top-node.png" id=topnode>
+<img src="bottom-node1.png" id=bottomnode>
+<img src="bottom-node7.png" id=placednode>
+<style>
+html, body { height: 100%; overflow: hidden; background: #E3D2B6; }
+* { cursor: crosshair }
+#a { position:fixed;top:0;left:50%;transform:translateX(-50%);background-size:100%;height:100vh }
+img { position: absolute; left: -100vw; }
+button { position: fixed; left: 10px; z-index: 3; font-size: 8px; padding: 3px;}
+</style>
+<script>
+  
+  ambiance.volume = 0.2;
+  
+  exp.onclick = function(){
+    prompt("Export", JSON.stringify(points));
+  }
+
+  sizes = [
+    0,
+    3, // 1
+    3, // 2
+    3, // 3
+    3, // 4
+    3, // 5
+    3, // 6
+    3, // 7
+    3, // 8
+    3, // 9
+    3, // 10
+    3, // 11
+    3, // 12
+    3,3,3,4
+  ];
+
+  ratio = 1;
+  level = 1;
+  size = sizes[level];
+  levelwon = 0;
+  I = J = -1;
+
+  c = a.getContext("2d");
+  points = [];
+  
+
+  /*
+  
+  [  
+    [[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[0,0]],
+  ],  
+     
+  [  
+    [[0,0],[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[0,0],[0,0]],
+  ]
+  
+  */
+    
+    
+  levels = [
+    
+    // No level 0
+    0,
+    
+    // 1
+    [
+    [[[326,198],[217,260],[214,425]],[[382,86],[382,257],[385,428]],[[556,86],[553,257],[441,318]]]
+    ],
+    
+    // 2
+    [
+    [[[248,81],[167,159],[178,274]],[[379,251],[379,195],[382,436]],[[516,83],[595,162],[589,274]]]
+    ],
+       
+    // 3
+    [
+    [[[385,44],[281,145],[136,265]],[[480,142],[382,265],[346,388]],[[626,265],[418,386],[382,464]]]
+    ],
+    
+    // 4
+    [
+    [[[307,195],[183,100],[251,257]],[[480,114],[304,257],[195,402]],[[623,254],[480,394],[307,316]]]
+    ],
+       
+    // 5
+    [
+    [[[125,142],[211,134],[259,374]],[[211,55],[385,302],[385,458]],[[388,246],[642,153],[550,391]]]
+    ],
+       
+    // 6 (2 sets of solutions)
+    [
+    [[[189,358],[192,249],[186,456]],[[388,204],[388,249],[388,296]],[[586,53],[586,251],[586,145]]],  
+    [[[192,249],[189,358],[186,456]],[[388,249],[388,204],[388,296]],[[586,251],[586,53],[586,145]]]
+    ],
+    
+    // 7
+    [
+    [[[225,75],[228,428],[228,377]],[[377,75],[578,433],[379,377]],[[536,75],[533,229],[536,380]]]
+    ],
+       
+    // 8
+    [
+    [[[293,282],[178,137],[178,422]],[[491,374],[458,103],[340,302]],[[564,363],[623,321],[614,181]]]
+    ],
+       
+    // 9
+    [
+    [[[385,47],[262,181],[220,321]],[[508,179],[385,310],[259,453]],[[550,313],[511,453],[382,240]]]
+    ],
+       
+    // 10
+    [
+    [[[256,64],[284,201],[228,414]],[[424,262],[382,128],[377,470]],[[404,44],[474,156],[547,416]]]
+    ],
+    
+    // 11
+    [
+    [[[133,226],[239,64],[178,430]],[[217,193],[388,187],[385,271]],[[640,265],[550,187],[603,425]]]
+    ],
+    
+    // 12
+    [
+    [[[483,332],[172,254],[488,176]],[[393,36],[390,257],[393,475]],[[301,330],[612,254],[298,179]]] 
+    ],
+
+    [
+      [[[433,244],[338,209],[200,276]],[[468,296],[246,392],[160,361]],[[527,389],[424,359],[534,200]]]
+    ],
+
+    [
+      [[[274,307],[162,225],[279,401]],[[353,183],[353,296],[353,422]],[[430,304],[537,219],[422,400]]]
+    ],
+
+    [
+      [[[256,324],[168,271],[168,401]],[[352,187],[353,229],[353,141]],[[447,328],[530,270],[531,408]]]
+    ],
+
+    [
+      [[[194,440],[325,168],[172,276],[303,379]],[[412,363],[346,247],[266,296],[383,447]],[[524,444],[440,284],[392,325],[430,447]],[[540,345],[562,206],[595,297],[505,379]]]
+    ],
+  ];
+  
+  var rotate3 = function(matrix){
+    var newMatrix = [[],[],[]];
+    
+    newMatrix[0][0] = matrix[2][0];
+    newMatrix[0][1] = matrix[1][0];
+    newMatrix[0][2] = matrix[0][0];
+    
+    newMatrix[1][0] = matrix[2][1];
+    newMatrix[1][1] = matrix[1][1];
+    newMatrix[1][2] = matrix[0][1];
+    
+    newMatrix[2][0] = matrix[2][2];
+    newMatrix[2][1] = matrix[1][2];
+    newMatrix[2][2] = matrix[0][2];
+    
+    return newMatrix;
+  }
+  
+  var rotate4 = function(matrix){
+    var newMatrix = [[],[],[],[]];
+    
+    newMatrix[0][0] = matrix[3][0];
+    newMatrix[0][1] = matrix[2][0];
+    newMatrix[0][2] = matrix[1][0];
+    newMatrix[0][3] = matrix[0][0];
+    
+    newMatrix[1][0] = matrix[3][1];
+    newMatrix[1][1] = matrix[2][1];
+    newMatrix[1][2] = matrix[1][1];
+    newMatrix[1][3] = matrix[0][1];
+    
+    newMatrix[2][0] = matrix[3][2];
+    newMatrix[2][1] = matrix[2][2];
+    newMatrix[2][2] = matrix[1][2];
+    newMatrix[2][3] = matrix[0][2];
+    
+    newMatrix[3][0] = matrix[3][3];
+    newMatrix[3][1] = matrix[2][3];
+    newMatrix[3][2] = matrix[1][3];
+    newMatrix[3][3] = matrix[0][3];
+    
+    return newMatrix;
+  }
+  
+  var transpose3 = function(matrix){
+    var newMatrix = [[],[],[]];
+    
+    newMatrix[0][0] = matrix[0][0];
+    newMatrix[0][1] = matrix[1][0];
+    newMatrix[0][2] = matrix[2][0];
+    
+    newMatrix[1][0] = matrix[0][1];
+    newMatrix[1][1] = matrix[1][1];
+    newMatrix[1][2] = matrix[2][1];
+    
+    newMatrix[2][0] = matrix[0][2];
+    newMatrix[2][1] = matrix[1][2];
+    newMatrix[2][2] = matrix[2][2];
+    
+    return newMatrix;
+  }
+  
+  var transpose4 = function(matrix){
+    var newMatrix = [[],[],[],[]];
+    
+    newMatrix[0][0] = matrix[0][0];
+    newMatrix[0][1] = matrix[1][0];
+    newMatrix[0][2] = matrix[2][0];
+    newMatrix[0][3] = matrix[3][0];
+    
+    newMatrix[1][0] = matrix[0][1];
+    newMatrix[1][1] = matrix[1][1];
+    newMatrix[1][2] = matrix[2][1];
+    newMatrix[1][3] = matrix[3][1];
+    
+    newMatrix[2][0] = matrix[0][2];
+    newMatrix[2][1] = matrix[1][2];
+    newMatrix[2][2] = matrix[2][2];
+    newMatrix[2][3] = matrix[3][2];
+    
+    newMatrix[3][0] = matrix[0][3];
+    newMatrix[3][1] = matrix[1][3];
+    newMatrix[3][2] = matrix[2][3];
+    newMatrix[3][3] = matrix[3][3];
+    
+    return newMatrix;
+  }
+  
+  onmousedown = function(e) {
+    X = (768 * ratio / 2 - innerWidth / 2 + e.pageX) / ratio;
+    Y = e.pageY /ratio;
+    draw();
+  }
+  
+  ontouchstart = function(e) {
+    X = (768 * ratio / 2 - innerWidth / 2 + e.changedTouches[0].pageX) / ratio;
+    Y = e.changedTouches[0].pageY /ratio;
+    draw();
+  }
+  
+  onmousemove = function(e) {
+    X = (768 * ratio / 2 - innerWidth / 2 + e.pageX) / ratio;
+    Y = e.pageY /ratio;
+    if(X < 4) X = 4;
+    if(Y < 4) Y = 4;
+    if(X > 768 - 4) X = 768 - 4;
+    if(Y > 1024 - 4) Y = 1024 - 4;
+    movepoint();
+  }
+  
+  ontouchmove = function(e) {
+    e.preventDefault();
+    X = (768 * ratio / 2 - innerWidth / 2 + e.changedTouches[0].pageX) / ratio;
+    Y = e.changedTouches[0].pageY /ratio; ;
+    movepoint();
+  };
+  
+  ondrag = function(e) {
+    e.preventDefault();
+  };
+
+  movepoint = function(z) {
+    if(I > -1 && J > -1){
+      points[I][J][0] = ~~X;
+      points[I][J][1] = ~~Y;
+      draw();
+    }
+  }
+  
+  onmouseup = ontouchend = function(e) {
+    if(I == -1) return;
+    var dist = 9999;
+    var closest_i = -1;
+    var closest_j = -1;
+    for(i in solution){
+      for(j in solution[i]){
+        var tmp = Math.hypot(points[I][J][0] - solution[i][j][0], points[I][J][1] - solution[i][j][1]);
+        if(tmp < dist){
+          dist = tmp;
+          closest_i = i;
+          closest_j = j;
+        };
+      }
+    }
+    if(dist < 40){
+      points[I][J][0] = solution[closest_i][closest_j][0];
+      points[I][J][1] = solution[closest_i][closest_j][1];
+      draw();
+      points[I][J][2] = 1;
+    }
+    else {
+      points[I][J][2] = 0;
+    }
+    draw();
+    
+    for(s in solutions){
+      var won = 1;
+      for(i in solutions[s]){
+        for(j in solutions[s][i]){
+          if(points[i][j][0] != solutions[s][i][j][0] || points[i][j][1] != solutions[s][i][j][1]){
+            won = 0;
+          }
+        }
+      }
+      if(won){
+        var sound = new Audio("SoundFX.mp3")
+        sound.play();
+        a.levelwon = 1;
+        a.style.background = "url(" + level + "-v.jpg)";
+        a.style.backgroundSize = "100%";
+        setTimeout(function(){
+          level++;
+          size = sizes[level];
+          make();
+        }, 2000);
+      }
+    }
+    I = J = -1;
+    draw(1);
+  }
+  
+  draw = function(donttake){
+    a.width ^= 0;
+    for(i in solution){
+      for(j in solution[i]){
+        //c.fillStyle = "#555";
+        //c.fillRect(solution[i][j][0] - 4, solution[i][j][1] - 4, 8, 8);
+        c.drawImage(topnode, solution[i][j][0] - 18, solution[i][j][1] - 18);
+        c.beginPath();
+        if(solution[i][+j+1]){
+          c.moveTo(solution[i][j][0], solution[i][j][1]);
+          c.lineTo(solution[i][+j+1][0], solution[i][+j+1][1]);
+          c.stroke();
+        }
+
+        if(solution[+i+1]){
+          c.moveTo(solution[i][j][0], solution[i][j][1]);
+          c.lineTo(solution[+i+1][j][0], solution[+i+1][j][1]);
+          c.stroke();
+        }
+      }
+    }
+    
+    if(size == 3){
+    
+      for(i = 0; i < 3; i++){
+        for(j = 0; j < 3; j++){
+          if(i < 2){
+            c.beginPath();
+              c.lineWidth = 2;
+              if((i == I && j == J) || (i+1 == I && j == J)){
+                c.strokeStyle = "#5C6BC0";
+              }
+              else {
+                c.strokeStyle = "rgba(0,0,0,0.3)";
+              }
+              c.moveTo(points[i][j][0], points[i][j][1]);
+              c.lineTo(points[i+1][j][0], points[i+1][j][1]);
+              c.stroke();
+            c.closePath();
+            
+          }
+          if(j < 2){
+            c.beginPath();
+              c.lineWidth = 2;
+              if((i == I && j == J) || (i == I && j+1 == J)){
+                c.strokeStyle = "#5C6BC0";
+              }
+              else {
+                c.strokeStyle = "rgba(0,0,0,0.3)";
+              }
+              c.moveTo(points[i][j][0], points[i][j][1]);
+              c.lineTo(points[i][j+1][0], points[i][j+1][1]);
+              c.stroke();
+            c.closePath();
+          }
+          
+          //c.fillStyle = "#555";
+          //c.fillRect(points[i][j][0] - 4, points[i][j][1] - 4, 8, 8);
+          if(points[i][j][2]){
+            c.drawImage(placednode, points[i][j][0] - 26, points[i][j][1] - 26);
+          }
+          else{
+            c.drawImage(bottomnode, points[i][j][0] - 27, points[i][j][1] - 27);
+          }
+          c.beginPath();
+            c.rect(points[i][j][0] - 40, points[i][j][1] - 40, 80, 80);
+            if(!donttake && I == -1 && J == -1 && c.isPointInPath(X, Y)){
+              I = i;
+              J = j;
+            }
+          c.closePath();
+        }
+      }
+    }
+    
+    else {
+      
+      for(i = 0; i < 4; i++){
+        for(j = 0; j < 4; j++){
+          if(i < 3){
+            c.beginPath();
+              c.lineWidth = 2;
+              if((i == I && j == J) || (i+1 == I && j == J)){
+                c.strokeStyle = "#5C6BC0";
+              }
+              else {
+                c.strokeStyle = "rgba(0,0,0,0.3)";
+              }
+              c.moveTo(points[i][j][0], points[i][j][1]);
+              c.lineTo(points[i+1][j][0], points[i+1][j][1]);
+              c.stroke();
+            c.closePath();
+          }
+          
+          if(j < 3){
+            c.beginPath();
+              c.lineWidth = 2;
+              if((i == I && j == J) || (i == I && j+1 == J)){
+                c.strokeStyle = "#5C6BC0";
+              }
+              else {
+                c.strokeStyle = "rgba(0,0,0,0.3)";
+              }
+              c.moveTo(points[i][j][0], points[i][j][1]);
+              c.lineTo(points[i][j+1][0], points[i][j+1][1]);
+              c.stroke();
+            c.closePath();
+          }
+ 
+          //c.fillStyle = "#555";
+          //c.fillRect(points[i][j][0] - 4, points[i][j][1] - 4, 8, 8);
+          c.drawImage(bottomnode, points[i][j][0] - 27, points[i][j][1] - 27);
+          c.beginPath();
+            c.rect(points[i][j][0] - 40, points[i][j][1] - 40, 80, 80);
+            if(!donttake && I == -1 && J == -1 && c.isPointInPath(X, Y)){
+              I = i;
+              J = j;
+            }
+          c.closePath();
+        }
+      }
+    }
+  }
+  
+  var make = function(){
+  
+    if(size == 3){
+      size = 3;
+    }
+    else {
+      size = 4;
+    }
+    
+    a.style.background = "url(" + level + ".jpg)";
+    a.style.backgroundSize = "100%";
+  
+    solution = levels[level][0];
+    solutions = [solution];
+    
+    if(size == 3){
+      solutions[1] = rotate3(solutions[0]);
+      solutions[2] = rotate3(solutions[1]);
+      solutions[3] = rotate3(solutions[2]);
+      solutions[4] = transpose3(solutions[0]);
+      solutions[5] = rotate3(solutions[4]);
+      solutions[6] = rotate3(solutions[5]);
+      solutions[7] = rotate3(solutions[6]);
+    }
+    
+    else {
+      solutions[1] = rotate4(solutions[0]);
+      solutions[2] = rotate4(solutions[1]);
+      solutions[3] = rotate4(solutions[2]);
+      solutions[4] = transpose4(solutions[0]);
+      solutions[5] = rotate4(solutions[4]);
+      solutions[6] = rotate4(solutions[5]);
+      solutions[7] = rotate4(solutions[6]);
+    }
+    
+    
+    if(levels[level][1]){
+    
+      solution = levels[level][1];
+      solutions[8] = solution;
+      
+      if(size == 3){
+        solutions[9] = rotate3(solutions[8]);
+        solutions[10] = rotate3(solutions[9]);
+        solutions[11] = rotate3(solutions[10]);
+        solutions[12] = transpose3(solutions[8]);
+        solutions[13] = rotate3(solutions[12]);
+        solutions[14] = rotate3(solutions[13]);
+        solutions[15] = rotate3(solutions[14]);
+      }
+      
+      else {
+        solutions[9] = rotate4(solutions[8]);
+        solutions[10] = rotate4(solutions[9]);
+        solutions[11] = rotate4(solutions[10]);
+        solutions[12] = transpose4(solutions[8]);
+        solutions[13] = rotate4(solutions[12]);
+        solutions[14] = rotate4(solutions[13]);
+        solutions[15] = rotate4(solutions[14]);
+      }
+    }
+    
+    X = Y = -1;
+    I = J = -1;
+  
+    if(size == 3){
+      for(i = 0; i < 3; i++){
+        points[i] = [];
+        for(j = 0; j < 3; j++){
+          points[i][j] = [~~(400 + (i - 1.3) * (120 + j * 5)), ~~(900 + (j - 2) * 120)];
+        }
+      }
+    }
+    
+    else{
+      for(i = 0; i < 4; i++){
+        points[i] = [];
+        for(j = 0; j < 4; j++){
+          points[i][j] = [~~(380 + (i - 1.8) * (80 + j * 5)), ~~(800 + (j - 2) * 80)];
+        }
+      }
+    }
+    
+    draw();
+  }
+  
+  onload = function(){
+    ratio = innerHeight / 1024;
+    make();
+  }
+  
+  onresize = function(){
+    ratio = innerHeight / 1024;
+    draw();
+  }
+  
+</script>

@@ -1,0 +1,49 @@
+<h2>UPDATE: see <a href=index2.html>MKSC</a></h2>
+
+<style>
+#cssparent1, #cssparent2 { width: 200px; height: 200px; perspective: 1000px; -webkit-perspective: 1000px; border: 1px solid; margin: auto; overflow: hidden; }
+#csschild1, #csschild2 { width: 200px; height: 200px; background: red; transform-origin: 0 100%; -webkit-transform-origin: 0 100%; }
+#csschild1 { transform: rotateX(45deg); -webkit-transform: rotateX(45deg); }
+#csschild2 { transform: rotate3D(1,0,0,45deg); -webkit-transform: rotate3D(1,0,0,45deg); }
+</style>
+<center>
+Perspective: <input type=range id=perspective min=0 max=4000 value=200>
+<br>
+Angle: <input type=range id=angle min=0 max=90 value=45>
+<br>
+Transform-origin: <input type=range id=origin min=0 max=100 value=100>
+
+<h3>CSS rotate X</h3>
+
+<div id=cssparent1>
+  <div id=csschild1>
+  </div>
+</div>
+
+<br>
+<h3>CSS rotate3D X</h3>
+<div id=cssparent2>
+  <div id=csschild2>
+  </div>
+</div>
+
+
+<script>
+perspective.oninput=perspective.onchange=function(){
+  cssparent1.style.perspective=cssparent2.style.perspective=perspective.value+"px";
+  cssparent1.style.webkitPerspective=cssparent2.style.webkitPerspective=perspective.value+"px";
+}
+
+angle.oninput=angle.onchange=function(){
+  csschild1.style.transform="rotateX("+angle.value+"deg)";
+  csschild1.style.webkitTransform="rotateX("+angle.value+"deg)";
+  csschild2.style.transform="rotate3D(1,0,0,"+angle.value+"deg)";
+  csschild2.style.webkitTransform="rotate3D(1,0,0,"+angle.value+"deg)";
+}
+
+origin.oninput=angle.onchange=function(){
+  csschild1.style.transformOrigin=csschild2.style.transformOrigin="0 "+origin.value+"%";
+  csschild1.style.webkitTransformOrigin=csschild2.style.webkitTransformOrigin="0 "+origin.value+"%";
+}
+</script>
+</center>

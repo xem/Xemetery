@@ -1,0 +1,21 @@
+<pre id=a>
+<script>
+p=1;
+onkeyup=function(e){
+    if(e.keyCode==37) p = [0,0,1][p];
+    if(e.keyCode==39) p = [1,2,2][p];
+}
+setInterval(function(){
+    a.innerHTML =  
+    "       o\n" +
+    "     o o o\n" +
+    "   oo  o  oo\n" +
+    "  ooo     ooo\n" +
+    " ooo       ooo\n" +
+    " ooo  ( )  ooo\n" +
+    " " + ["\\__", " |_", "  /"][p] + "___|___" + ["\\", "_|", "__/"][p] + "\n" +
+    "      ( )\n" +
+    " *  " + [" _|  \\/ ", " _| |_  ", "\\/  |_  "][p] + " *\n" +
+    "_______________";
+}, 9);
+</script>

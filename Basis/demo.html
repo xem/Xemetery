@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1.0">
+<script>'AbbrArticleAsideAudioBdiCanvasDataDatalistDetailsFigureFigcaptionFooterHeaderHgroupKeygenMainMathMarkMeterNavOutputProgressSectionSummarySvgTimeVideo'.replace(/.[a-z]+/g,function(n){document.createElement(n)});document.documentElement.className=navigator.userAgent.replace(/.*IE (\d+).*|.*/,function(a,b,c){c="";if(b)for(a=11;a>b;a--)c+=" lt-ie"+a;return c})</script>
+<style>body{font:14px/1.5em sans-serif}*{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;*behavior:url(boxsizing.htc);zoom:1}form,body,figure{margin:0}fieldset{border:1px solid #c00c0;margin:0 2px;padding:.5em}legend{border:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{vertical-align:baseline;font-size:100%;margin:0;line-height:normal;text-transform:none;font-family:sans-serif;*vertical-align:middle}textarea{overflow:auto}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}img{border:0;-ms-interpolation-mode:bicubic}a:focus{outline:thin dotted}a:active,a:hover{outline:0}ul,ol{padding:0 0 0 40px}ul{list-style-type:disc}ol{list-style-type:decimal}ol ol{list-style:upper-alpha}ol ol ol{list-style:lower-roman}ol ol ol ol{list-style:lower-alpha}ul,ol,li,th,td{vertical-align:top}li ul,li ol,audio,canvas,video{margin:0;display:inline-block;*display:inline}li{display:list-item}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}blockquote,q{quotes:none;margin:1em 2em}h1,h2,h3,h4,h5,h6{margin:20px 0}h1{font-size:2em}h2{font-size:1.5em}h3{font-size:1.17em}h4{font-size:1em}h5{font-size:.83em}h6{font-size:.67em}table{border-collapse:collapse;border-spacing:0;width:100%}th,td,legend{padding:0}pre,script,style{white-space:pre;white-space:pre-wrap;word-wrap:break-word}pre,code,script,style,kbd,samp{font-family:monospace}p,pre,ul,ol{margin:1em 0}del{text-decoration:line-through}abbr,acronym{border-bottom:1px dotted}sup,sub{vertical-align:baseline;line-height:0;font-size:75%}sub{bottom:-.25em}sup{top:-.5em}b,strong{font-weight:bold}dfn{font-style:italic}small{font-size:80%}</style>
+<style>
+	html { background: #eee }
+	body { text-align: center }
+	.body { margin: 20px auto; padding: 20px 0; text-align: center; width: 800px; background: #fff }
+	pre { text-align: left; background: #def; width: 75%; margin: 0 auto; padding: 20px }
+	.body div { display: inline-block; width: 80px; height: 80px; margin: 10px; background: red; vertical-align: top; border: 1px solid }
+	.body div * { display: block; width: 80px; height: 80px; background: green; color: green; border-color: green }
+	.div1, .div2, .div3, .div4, .div5, .div6 { padding: 10px }
+	.ol { text-align: left; display: inline-block; *display: inline; margin: 0 auto; width: 50%; margin-left: 25% }
+	.styled { padding: 10px }
+	.unstyled { width: auto; margin-left: auto }
+	td { border: 1px solid #555 }
+	h3 { width: 110%; margin-left: -5%; _width:auto; _margin-left: auto }
+	h3.styled { background: #ccc }
+	h4 { width: 90%; margin-left: 5%; _width:auto; _margin-left: auto }
+	h4.styled { background: #ddd }
+	.body div.quarter { background: green }
+	.lt-ie8 div, .lt-ie8 .ol { display: inline; zoom: 1 }
+	.lt-ie9 style { display: none!important }
+	.shim { width: 90%; margin: 5% }
+	.shim td { font-weight: bold; border: none }
+</style>
+<title>Basis Demo</title>
+<body>
+	<div class=body>
+	<h1>Basis v0.5</h1>
+	<button onclick="window.location='basis.zip'">Download</button>
+	<br>
+	<br>
+	<h2>Demo page</h2>
+	<br>
+	<br>
+	<h3 class="styled">Main CSS features</h3>
+	<br>
+	<h4 class="styled">All elements have box-sizing: border-box (even on IE6+)</h4>
+	<br>
+	<style>
+.body div.quarter { width: 25%; height: auto; padding: 20px; margin: 0 }
+	</style>
+	<pre>.quarter { width: 25%; height: auto; padding: 20px; margin: 0 }</pre>
+	<br>
+	<div class=quarter>Quarter</div><div class=quarter>Quarter</div><div class=quarter>Quarter</div><div class=quarter>Quarter</div>
+	<br>
+	<h4 class="styled">Tables have a 100% width and their borders colapse</h4>
+	<br>
+	<style>
+td { border: 1px solid green }
+	</style>
+	<pre>td { border: 1px solid green }</pre>
+	<br>
+	<table>
+		<tr>
+			<td>TD</td>
+			<td>TD</td>
+			<td>TD</td>
+			<td>TD</td>
+		</tr>
+	</table>
+	<br>
+	<h4 class="styled">Titles have consistent sizes across all browsers</h4>
+	<br>
+	<h1>H1 title</h1>
+	<h2>H2 title</h2>
+	<h3 class=unstyled>H3 title</h3>
+	<h4 class=unstyled>H4 title</h4>
+	<h5>H5 title</h5>
+	<h6>H6 title</h6>
+	<br>
+	<h4 class="styled">Nested lists have correct ticks and display (even on IE)</h4>
+	<br>
+	<ol class="ol">
+		<li>level 1
+		<li>item
+		<li>item
+		<li><ol><li>level 2
+						<li>item
+						<li>item
+						<li><ol><li>level 3
+										<li>item
+										<li>item
+										<li><ol><li>level 4
+														<li>item
+														<li>item
+												</ol>
+								</ol>
+				</ol>
+	</ol>
+	<br>
+	<br>
+	<hr style="width: 400px;">
+	<br>
+	<ul class="ol">
+		<li>level 1</li>
+		<li>item</li>
+		<li>item</li>
+		<li>
+			<ul>
+				<li>level 2</li>
+				<li>item</li>
+				<li>item</li>
+				<li>
+					<ul>
+						<li>level 3</li>
+						<li>item</li>
+						<li>item</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<br>
+	<h3 class="styled">JavaScript features (for IE)</h3>
+	<br>
+	<h4 class="styled">HTML5 shim</h4>
+	<br>
+	Here are all the new HTML5 elements. You can use them as regular &lt;div>s on IE &lt; 9: (green = enabled) 
+	<br>
+	<table class=shim>
+		<tr>
+			<td>
+				Abbr
+				<br>
+				<div><abbr></abbr></div>
+			</td>
+			<td>
+				Article
+				<br>
+				<div><article></article></div>
+			</td>
+			<td>
+				Aside
+				<br>
+				<div><aside></aside></div>
+			</td>
+			<td>
+				Audio
+				<br>
+				<div><audio controls></audio></div>
+			</td>
+			<td>
+				Bdi
+				<br>
+				<div><bdi></bdi></div>
+			</td>
+			<td>
+				Canvas
+				<br>
+				<div><canvas></canvas></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Data
+				<br>
+				<div><data></data></div>
+			</td>
+			<td>
+				Datalist
+				<br>
+				<div><datalist></datalist></div>
+			</td>
+			<td>
+				Details
+				<br>
+				<div><details></details></div>
+			</td>
+			<td>
+				Figure
+				<br>
+				<div><figure></figure></div>
+			</td>
+			<td>
+				Figcaption
+				<br>
+				<div><figcaption></figcaption></div>
+			</td>
+			<td>
+				Footer
+				<br>
+				<div><footer></footer></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Header
+				<br>
+				<div><header></header></div>
+			</td>
+			<td>
+				Hgroup
+				<br>
+				<div><hgroup></hgroup></div>
+			</td>
+			<td>
+				Keygen
+				<br>
+				<div><keygen></keygen></div>
+			</td>
+			<td>
+				Main
+				<br>
+				<div><main></main></div>
+			</td>
+			<td>
+				Math
+				<br>
+				<div><math></math></div>
+			</td>
+			<td>
+				Mark
+				<br>
+				<div><mark></mark></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Meter
+				<br>
+				<div><meter></meter></div>
+			</td>
+			<td>
+				Nav
+				<br>
+				<div><nav></nav></div>
+			</td>
+			<td>
+				Output
+				<br>
+				<div><output></output></div>
+			</td>
+			<td>
+				Progress
+				<br>
+				<div><progress></progress></div>
+			</td>
+			<td>
+				Section
+				<br>
+				<div><section></section></div>
+			</td>
+			<td>
+				Summary
+				<br>
+				<div><summary></summary></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Svg
+				<br>
+				<div><svg></svg></div>
+			</td>
+			<td>
+				Time
+				<br>
+				<div><time></time></div>
+			</td>
+			<td>
+				Video
+				<br>
+				<div><video></video></div>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<h4 class="styled">Conditional classes</h4>
+	<br>
+	You can use prefixes in your CSS to target old versions of IE:
+	<style>
+.lt-ie11 .div2 { background: green; } /* IE &lt; 11 */
+.lt-ie10 .div3 { background: green; } /* IE &lt; 10 */
+.lt-ie9 .div4 { background: green; } /* IE &lt; 9 */
+.lt-ie8 .div5 { background: green; } /* IE &lt; 8 */
+.lt-ie7 .div6 { background: green; } /* IE &lt; 7 */
+	</style>
+	<pre>.lt-ie11 .div2 { background: green; } /* IE &lt; 11 */
+.lt-ie10 .div3 { background: green; } /* IE &lt; 10 */
+.lt-ie9 .div4 { background: green; } /* IE &lt; 9 */
+.lt-ie8 .div5 { background: green; } /* IE &lt; 8 */
+.lt-ie7 .div6 { background: green; } /* IE &lt; 7 */</pre>
+	<br>
+	<div class=div1>I'm red</div>
+	<div class=div2>I'm green on IE &lt; 11</div>
+	<div class=div3>I'm green on IE &lt; 10</div>
+	<div class=div4>I'm green on IE &lt; 9</div>
+	<div class=div5>I'm green on IE &lt; 8</div>
+	<div class=div6>I'm green on IE &lt; 7</div>
+	</div>
+</body>
+</html>

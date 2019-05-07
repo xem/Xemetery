@@ -1,0 +1,35 @@
+<style>
+* { image-rendering: pixelated; image-rendering: -moz-crisp-edges; }
+#cssparent { width: 300px; height: 300px; background: url(bg.png) no-repeat center top #def; background-size: 150%;
+perspective: 1000px; -webkit-perspective: 1000px; border: 1px solid; margin: auto; overflow: hidden; }
+#csschild { width: 400px; height: 400px; background: url(mksc.png); background-size: 100%; transform-origin: 0 100%; -webkit-transform-origin: 0 100%; }
+#csschild { transform: rotateZ(45deg); -webkit-transform: rotateZ(45deg); }
+</style>
+<center>
+Perspective: <input type=range id=perspective min=10 max=2000 value=220>
+-
+Transform-origin x: <input type=range id=originx min=0 max=1000 value=60> y: <input type=range id=originy min=0 max=1000 value=70>
+-
+Scale <input type=range id=scale min=1 max=10 value=5>
+<br><br>
+rotate x: <input type=range id=anglex min=0 max=360 value=90> y: <input type=range id=angley min=0 max=360 value=0> z: <input type=range id=anglez min=0 max=360 value=0>
+-
+Translate x: <input type=range id=translatex min=-1000 max=1000 value=26> y: <input type=range id=translatey min=-100 max=100 value=-23> z: <input type=range id=translatez min=-1000 max=1000 value=271>
+
+
+<br>
+<div id=cssparent>
+  <div id=csschild>
+  </div>
+</div>
+
+
+<script>
+onload=oninput=onchange=function(){
+  console.clear();
+  console.log("perspective", cssparent.style.perspective=cssparent.style.webkitPerspective=perspective.value+"px");
+  console.log("transform", csschild.style.transform=csschild.style.webkitTransform="scale("+scale.value+") translateX("+translatex.value+"px) translateY("+translatey.value+"px) translateZ("+translatez.value+"px) rotateX("+anglex.value+"deg) rotateY("+angley.value+"deg) rotateZ("+anglez.value+"deg)");
+  console.log("transform origin", csschild.style.transformOrigin=csschild.style.webkitTransformOrigin=originx.value+"% "+originy.value+"%");
+}
+</script>
+</center>

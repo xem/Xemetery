@@ -1,0 +1,209 @@
+﻿<canvas width=422 height=28 id=a>
+<script>
+c = a.getContext("2d");
+a.width=16*16;
+a.height=13*16;
+
+onload = function(){
+
+// INIT
+
+// Map
+var map = [];
+
+// Mario position, jump/ground state, orientation and vspeed
+var n=16
+var mx=96;
+var my=96;
+var grounded=1;
+var orientation=1;
+var vy=0;
+
+// Gravity
+var g=8;
+
+// Map scroll
+var scroll=0;
+
+// BUILD MAP
+
+// ground
+for(i=0;i<15;i++){
+  map[i]=[];
+  for(j=0;j<211;j++){
+    if(j!=19&&j!=20) map[i][j]=i>=11?1:0
+  }
+}
+
+// random stuff
+map[5][8]=1;
+map[7][10]=1;
+map[9][11]=1;
+map[10][13]=1;
+map[10][2]=1;
+map[10][7]=3;
+map[10][8]=3;
+map[9][7]=3;
+map[9][8]=3;
+map[7][2]=2;
+
+// Enemies
+var enemies = [
+  [5*n, 10*n]
+];
+
+// INPUT
+u=l=d=r=0;
+onkeydown=onkeyup=e=>self['lld*rlurdu'[e.which%32%17]]=e.type[5];
+
+setInterval(e=>{
+
+  e = 0;
+  
+  // UPDATE GAME STATE
+  
+  // Left
+  if(l && mx>scroll){
+    mx-=4;
+    
+    orientation=0;
+    
+    // Hit wall
+    if(map[~~((my-8)/n)][~~((mx-8)/n)]){
+      mx = ~~((mx)/n)*16+4;
+    }
+  }
+  
+  // Right
+  if(r){
+    mx+=4;
+    if(mx > scroll + 7*n) e = 4;
+    orientation=1;
+    
+    // Hit wall
+    if(map[~~((my-8)/n)][~~((mx+16)/n)]){
+      mx = ~~((mx)/n)*16;
+      e = 0
+    }
+    
+    scroll += e;
+  }
+  
+  // Up
+  if(u && grounded){
+    vy=-60;
+  }
+  
+  // Jump
+  if(vy<0){
+    my += Math.max(vy,-15);
+    
+    // Hit solid block
+    if(map[~~((my-16)/n)][~~((mx + 1)/n)] || map[~~((my-16)/n)][~~((mx+12)/n)]){
+      my = ~~((my)/n)*16+8;
+      vy=0;
+    }
+    
+    // Hit question block
+    if(map[~~((my-16)/n)][~~(mx/n)] == 2){
+      map[~~((my-16)/n)][~~(mx/n)] = 1;
+    }
+    if(map[~~((my-16)/n)][~~((mx+16)/n)] == 2){
+      map[~~((my-16)/n)][~~((mx+16)/n)] = 1;
+    }
+    
+  }
+  
+  // Apply gravity  
+  my += g;
+  vy += g;
+  
+  // Die by falling
+  if(my > 14*n)alert("dead"),location = location;
+  
+  // Stop on ground
+  if(map[~~((my)/n)][~~((mx+1)/n)] || map[~~((my)/n)][~~((mx+12)/n)]){
+    my = ~~((my)/n)*16;
+    grounded = 1;
+  }
+  else {
+    grounded = 0;
+  }
+  
+  // DRAW
+  
+  // Sky
+
+  c.fillStyle="#5C94FC";
+  c.fillRect(0,0,16*n,14*n);
+  
+  for(i=13;i--;){
+    for(j=0;j<211;j++){
+
+      // Pipes
+      if(map[i][j] == 3){
+        c.fillStyle="#000"
+        c.fillRect(j*n-scroll+1,i*n,1*n,1*n)
+        c.fillStyle="#00A800"
+        c.fillRect(j*n-scroll,i*n-1,1*n,1)
+        c.fillStyle="#80D010"
+        c.fillRect(j*n-scroll,i*n,1*n,1*n)
+      }
+
+      // Ground/block
+      if(map[i][j] == 1){
+        c.fillStyle="#000"
+        c.fillRect(j*n-scroll,i*n,1*n,1*n)
+        c.fillStyle="#C84C0C"
+        c.fillRect(j*n-scroll,i*n,1*n-1,1*n-1)
+        c.fillStyle="#FCBCB0"
+        c.fillRect(j*n-scroll,i*n,1*n,1)
+      }
+      
+      // Question block
+      if(map[i][j] == 2){
+        c.fillStyle="#000"
+        c.fillRect(j*n-scroll,i*n,1*n,1*n)
+        c.fillStyle="#FC9838"
+        c.fillRect(j*n-scroll,i*n,1*n-1,1*n-1)
+      }
+    }
+  }
+  
+  // Enemies
+  for(i of enemies){
+    c.fillStyle = "#C84C0C";
+    c.fillRect(i[0]-scroll,i[1],16,12);
+    c.fillStyle="#FCBCB0"
+    c.fillRect(i[0]-scroll+2,i[1]+8,12,4);
+    c.fillStyle = "#000";
+    c.fillRect(i[0]-scroll+2,i[1]+12,4,4);
+    c.fillRect(i[0]-scroll+10,i[1]+12,4,4);
+    c.fillRect(i[0]-scroll+2,i[1]+4,12,2);
+  }
+    
+  // Mario
+  
+  // Red
+  c.fillStyle="#DB3401"
+  c.fillRect(mx-scroll,my-16,12,12)
+  
+  // Brown
+  c.fillStyle="#887000"
+  c.fillRect(mx-scroll,my-16+3,12,4)
+  c.fillRect(mx+2-scroll,my-16+12,4,4)
+  c.fillRect(mx+8-scroll,my-16+12,4,4)
+  
+  // Orange
+  c.fillStyle="#FC9838"
+  c.fillRect(mx-4+orientation*8-scroll,my-16+3,12,4)
+  c.fillRect(mx-scroll,my-16+9,4,4)
+  c.fillRect(mx+10-scroll,my-16+9-!grounded*12,4,4)
+  
+  //c.fillStyle="yellow";
+  //c.fillRect(mx,my,10,10);
+
+}, 33);
+
+}
+</script>

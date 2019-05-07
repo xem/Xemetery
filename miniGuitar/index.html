@@ -1,0 +1,73 @@
+﻿<h1>MiniGuitar</h1>
+<h3>(Same as <a href="//xem.github.io/miniPiano">miniPiano</a>, but with acoustic guitar settings)</h3>
+<br>
+<p>Note length: <input id=d value=2 size=1> s<p><div id=p>
+<script>
+
+/*play = function(frequency, time) {
+  var sampleRate = 44100;
+  var volume = 1e4;
+  var channels = 1;
+  var bitsPerSample = 16;
+  var attack = .002;
+  var dampen = 1;
+  var waveBind = {modulate: [], vars: {}};
+  var waveFunc = function(i, sampleRate, frequency) {
+    var vars = waveBind.vars;
+    vars.v = !vars.v?[]:vars.v;
+    if(typeof(vars.p)=='undefined') { vars.p = 0; }
+    if(typeof(vars.c)=='undefined') { vars.c = 0; }
+    var v = vars.v;
+    var p = vars.p;
+    var c = vars.c;
+    var period = sampleRate/frequency;
+    var p_hundredth = Math.floor((period-Math.floor(period))*100);
+    var resetPlay = false;
+    if(v.length<=Math.ceil(period)) {
+      v.push(Math.round(Math.random())*2-1);
+      return v[v.length-1];
+    } else {
+      v[p] = (v[p >= (v.length-1)?0:p+1] + v[p]) * 0.5;
+      if(p >= Math.floor(period)) {
+        if(p<Math.ceil(period)) {
+          if((c%100) >= p_hundredth) {
+            resetPlay = true;
+            v[p+1] = (v[0] + v[p+1]) * 0.5;
+            vars.c++;	
+          }
+        } else {
+          resetPlay = true;	
+        }
+      }
+      var _return = v[p];
+      if(resetPlay) { vars.p = 0; } else { vars.p++; }
+      return _return;
+    }
+  };
+  
+  var val = 0;
+  var curVol = 0;
+  var data = [];var attackLen = (sampleRate * attack) | 0;
+  var decayLen = (sampleRate * time) | 0;
+  for (var i = 0 | 0; i !== attackLen; i++) {
+    val = volume * (i/(sampleRate*attack)) * waveFunc(i, sampleRate, frequency, volume);
+    data[i] = val/1e5;
+  }
+  for (; i !== decayLen; i++) {
+    val = volume * Math.pow((1-((i-(sampleRate*attack))/(sampleRate*(time-attack)))),dampen) * waveFunc(i, sampleRate, frequency, volume);
+    data[i] = val/1e5;
+  }
+  var A=new AudioContext({sampleRate:44100});
+  var m=A.createBuffer(1,data.length,44100);
+  var b=m.getChannelData(0).set(data);
+  var s=A.createBufferSource();
+  s.buffer=m;
+  s.connect(A.destination);
+  s.start();
+};
+*/
+
+play=function(e,t){for(var a={},r=function(e,t,r){var n=a;n.v=n.v?n.v:[],void 0===n.p&&(n.p=0),void 0===n.c&&(n.c=0);var o=n.v,f=n.p,h=n.c,c=t/r,l=Math.floor(100*(c-Math.floor(c))),u=!1;if(o.length<=Math.ceil(c))return o.push(2*Math.round(Math.random())-1),o[o.length-1];o[f]=.5*(o[f>=o.length-1?0:f+1]+o[f]),f>=Math.floor(c)&&(f<Math.ceil(c)?h%100>=l&&(u=!0,o[f+1]=.5*(o[0]+o[f+1]),n.c++):u=!0);var v=o[f];return u?n.p=0:n.p++,v},n=0,o=[],f=44100*t|0,h=0;88!==h;h++)n=h/88.2*1e4*r(0,44100,e),o[h]=n/1e5;for(;h!==f;h++)n=1e4*Math.pow(1-(h-88.2)/(44100*(t-.002)),1)*r(0,44100,e),o[h]=n/1e5;var c=new AudioContext({sampleRate:44100}),l=c.createBuffer(1,o.length,44100),u=(l.getChannelData(0).set(o),c.createBufferSource());u.buffer=l,u.connect(c.destination),u.start()}
+for(i=0;i<36;i++)f=130.81*1.06**i,[1,3,6,8,10].includes(i%12)?p.innerHTML+="<div class=s style=left:"+(i/2*35-6)+"px onclick=play("+f+",d.value)>":p.innerHTML+="<div onclick=play("+f+",d.value)>"
+</script>
+<style>*{box-sizing:border-box}#p{width:630px;position:relative}#p div{width:30px;height:200px;float:left;border:1px solid;cursor:pointer}#p div.s{background:#000;position:absolute;height:100px

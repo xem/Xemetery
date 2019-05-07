@@ -1,0 +1,123 @@
+<meta charset=utf-8>
+<canvas id=c>
+<style>*{margin:0;padding:0;border:0}body{background:000;}canvas{border:1px solid;}</style>
+<script>
+
+ctx = c.getContext("2d");
+
+// Draw the buddhabrot set on a 1000x1000 canvas (representing x between -2.5 and 2.5, and y between -2.5 and 2.5)
+iterations = 20;
+c.width = 500;
+c.height = 500;
+limit_left = -2.5;
+limit_top = -2.5;
+limit_right = 2.5;
+limit_bottom = 2.5;
+relative_width = 5;
+relative_height = 5;
+passes = [];
+for(y = 0; y < c.height; y++){
+  passes[y] = [];
+  for(x = 0; x < c.height; x++){
+    passes[y][x] = 0;
+  }
+}
+x = 0;
+y = 0;
+
+draw_column = function(){
+  
+  // Increment x
+  x++;
+  
+  // debug
+  document.title = x;
+  
+  // Consider x in the current interval (visible viewport)
+  relative_x = limit_left + relative_width * (x / c.width);
+  
+  // Loop on y
+  for(y = 0; y < c.height; y++){
+  
+    // Consider y in the current interval (visible viewport)
+    relative_y = limit_top + relative_height * (y / c.height);
+    
+    // At this pixel, c is the complex number relative_x + i * relative_y
+    
+    // The series tested in the Mandelbrot set is defined by:
+    
+    // Z[0] = 0
+    // Z[n] = Z[n-1]² + c
+    
+    // We start with z = 0 and update it at each iteration.
+    // If the series diverges, each intermediary point IS in the buddhabrot set
+    // If it never diverges, c is NOT in the set.
+    // The number of paths passing by a given point can be shown by a different color.
+    
+    // Z(n) is complex, so we use Zx and Zy for real and imaginary parts.
+    zx = 0;
+    zy = 0;
+    diverge = false;
+    intermediates = [];
+    
+    // Iterate
+    for(i = 0; i < iterations; i++){
+      
+      // Compute the i-th iteration:
+      // z[i] = z[i-1]² + c
+      //
+      // If we decompose the complex numbers in the form a + i * b:
+      //
+      // a[z[i]] + i * b[z[i]] = (a[z[i-1]] + i * b[z[i-1]])² + a[c] + i * b[c]
+      //                       = a[z[i-1]]² + 2 * a[z[i-1]] * i * b[z[i-1]] + (i * b[z[i-1]])² + a[c] + i * b[c]
+      //                       = (a[z[i-1]]² - b[z[i-1]]² + a[c]) + i * (2 * a[z[i-1]] * [b[z[i-&]] + b[c])
+      //
+      // Using our variables:
+      //
+      // real part of Z[n]:
+      // zx = zx² - zy² +  relative_x
+      //
+      // imaginary part of Z[n]:
+      // zy = zx * zy * 2 + relative_y
+      
+      backup_zx = zx;
+      zx = zx * zx - zy * zy + relative_x;
+      zy = backup_zx * zy * 2 + relative_y;
+      intermediates.push([
+        Math.round((zx - limit_left)*(c.width / (limit_right - limit_left))),
+        Math.round((zy - limit_top)*(c.height / (limit_bottom - limit_top)))
+      ]);
+      
+      // if the series diverges (i.e. if |Zn| > 2 which means zx² + zy² > 4), increment the number of passes of each intermediate point and draw them using a color depending on the number of passes.
+      if(zx * zx + zy * zy > 4){
+        diverge = true;
+      }
+    }
+    
+    // If the iterations didn't diverge, do nothing
+    
+    // If they diverge, draw the passes
+    if(diverge){
+      for(point = 1; point < intermediates.length; point++){
+        real_x = intermediates[point][1];
+        real_y = intermediates[point][0];
+        if(real_x > 0 && real_x < c.width && real_y > 0 && real_y < c.width){
+          passes[y][x]++;
+          ctx.fillStyle = "hsl("+ passes[real_y][real_x] * 20 + ", 50%, 50%)";
+          ctx.fillRect(real_x, real_y, 1, 1);
+          ctx.fillRect(real_x, c.height - real_y, 1, 1);
+        }
+      }
+    }
+  }
+  
+  // Next column
+  if(x < c.width){
+    requestAnimationFrame(draw_column);
+  }
+}
+
+// Start drawing
+draw_column();
+
+</script>

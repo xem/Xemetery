@@ -1,0 +1,12 @@
+Envelope:
+- Ecran d'accueil / ecran selection puzzle
+- Chronométrage du temps de résolution
+- Bouton reset
+- Ours
+- Voiture
+
+Version gratuite:
+- 1 à 12 de V2/SD
+
+Version payante:
+1 à 27 de V2 + des nouveaux à créer

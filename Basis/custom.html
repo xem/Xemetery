@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1.0">
+<title>Basis builder</title>
+<style>
+	body { font-family: arial; }
+	label { font-weight: bold; color: #567; }
+	h1 { color: #abc; text-align: center; }
+	div { width: 600px; margin: 20px auto; border: 2px solid #def; border-radius: 10px; padding: 10px; }
+	button { display: block; margin: 10px auto; }
+	#htmlblock, #cssblock, #jsblock, #dlblock, #boxsizing { display: none; }
+	textarea { width: 600px; white-space: nowrap; }
+	#html { height: 180px; }
+	#css, #js { height: 40px; }
+</style>
+<body>
+	<div>
+		<h1>Basis Builder</h1>
+		<input type=checkbox id=group checked><label for=group>Group Basis HTML, CSS and JS in one file</label>
+		<br>
+		<input type=checkbox id=prefix checked><label for=prefix>Enable CSS prefixes on IE &lt; 11</label>
+		<br>
+		<input type=checkbox id=shim checked><label for=shim>Enable HTML5 elements on IE &lt; 9</label>
+		<br>
+		<input type=checkbox id=ie67><label for=ie67>Support IE &lt; 8 (polyfill for box-sizing: border-box and other CSS fixes)</label>
+		<br>
+		<button id=build>Build</button>
+	</div>
+	<div id=htmlblock>
+		<label>index.html</label>
+		<br>
+		<textarea id=html wrap=off></textarea>
+		<br>
+	</div>
+	<div id=cssblock>
+		<label>basis.css</label>
+		<br>
+		<textarea id=css wrap=off></textarea>
+		<br>
+	</div>
+	<div id=jsblock>
+		<label>basis.js</label>
+		<br>
+		<textarea id=js wrap=off></textarea>
+		<br>
+	</div>
+	<div id=dlblock>
+		<label>Other files</label> (to download and put in index.html's folder)
+		<br>
+		<br>
+		<a href=favicon.ico>favicon.ico</a> - to customize
+		<br>
+		<a id=boxsizing href=boxsizing.htc>boxsizing.htc</a>
+		<br>
+	</div>
+	
+	<script src=//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js></script>
+	<script>
+		$.ajaxSetup({async: false});
+		$("#build").click(function(){
+			htmlblock = $("#htmlblock");
+			html = $("#html");
+			cssblock = $("#cssblock");
+			css = $("#css");
+			jsblock = $("#jsblock");
+			js = $("#js");
+			dlblock = $("#dlblock");
+			boxsizing = $("#boxsizing");
+			group = $("#group").prop("checked");
+			prefix = $("#prefix").prop("checked");
+			shim = $("#shim").prop("checked");
+			ie67 = $("#ie67").prop("checked");
+			csscode = $.get(ie67 ? "basis-oldie.css" : "basis.css").responseText;
+			boxsizing.css("display", ie67 ? "inline" : "none");
+			jssource = $.get("basis-oldie.js").responseText.split(/\r?\n/);
+			jscode = "" + (shim ? jssource[0] : "") + (prefix ? jssource[1] : "");
+			htmlcode = "<!doctype html>\n<html lang=en>\n<meta charset=utf-8>\n<meta name=viewport content='width=device-width,initial-scale=1.0'>";
+			if(group){
+				htmlcode += (jscode ? "\n<script>" + jscode + "<\/script>" : "") + "\n" + csscode;
+				cssblock.hide();
+				jsblock.hide();
+			}
+			else{
+				css.text(csscode);
+				cssblock.show();
+				if(jscode){
+					js.text(jscode);
+					jsblock.show();
+				}
+			}
+			htmlcode += "\n<title></title>\n<body>\n</body>\n</html>";
+			html.text(htmlcode);
+			htmlblock.show();
+			dlblock.show();
+		});
+	</script>
+</body>
+</html>

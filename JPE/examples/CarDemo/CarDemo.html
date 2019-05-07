@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>JPE Example - Car Demo</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<style>
+#myCanvas{
+	width:650px;
+	height:350px;
+	background:#334433;
+}
+body{
+	margin:0 auto;
+	font-size:12px;
+	font-family:Verdana;
+	background:#f2f2f2;
+	width:950px;
+}
+</style>
+</head>
+<body>
+	<a href="https://github.com/colorhook/JPE"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+	<h1>Car - JPE demo</h1>
+
+	<canvas id='myCanvas' width='650' height='350'></canvas>
+
+
+	<div class='summary'>
+		<p>Click inside the demo, then use:</p>
+		<p>A key to move the car left</p>
+		<p>D key to move the car right</p>
+		<P>APE version: <a href="http://www.cove.org/ape/demo1.htm" target="_blank">http://www.cove.org/ape/demo1.htm</a></p>
+	</div>
+
+<script charset='utf-8' src='../../lib/sea.js'></script>
+<script charset='utf-8' src='../../lib/easel.js'></script>
+
+
+<script>
+seajs.config({
+	base: './',
+	preload: '../../build/JPE-2.0.0'
+});
+seajs.use("./CarDemo", function(CarDemo){
+	CarDemo.init();
+});
+</script>
+</body>
+</html>

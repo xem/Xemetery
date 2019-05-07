@@ -1,0 +1,222 @@
+/** Basis CSS for old IE **/
+
+/* Box-sizing: border-box and HasLayout (for IE) on all elements */
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	*behavior: url(boxsizing.htc);
+	zoom: 1
+}
+
+/* HTML5 block elements */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block
+}
+
+/* HTML5 inline elements and nested lists */
+li ul, li ol, audio, canvas, video {
+	margin: 0;
+	display: inline-block;
+	*display: inline
+}
+
+/* Hide some elements */
+audio:not([controls]), [hidden], template {
+	display: none;
+	height: 0;
+}
+
+/* Root font size */
+body {
+	font: 14px/1.5em sans-serif
+}
+
+/* Margins to disable */
+form, body, figure, fieldset {
+	margin: 0
+}
+
+/* Margins to set */
+p, pre, ul, ol {
+	margin: 1em 0
+}
+
+/* Paddings to disable */
+th, td, legend {
+	padding: 0
+}
+
+/* Fieldsets */
+fieldset {
+	border: 1px solid #c0c0c0;
+	padding: .5em
+}
+
+/* Legends */
+legend {
+	border: 0;
+	white-space: normal;
+	*margin-left: -7px
+}
+
+/* Form elements */
+button, input, select, textarea {
+	vertical-align: baseline;
+	font-size: 100%;
+	margin: 0;
+	line-height: normal;
+	text-transform: none;
+	font-family: sans-serif;
+	*vertical-align: middle
+}
+
+/* Textareas */
+textarea {
+	overflow: auto
+}
+
+/* Images */
+img {
+	border: 0;
+	-ms-interpolation-mode: bicubic
+}
+
+/* Links */
+a {
+	background: none
+}
+
+a:focus {
+	outline: thin dotted
+}
+
+a:active, a:hover {
+	outline: 0
+}
+
+/* Lists */
+ul, ol {
+	padding: 0 0 0 40px
+}
+
+ul {
+	list-style-type: disc
+}
+
+ol {
+	list-style-type: decimal
+}
+
+li {
+	display: list-item
+}
+
+ol ol {
+	list-style: upper-alpha
+}
+
+ol ol ol {
+	list-style: lower-roman
+}
+
+ol ol ol ol {
+	list-style: lower-alpha
+}
+
+ul, ol, li, th, td {
+	vertical-align: top
+}
+
+/* Quotes */
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none
+}
+
+blockquote, q {
+	quotes: none;
+	margin: 1em 2em
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+	margin: 20px 0
+}
+
+h1 {
+	font-size: 2em
+}
+
+h2 {
+	font-size: 1.5em
+}
+
+h3 {
+	font-size: 1.17em
+}
+
+h4 {
+	font-size: 1em
+}
+
+h5 {
+	font-size: .83em
+}
+
+h6 {
+	font-size: .67em
+}
+
+/* Tables */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%
+}
+
+/* Presentations */
+pre, script, style {
+	white-space: pre;
+	white-space: pre-wrap;
+	word-wrap: break-word
+}
+
+pre, code, script, style, kbd, samp {
+	font-family: monospace
+}
+
+/* Text effects */
+del {
+	text-decoration: line-through
+}
+
+abbr, acronym {
+	border-bottom: 1px dotted
+}
+
+sup, sub {
+	vertical-align: baseline;
+	line-height: 0;
+	font-size: 75%
+}
+
+sub {
+	bottom: -.25em
+}
+
+sup {
+	top: -.5em
+}
+
+b, strong {
+	font-weight: bold
+}
+
+dfn {
+	font-style: italic
+}
+
+small {
+	font-size: 80%
+}

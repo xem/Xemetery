@@ -1,0 +1,44 @@
+<h1>CSS4 color converter</h1>
+<a href="http://dev.w3.org/csswg/css-color">spec</a>
+<br>
+<br>
+&#945;? <input type=checkbox id=h>
+<br>
+#<input size=2 maxlength=2 id=h1><input size=2 maxlength=2 id=h2><input size=2 maxlength=2 id=h3><h><input size=2 maxlength=2 id=h4></h>
+<br>
+rgb<h>a</h> ( <input size=2 maxlength=3 id=rgb1>, <input size=2 maxlength=3 id=rgb2>, <input size=2 maxlength=3 id=rgb3><h>, <input size=2 id=rgb4></h> )
+<br>
+hsl<h>a</h> ( <input size=2 maxlength=3>, <input size=2 maxlength=3>%, <input size=2 maxlength=3>%<h>, <input size=2></h> )
+<br>
+hwb ( <input size=2 maxlength=3>, <input size=2 maxlength=3>%, <input size=2 maxlength=3>%<h>, <input size=2></h> )
+<br>
+device-cmyk ( <input size=2 maxlength=3>, <input size=2 maxlength=3>, <input size=2 maxlength=3>, <input size=2 maxlength=3><h>, <input size=2></h> )
+<br>
+preview
+<br>
+<div id=p></div>
+<style>
+body{text-align:center;font:normal 1em/2em Arial}
+#h:not(:checked)~h{display:none}
+#p{width:50px;height:50px;border:1px solid;margin:auto}
+</style>
+<script>
+h1.onkeyup=function(){rgb1.value=parseInt(h1.value,16);preview()}
+h2.onkeyup=function(){rgb2.value=parseInt(h2.value,16);preview()}
+h3.onkeyup=function(){rgb3.value=parseInt(h3.value,16);preview()}
+h4.onkeyup=function(){rgb4.value=parseInt(h4.value,16)/100;preview()}
+
+rgb1.onkeyup=function(){h1.value=(10+(+rgb1.value).toString(16)).slice(-2);preview()}
+rgb2.onkeyup=function(){h2.value=(10+(+rgb2.value).toString(16)).slice(-2);preview()}
+rgb3.onkeyup=function(){h3.value=(10+(+rgb3.value).toString(16)).slice(-2);preview()}
+rgb4.onkeyup=function(){h4.value=(10+(+rgb4.value*255).toString(16)).slice(-2);preview()}
+
+h.onchange=preview=function(){
+  if(h.checked){
+    p.style.background="rgba("+rgb1.value+","+rgb2.value+","+rgb3.value+","+rgb4.value+")";
+  }
+  else{
+    p.style.background="rgb("+rgb1.value+","+rgb2.value+","+rgb3.value+")";
+  }
+}
+</script>

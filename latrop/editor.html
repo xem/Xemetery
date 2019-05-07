@@ -1,0 +1,65 @@
+<meta charset=utf-8>
+<style>
+img { border: 1px dotted #888 }
+</style>
+<img src="img/void.png" id=v>
+<img src="img/wall_portalable.png" id=wp>
+<img src="img/wall_unportalable.png" id=wu>
+<img src="img/exit.png" id=e>
+<img src="img/gun.png" id=g>
+<img src="img/hero.png" id=h>
+<br><br>
+<canvas width=1024 height=512 id=c></canvas>
+<script>
+function log(a){console.log(a)};
+ctx = c.getContext("2d");
+function grid(){
+  ctx.strokeStyle = "#888";
+  for(i=0; i<1024; i+=32){
+    for(j=0; j<512; j+=32){
+      ctx.strokeRect(i,j,32,32);
+    }
+  }
+}
+grid();
+function drawmap(){
+  ctx = c.getContext("2d");
+  ctx.strokeStyle = "#888";
+  for(i=0; i<1024/32; i++){
+    for(j=0; j<512/32; j++){
+      if(cur_tile = map[j * (1024/32) + i]){
+        ctx.drawImage(window[cur_tile], i * 32, j * 32, 32, 32);
+      }
+    }
+  }
+}
+tile = v;
+v.onclick = 
+wp.onclick = 
+wu.onclick = 
+e.onclick = 
+g.onclick = 
+h.onclick = function(){
+  tile = this;
+}
+md = false;
+onmousedown = function(){
+  md = true;
+}
+onmouseup = function(){
+  md = false;
+}
+map = [];
+c.onclick = c.onmousemove = function(e){
+  c.width = c.width;
+  grid();
+  drawmap();
+  I = Math.floor((e.pageX - c.getBoundingClientRect().left)/32);
+  J = Math.floor((e.pageY - c.getBoundingClientRect().top)/32)
+  ctx.drawImage(tile, I * 32, J * 32, 32, 32);
+  
+  if(e.type == "click" || md){
+    map [J * (1024/32) + I] = tile.id;
+  }
+}
+</script>

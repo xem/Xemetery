@@ -1,0 +1,228 @@
+﻿<body id=b>
+<script>
+//b.innerHTML = "<input size=99 id=A value='abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 01234567890 ? ! . ,  - =' oninput=z()><p id=o>";
+
+b.innerHTML = "<input size=99 id=A value=Hi oninput=z()><p id=o>";
+
+s = n => String.fromCodePoint(n);
+
+t = [
+
+  // Circled (U+24b6-U+24cf ⒶⓏ U+24d0-U+24e9 ⓐⓩ U+2460-U+2468 ①⑨ U+24ea ⓪)
+  [
+    6, // A-Z
+    9327,  // a-z
+    9264, // 1-9
+    {0: '⓪'} // 0
+  ],
+  
+  // Circled negative (U+1f150-U+1f169 🅐🅩 U+1f150-U+1f169 🅐🅩 U+278a-U+2792 ➊➒ U+24FF ⓿)
+  [
+    32, // A-Z
+    127215,  // a-z
+    10073,  // 1-9
+    {0: '⓿'} // 0
+  ],
+  
+  // Squared (U+1F130-U+1F149 🄰🅉)
+  [
+    32, // A-Z
+    127183, // a-z
+  ],
+  
+  // Squared negative (U+1F170-U+U+1F189 🅰🆉)
+  [
+    32, // A-Z
+    127247, // a-z
+  ],
+  
+  // Fullwidth (U+ff01-U+ff5e ！～)
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    , // other chars
+    c => s(c + 65248)   // ASCII
+  ],
+  
+  // Math bold (U+1d41a-U+1d433 𝐚𝐳 U+1d400-U+1d419 𝐀𝐙 U+1d7ce-U+1d7d7 𝟎𝟗)
+  [
+    6, // A-Z
+    119737, // a-z
+    120734, // 0-9
+  ],
+  
+  // Math fraktur (U+1d51e-U+1d537 𝔞𝔷 U+1d504-U+1d51c 𝔄𝔜 + exceptions: CHIRZ U+212d U+210c U+2111 U+211c U+2128 ℭℌℑℜℨ)
+  [
+    6, // A-Z
+    119997, // a-z
+    , // 0-9
+    {C:"ℭ",H:"ℌ",R:"ℜ",Z:"ℨ",I:"ℑ"} // CHRZI
+  ],
+  
+  // Math bold fraktur (U+1d586-U+1d59f 𝖆𝖟 U+1d56c-U+1d585 𝕬𝖅)
+  [
+    6, // A-Z
+    120101, // a-z
+  ],
+  
+  // Math bold italic (U+1d482-U+1d49b 𝒂𝒛 U+1d468-U+1d481 𝑨𝒁)
+  [
+    6, // A-Z
+    119841, // a-z
+  ],
+  
+  // Math bold script (U+1d4ea-U+1d503 𝓪𝔃 U+1d4d0-U+1d4e9 𝓐𝓩)
+  [
+    6, // A-Z
+    119945, // a-z
+  ],
+  
+  // Math double struck (U+1d552-U+1d56b 𝕒𝕫 U+1d538 𝔸 U+1d7d8-U+1d7e1 𝟘𝟡 exceptions: CHNPQRZ U+2102 U+210d U+2115 U+2119 U+211a U+211d U+2124 ℂℍℕℙℚℝℤ)
+  [
+    6, // A-Z
+    120049, // a-z
+    120744, // 0-9 
+    {C:"ℂ",H:"ℍ",R:"ℝ",Z:"ℤ",N:"ℕ",P:"ℙ",Q:"ℚ"} // CHRZNPQ
+  ],
+  
+  // Math monospace (U+1d68a-U+1d6a3 𝚊𝚣 U+1d670-U+1d689 𝙰𝚉 U+1d7f6-U+1d7ff 𝟶𝟿)
+  [
+    6, // A-Z
+    120361, // a-z
+    120774, // 0-9
+  ],
+  
+  // Math sans (U+1d5ba-U+1d5d3 𝖺𝗓 U+1d5a0-U+1d5b9 𝖠𝖹 U+1d7e2-U+1d7eb 𝟢𝟫)
+  [
+    6, // A-Z
+    120153, // a-z
+    120754, // 0-9
+  ],
+  
+  // Math sans bold (U+1d5ee-U+1d607 𝗮𝘇 U+1d5d4-U+1d5ed 𝗔𝗭 U+1d7ec-U+1d7f5 𝟬𝟵)
+  [
+    6, // A-Z
+    120205, // a-z
+    120764, // 0-9
+  ],
+
+  // Math sans bold italic (U+1d656-U+1d66f 𝙖𝙯 U+1d63c-U+1d655 𝘼𝙕)
+  [
+    6, // A-Z
+    120309, // a-z
+  ],
+  
+  // Math sans italic (U+1d622-U+1d63b 𝘢𝘻 U+1d608-U+1d621 𝘈𝘡)
+  [
+    6, // A-Z
+    120257, // a-z
+  ],
+  
+  // Parenthesized (U+249c-U+24b5 ⒜⒵ U+1f110-U+1f129 🄐🄩 U+2474-U+247c ⑴⑼ 0)
+  [
+    117908, // A-Z
+    9275,   // a-z
+    9283,   // 0-9
+    {0: '(0)'} // 0
+  ],
+  
+  // Regional indicator (U+1f1e6-U+1f1ff 🇦 🇿)
+  [
+    32, // A-Z
+    127365, // a-z
+  ],
+  
+  // Strikethrough (U+0336)
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    , // other chars
+    ,                   // ASCII
+    c => s(c) + "̶"     // Unicode
+  ],
+  
+  // Underline (U+0332)
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    , // other chars
+    ,                   // ASCII
+    c => s(c) + "̲"      // Unicode
+  ],
+  
+  // Cross hatching (U+0337)
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    , // other chars
+    ,                   // ASCII
+    c => s(c) + "̷"     // Unicode
+  ],
+  
+  // Inverted
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    ,                   // other chars
+    c => "¡\"#$%⅋,()*+‘-./0123456789:;<=>¿@ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz[\\]^_`ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz{|}~"[c - 33] // ASCII
+    ,                   // Unicode
+    , 1                 // reverse
+  ],
+  
+  // Reversed
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    ,                   // other chars
+    c => [..."!\"#$%&'()*+,-./0߁23456789:⁏<=>⸮@AdↃbƎꟻGHIJK⅃MᴎOꟼpᴙꙄTUVWXYZ[\\]^_`AdↄbɘꟻgHijklmᴎoqpᴙꙅTUvwxYz{|}∽"][c - 33] // ASCII
+    ,                   // Unicode
+    , 1                 // reverse
+  ],
+  
+  
+  // Zalgo
+  [
+    ,                   // A-Z
+    ,                   // a-z
+    ,                   // 0-9
+    , // other chars
+    ,                   // ASCII
+    c => { b = ""; for(d = 9; d--;) b += s(0x300 + Math.random()* 0x6F | 0); return s(c) + b } // Unicode
+  ],
+
+];
+
+(
+  z=()=>{
+  
+    o.innerHTML = "";
+    
+    for(i of t){
+
+      r = '';
+      
+      for(c of v = [...A.value]){
+        p = c.codePointAt();
+        if(i[3] && i[3][c]) r += i[3][c];              // special chars (CHRZINPQ0)
+        else if(p >= 0x30 && p <= 0x39 && i[2]) r += s(p + i[2]); // 0-9
+        else if(p >= 0x41 && p <= 0x5A && i[0]) r += s(p + i[1]+i[0]); // A-Z
+        else if(p >= 0x61 && p <= 0x7a && i[1]) r += s(p + i[1]); // a-z
+        else if(p >= 0x21 && p <= 0x7e && i[4]) r += i[4](p); // ASCII
+        else if(i[5]) r += i[5](p);                             // Unicode
+        else r += c;                                                  // Unchanged
+      }
+      if(i[6]) r = r.split("").reverse().join("")+"<br>";                 // Reverse string
+      
+      o.innerHTML += r + "<br><br>";
+      
+    }
+  }
+)();
+
+</script>
