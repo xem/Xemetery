@@ -1,0 +1,54 @@
+<div class=d>Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.</div>
+<style>
+div {
+  width: 50%;
+  background: none;
+  margin: 100px auto;
+  padding: 10px;
+  position: relative;
+}
+
+div.d::before {
+  content: "coucou";
+  background: red;
+  color: #fff;
+  position: absolute;
+  top:-20px;
+  left: -45px;
+  z-index:999;
+}
+
+div.d::after {
+  content: " ";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  z-index:999;
+  border-top: 20px solid blue;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+div.d:before {
+  content: "coucou";
+  background: red;
+  color: #fff;
+  position: absolute;
+  top:-20px;
+  left: -45px;
+  z-index:999;
+}
+
+div.d:after {
+  content: " ";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  z-index:999;
+  border-top: 20px solid blue;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+
+</style>

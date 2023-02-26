@@ -1,0 +1,56 @@
+<a href="editor.html">Editor</a>
+<br>
+<canvas id=c width=1999 height=999></canvas>
+<script>
+
+// Data of the shape to draw
+z = [
+{x:34,y:14,path:'FGL@F:@69;3@;;@6G;M@DJ'},
+{x:52,y:3,path:'@996@8G@g'},
+{x:94,y:51,path:'@p@=->;:@7G:M@'},
+{x:159,y:5,path:'Z?<@@@D*@VA@U-@'},
+{x:174,y:50,path:'@o@<-@:9@:G6O@0@9;@0'},
+{x:34,y:92,path:'GIJ@G9A%884@;J'},
+{x:52,y:128,path:'@p@($@E@@X@'},
+{x:94,y:126,path:'@o@<-@:9@:G6O@0@9;@0'},
+{x:135,y:94,path:'3K1@64@.K3PAIIAU'},
+{x:190,y:128,path:'?p\'#@]@'},
+{x:231,y:94,path:'3K1@64@.K3PAIIAU'},
+{x:306,y:127,path:'@p@=->;:@7G:M@'},
+{x:350,y:93,path:'3K1@64@.K3PAIIAU'},
+{x:401,y:127,path:'@o@<-@:9@:G6O@0@9;@0'},
+{x:441,y:83,path:'"@O?@'},
+{x:485,y:127,path:'@`4M<@75@@UY@'},
+{x:528,y:79,path:'@@E(@'},
+{x:585,y:127,path:'?o,+DD.O@'},
+{x:636,y:127,path:'@`4M<@75@@UY@'},
+{x:677,y:128,path:'@p@%&YV+\')'},
+{x:743,y:83,path:'Z?<@@@D*@VA@U-@'},
+{x:757,y:128,path:'@o@<-@:9@:G6O@0@9;@0'},
+]
+
+
+// Canvas context
+t = c.getContext("2d");
+t.lineWidth = 10;
+t.lineCap = "butt";
+
+// Zoom (scale)
+Z=1.5;
+
+for(d in z){
+
+// Draw the shape (you can replace d.path.length with a large number, like 1e4)
+t.moveTo(x=z[d].x*Z,y=z[d].y*Z);for(i=0;i<z[d].path.length;i+=2)
+t.lineTo(x-=(z[d].path.charCodeAt(i)-64)*Z,y-=(z[d].path.charCodeAt(i+1)-64)*Z);
+
+// Optional: draw a line between last and first point
+//t.closePath();
+
+// Optional: color inside the shape
+//t.fill();
+
+// Optional: draw the shape
+t.stroke();
+}
+</script>

@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>WebRTC</title>
+<script src="http://static.opentok.com/webrtc/v2.0/js/TB.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  TB.addEventListener("exception", exceptionHandler);
+  var session = TB.initSession("1_MX4xMTI3fn5TYXQgRGVjIDIyIDAxOjU1OjU0IFBTVCAyMDEyfjAuNzI4MjUzMjV-");
+  session.addEventListener("sessionConnected", sessionConnectedHandler);
+  session.addEventListener("streamCreated", streamCreatedHandler);
+  session.connect(1127, "T1==cGFydG5lcl9pZD0xMTI3JnNpZz1mZDczZWE2ZjAzNWY4MzNkOTUxMWVmMzc2ZDk5ZDdlMGNmMTc1OGFmOnNlc3Npb25faWQ9MV9NWDR4TVRJM2ZuNVRZWFFnUkdWaklESXlJREF4T2pVMU9qVTBJRkJUVkNBeU1ERXlmakF1TnpJNE1qVXpNalYtJmNyZWF0ZV90aW1lPTEzNTYxNzAyNDgmcm9sZT1wdWJsaXNoZXImbm9uY2U9MTM1NjE3MDI0OC44NDUxOTA4MTY1NDA="); // Replace with your API key and token. See https://dashboard.tokbox.com/projects
+
+  function sessionConnectedHandler(event) {
+     subscribeToStreams(event.streams);
+     session.publish();
+  }
+  
+  function streamCreatedHandler(event) {
+    subscribeToStreams(event.streams);
+  }
+  
+  function subscribeToStreams(streams) {
+    for (i = 0; i < streams.length; i++) {
+      var stream = streams[i];
+      if (stream.connection.connectionId != session.connection.connectionId) {
+        session.subscribe(stream);
+      }
+    }
+  }
+  
+  function exceptionHandler(event) {
+    alert(event.message);
+  }
+</script>

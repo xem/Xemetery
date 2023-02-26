@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>OpenTok Sample &#8212; Pre-publish set-up</title>
+	<link href="http://static.opentok.com/opentok/assets/css/demos.css" type="text/css" rel="stylesheet" >
+	<script src="http://static.opentok.com/v1.1/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var apiKey = ""; // Replace with your API key. See https://dashboard.tokbox.com/projects
+		var sessionId = ''; // Replace with your own session ID. See https://dashboard.tokbox.com/projects 
+		var token = ''; // Replace with a generated token. See https://dashboard.tokbox.com/projects
+
+		var session;
+		var publisher;
+		var microphones = [];
+		var cameras = [];
+		var microphoneGain = 50; // Inital gain: 50%
+
+		// Un-comment either of the following to set automatic logging and exception handling.
+		// See the exceptionHandler() method below.
+		// TB.setLogLevel(TB.DEBUG);
+		// TB.addEventListener("exception", exceptionHandler);
+
+		function init() {
+			if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
+				alert("You don't have the minimum requirements to run this application."
+					  + "Please upgrade to the latest version of Flash.");
+			} else {
+				var parentDiv = document.getElementById("publisherContainer");
+				var replacementDiv = document.createElement("div"); // Create a div for the publisher to replace
+				replacementDiv.id = "opentok_publisher";
+				parentDiv.appendChild(replacementDiv);
+
+				publisher = TB.initPublisher(replacementDiv.id);
+				publisher.addEventListener("devicesDetected", devicesDetectedHandler);
+				publisher.addEventListener("microphoneActivityLevel", microphoneActivityLevelHandler)
+				publisher.addEventListener("microphoneGainChanged", microphoneGainChangedHandler);
+				publisher.addEventListener("echoCancellationModeChanged", echoCancellationModeChangedHandler);
+
+				publisher.detectDevices();
+
+				initSession();
+			}
+		}
+
+		function initSession() {
+				session = TB.initSession(sessionId);
+
+				// Add event listeners to the session
+				session.addEventListener("sessionConnected", sessionConnectedHandler);
+				session.addEventListener("sessionDisconnected", sessionDisconnectedHandler);
+				session.addEventListener("streamCreated", streamCreatedHandler);
+				session.addEventListener("streamDestroyed", streamDestroyedHandler);
+
+				/*
+				If testing the app from the desktop, be sure to check the Flash Player Global Security setting
+				to allow the page from communicating with SWF content loaded from the web. For more information,
+				see http://www.tokbox.com/opentok/build/tutorials/helloworld.html#localTest
+				*/
+				session.connect(apiKey, token);
+			}
+
+		//--------------------------------------
+		//  OPENTOK EVENT HANDLERS
+		//--------------------------------------
+
+		function devicesDetectedHandler(event) {
+			var microphones = event.microphones;
+			var cameras = event.cameras;
+			var camsSelect = document.getElementById("cams");
+			camsSelect.innerHTML = "";
+			for (i = 0; i < cameras.length; i++) {
+				var camOption = document.createElement("option");
+				camName =  cameras[i].name;
+				camOption.setAttribute("value", camName);
+				camOption.innerHTML = camName;
+				camsSelect.appendChild(camOption);
+				if (camName == event.selectedCamera.name) {
+					camsSelect.selectedIndex = i;
+				}
+			}
+			var micSelect = document.getElementById("mics");
+			micSelect.innerHTML = "";
+			for (i = 0; i < microphones.length; i++) {
+				var micOption = document.createElement("option");
+				var micName = microphones[i].name;
+				micOption.setAttribute("value", micName);
+				micOption.innerHTML = micName;
+				micSelect.appendChild(micOption);
+				if (micName == event.selectedMicrophone.name) {
+					micSelect.selectedIndex = i;
+				}
+			}
+			document.getElementById("call-status").innerHTML = "Devices detected.";
+			show("cams");
+			show("mics");
+			show("manageDevicesBtn");
+		}
+		
+		function microphoneGainChangedHandler(event) {
+			microphoneGain = event.value;
+			var gainControl = document.getElementById("gainControl");
+			gainControl.value = microphoneGain;
+		}
+		
+		function microphoneActivityLevelHandler(event) {
+			var volumeIndictator = document.getElementById("volumeIndicator");
+			volumeIndictator.style.width = (event.value * microphoneGain / 100) + "%";
+		}
+
+		function echoCancellationModeChangedHandler(event) {
+			if (publisher.getEchoCancellationMode() == "fullDuplex") {
+				document.getElementById("call-status").innerHTML = "Echo cancellation active.";
+			} else {
+				document.getElementById("call-status").innerHTML = "Echo cancellation mode inactive.";
+			}
+		}
+
+		function sessionConnectedHandler(event) {
+			show("publishBtn");
+		}
+
+		function sessionDisconnectedHandler (event) {
+			// We lost connection to the server
+			document.getElementById("call-status").innerHTML = "Disconnected";
+			hide("unpublishBtn");
+			hide("publishBtn");
+		}
+
+		// Show the Unpublish button if this is the stream published by this connection
+		function streamCreatedHandler(event) {
+			for (var i = 0; i < event.streams.length; i++) {
+				if (event.streams[i].connection.connectionId == session.connection.connectionId) {
+					// Our publisher just started streaming
+					show("unpublishBtn");
+				}
+			}
+		}
+
+		// Show the Publish button if this is the stream that was published by this connection
+		function streamDestroyedHandler(event) {
+			for (var i = 0; i < event.streams.length; i++) {
+				if (event.streams[i].connection.connectionId == session.connection.connectionId) {
+					// Our publisher just stopped streaming
+					document.getElementById("call-status").innerHTML = "Watching";
+					show("publishBtn");
+					hide("unpublishBtn");
+				}
+			}
+		}
+
+		/*
+		If you un-comment the call to TB.addEventListener("exception", exceptionHandler) above, OpenTok calls the
+		exceptionHandler() method when exception events occur. You can modify this method to further process exception events.
+		If you un-comment the call to TB.setLogLevel(), above, OpenTok automatically displays exception event messages.
+		*/
+		function exceptionHandler(event) {
+			alert("Exception: " + event.code + "::" + event.message);
+		}
+
+		//--------------------------------------
+		//  USER EVENT HANDLERS
+		//--------------------------------------
+
+		function detectDevices() {
+			hide("cams");
+			hide("mics");
+            publisher.detectDevices();
+		}
+
+		// Called when the user clicks the manageDevicesBtn button
+		function manageDevices() {
+			show("manageDevicesDiv");
+			publisher.detectMicActivity(true);
+		}
+
+		// Called when the user clicks the manageDevicesBtn button
+		function closeManageDevices() {
+			publisher.detectMicActivity(false);
+			hide("manageDevicesDiv");
+		}
+
+		// Called when user clicks the publishBtn button
+		function startPublishing() {
+			session.publish(publisher);
+
+			document.getElementById("call-status").innerHTML = "Joining...";
+			hide("publishBtn");
+		}
+
+		// Called when user clicks the unpublishBtn button
+		function stopPublishing() {
+			// Hide publisher controls
+			if (publisher) {
+				// Stop the stream
+				session.unpublish(publisher);
+			}
+
+			document.getElementById("call-status").innerHTML = "Leaving...";
+			hide("unpublishBtn");
+		}
+
+		function setCamera() {
+			var camsSelect = document.getElementById("cams");
+			var cameraName = camsSelect.options[camsSelect.selectedIndex].value;
+			publisher.setCamera(cameraName);
+		}
+
+		function setMicrophone() {
+			var micsSelect = document.getElementById("mics");
+			var micName = micsSelect.options[micsSelect.selectedIndex].value;
+			publisher.setMicrophone(micName);
+		}
+		
+		function setMicrophoneGain() {
+			var gainControl = document.getElementById("gainControl");
+			publisher.setMicrophoneGain(gainControl.value);
+		}
+
+		//--------------------------------------
+		//  HELPER METHODS
+		//--------------------------------------
+
+		function show(id) {
+			document.getElementById(id).style.display = 'block';
+		}
+
+		function hide(id) {
+			document.getElementById(id).style.display = 'none';
+		}
+
+	</script>
+</head>
+<body onload="init()">
+	<span id="call-status">Detecting devices</span>
+	<div id="links" style="height:44px">
+		<input type="button" value="Manage Devices" id ="manageDevicesBtn" onClick="manageDevices()" />
+		<input type="button" value="Start Publishing" id ="publishBtn" onClick="javascript:startPublishing()" />
+		<input type="button" value="Stop Publishing" id ="unpublishBtn" onClick="javascript:stopPublishing()" />
+	</div>
+	<div id="publisherContainer" class="publisherContainer">
+		<input type="button" value="Click to Talk" id ="push-to-talk" onClick="javascript:startTalking()" />
+	</div>
+	<div id="subscribers"></div>
+	
+	<div id="manageDevicesDiv">
+        <h1>Test Mic and Camera</h1>
+        <label>Selected microphone:</label>
+        <select id="mics" class="mics" onchange="setMicrophone()"></select>
+        <div id="volumeIndicator" class="volume" style="width:0">
+            <div></div>
+        </div>
+        <label style="margin-top:12px">Microphone gain:</label>
+        <input type="range" id="gainControl" min="0" max="100" value="50" onchange="setMicrophoneGain()" style="display:block"/>
+        <label>Selected camera:</label>
+        <select id="cams" class="cams" style="width:200px" onchange="setCamera()"></select><br/>
+        <a class="refreshDevices" href="javascript:detectDevices();">Refresh device lists</a>
+		<input type="button" value="Close" onClick="javascript:closeManageDevices()" style="display:block"/>
+    </div>
+</body>
+</html>

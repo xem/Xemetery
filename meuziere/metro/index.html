@@ -1,0 +1,200 @@
+<div class="content smallSizeLayout">
+  
+  <div class="intro" data-stretch-parent-if-n-lines="2" data-stretch-parent=".content" data-bind="css:{ 'bulletHidden': !isVisited()}" id="id_186">
+    <p data-bind="html:text"><div class="richText"><p>Intro: Lorem ipsum dolor sit, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa</p></div></p>
+  </div>
+
+  <table class="bulletpoint bulletHidden first">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            </div><img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="bulletpoint bulletHidden last">
+    <tbody>
+      <tr>
+        <td class="bullet-icon">
+            <div class=bar-wrapper>
+              <div class=bar></div>
+            </div>
+            <img src="">
+            <span class="icon">c</span>
+        </td>
+        <td class="bullet-text">
+            <div>
+                <span class="text"><div class="richText"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p></div></span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+            
+
+  <div class="conclusion bulletHidden">
+      <p><div class="richText"><p>Conclu: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p></div></p>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- CSS -->
+
+<style>
+*{ margin: 0; padding: 0; }
+table { border-collapse: collapse }
+body, table { font-size: 12px; font-family: arial }
+.content { border: 1px solid #888; margin: 1em 4em; padding: 2em 8em; width: 800px; }
+.intro { font-size: 1.4em; color: #eab841; }
+.bullet-icon { width: 3em; height: 4em; }
+td { vertical-align: middle; }
+.bullet-icon img { display: none }
+.bulletVisible { transition: color 0.5s 0.25s; }
+.bulletHidden { color: #aaa; }
+
+.bulletpoint .bullet-icon { text-align: center; overflow: hidden; }
+.bulletpoint .bullet-icon .bar-wrapper { vertical-align: middle; height: 100%; display: inline-block; width: 0.2em; position: relative; left: 1.15em; transition: all .5s linear; }
+.bulletpoint.first .bullet-icon .bar-wrapper { vertical-align: middle; height: 50%; display: inline-block; width: 0.2em; position: relative; left: 1.15em; transition: all .5s linear; }
+.bulletpoint .bullet-icon .bar-wrapper .bar { vertical-align: middle; height: 100%; display: inline-block; width: 0.2em; background: #019ccb; position: relative; -webkit-transform: translateY(-100%); transform: translateY(-100%); transition: all .5s linear; }
+.bulletpoint .bullet-text { padding: 0; }
+.bulletpoint .bullet-icon span.icon { display: inline-block; font-size: 1em; color: transparent; width: 1em; height: 1em; border-radius: 50%; border: .3em solid #019ccb; transition: background .5s; background: #fff; position: relative; }
+.bulletActive .bullet-icon span.icon { background: #019ccb; transition: background .5s .5s; }
+.bulletVisible .bullet-icon .bar-wrapper .bar { -webkit-transform: translateY(0%); transform: translateY(0%); }
+.bulletActive .bullet-icon .bar-wrapper .bar { -webkit-transform: translateY(-50%); transform: translateY(-50%); transition: all .5s .5s linear;}
+.bulletVisible.last .bullet-icon .bar-wrapper .bar { -webkit-transform: translateY(-50%); transform: translateY(-50%); transition: all .5s .5s linear;}
+.bulletpoint.first .bullet-icon .bar-wrapper { -webkit-transform: translateY(50%); transform: translateY(50%); overflow: hidden; }
+.bulletpoint.bulletActive.first .bullet-icon .bar-wrapper .bar { -webkit-transform: translateY(-100%); transform: translateY(-100%); }
+</style>
+
+<!-- JS -->
+
+<script src=//code.jquery.com/jquery-1.11.1.min.js></script>
+
+<script>
+$hiddenItems = $(".bulletpoint, .conclusion");
+for(i = 0; i < $hiddenItems.length; i++){
+  with($($hiddenItems[i])){
+    setTimeout(function(){
+      removeClass("bulletHidden");
+      addClass("bulletVisible"); // to add in runtime
+      if(hasClass){
+        $hiddenItems.removeClass("bulletActive"); // to add in runtime
+        addClass("bulletActive"); // to add in runtime
+      }
+    },
+    i * 2000);
+  }
+}
+</script>

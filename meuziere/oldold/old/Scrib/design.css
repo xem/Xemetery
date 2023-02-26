@@ -1,0 +1,77 @@
+body
+{
+    width: 1000px;
+    margin: auto;
+    background-image: url("./fond.jpg");
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    margin-top: 20px;
+	text-align:center;
+	   background-color: #65CBFF;
+}
+
+#head
+{
+    width: 675px;
+   	height: 190px;
+    background-image: url("./logo.png");
+	background-repeat: no-repeat;
+}
+
+#menu
+{
+   text-align:center;
+   float: up; /* Le menu flottera à gauche */
+   width: 799px; /* Très important : donner une taille au menu */
+}
+
+.element_menu
+{
+   margin-bottom: 10px; /* Pour éviter que les éléments du menu ne soient trop collés */
+}
+
+.element_menu a /* Tous les liens se trouvant dans un menu */
+{
+   color: #0000CC;
+}
+
+.element_menu a:hover /* Quand on pointe sur un lien du menu */
+{
+   color: black;
+}
+#corps
+{
+	background-image: url("./fond2.jpg");
+    background-repeat: repeat-x;
+   font-family: "Trebuchet MS", Arial, "Arial Black", "Times New Roman", Times, serif;
+   font-size: 13px;
+   color: #333333;
+   background-color: #6666FF; 
+   border: 2px solid black;
+
+}
+
+#corps h1 /* Tous les titres h1 du corps */
+{
+   color: #0000CC;
+   text-align: center;
+   font-family: "Trebuchet MS", Arial, "Arial Black", "Times New Roman", Times, serif;
+   font-size: 18px;
+}
+
+#corps h2 /* Tous les titres h2 du corps */
+{
+   height: 20px;
+   padding-left: 30px;
+   color: #B3B3B3;
+   text-align: left;
+}
+
+#pied_de_page
+{
+   font-size: 12px;
+   text-align: center;
+   color: #0000CC;
+
+}
+

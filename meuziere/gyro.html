@@ -1,0 +1,10 @@
+<div id=b>
+<script>
+ondeviceorientation = function(e){
+  var beta = 0;
+  if(e.beta > 90) beta = 180 - e.beta;
+  else if(e.beta < -90) beta = -180 - e.beta;
+  else beta = e.beta;
+  b.innerHTML = "<h1>" + beta;
+}
+</script>

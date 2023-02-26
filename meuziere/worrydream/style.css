@@ -1,0 +1,9 @@
+* { margin: 0; padding: 0; border: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; font: normal 12px Arial; }
+html, body { height: 100%; }
+body { text-align: center; font-size: 0; background: #ddd; min-width: 1000px; min-height: 500px;}
+.left, .right { display: inline-block; vertical-align: top; width: 500px; height: 500px; border: 1px solid black; background: #fff; box-shadow: 0px 0px 10px #555; /*position: relative; top: 50%; margin-top: -250px;*/ margin-top: 100px; }
+.left { border-radius: 0 20px 20px 0; overflow: hidden; }
+.left canvas { background: #eef; }
+.right { border-radius: 20px 0 0 20px; text-align: left; overflow: auto; }
+.edit { border: 2px dotted red; background: #fee; margin: 0 10px; }
+body .CodeMirror { height: auto; margin: 10px; }

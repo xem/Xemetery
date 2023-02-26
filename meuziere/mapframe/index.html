@@ -1,0 +1,13 @@
+﻿<h3>PoC Qwant Maps x Doctolib</h3>
+<p>Doctilib affiche une carte qui mesure au maximum 317x300px.
+<p>Ci-dessous, vous trouverez une iframe de cette taille chargeant mapbox-gl et le fond de carte de Qwant Maps, et affichant une puce custom à des coordonnées et un zoom donnés en paramètre.
+<p>Pour voir la page iframeable (en plein écran): <a href="./frame.html#map=17/48.85856/2.29400/Tour Eiffel @&#'!#\/-">cliquer ici</a>.
+<p>Bande passante utilisée à la première visite: HTML: 2kb. CSS: 35kb. JS: 767kb. JSON: 11kb. Icone: 2kb. Tuiles: 50-100kb. Fonts WebGL: 232kb. Total: ~1.2MB.
+<p>Vu que tous ces éléments sont mis en cache, les affichages suivants nécessiteront uniquement de charger les nouvelles tuiles si la carte a bougé (50-100kb)
+<br>
+<br>
+URL: <input id=url size=45 value="frame.html#map=17/48.85856/2.29400/Tour Eiffel @&#'!#\/-" oninput="frame.src=value;frame.contentWindow.location.reload(true)">
+<p><iframe id=frame src="./frame.html#map=17/48.85856/2.29400/Tour Eiffel @&#'!#\/-" width="317" height="300"></iframe>
+<style>
+body { font-family: arial; }
+</style>

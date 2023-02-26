@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #17191C;
+}
+
+input {
+  background: transparent;
+  border: none;
+  margin: 10px 0 0;
+  text-align: center;
+  width: 65px;
+  color: #fff;
+}
+
+.panel {
+  background: #0A0B0D;
+  width: 514px;
+  text-align: center;
+  padding: 10px;
+  margin: 2px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.panel_item_container {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 5px;
+  text-align: center;
+  width: 160px;
+  cursor: pointer;
+}
+
+.panel_item_container label {
+  color: #fff;
+  font-family: Helvetica, Arial;
+  font-size: 13px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.panel_item_container div {
+  margin: auto;
+}
+
+.panel_item_container canvas {
+  margin: 0 0 10px;
+}
+
+.QM_knob_big {
+  width: 142px;
+  height: 142px;
+  background: url("knob1.png");
+  background-size: 100% auto;
+}
+
+.QM_knob_small {
+  width: 54px;
+  height: 54px;
+  background: url("knob0.png");
+  background-size: 100% auto;
+}

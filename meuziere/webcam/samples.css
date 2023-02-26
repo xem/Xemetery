@@ -1,0 +1,251 @@
+@charset "UTF-8";
+/* CSS Document 
+ *
+ * Copyright 2010, TokBox, Inc.
+ *
+ */
+
+body, html {
+	font-family:'Lucida Grande', 'Trebuchet MS', sans-serif;
+	color: #4c4c4c;
+	text-align:left;
+	
+	background-color: #f0f9fb;
+}
+h1 {
+	margin-bottom:10px
+}
+object {
+	float: left;
+}
+a,a:visited {
+	color: #0099CC;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+#opentok_console {
+	float: right;
+	width: 400px;
+	font-family: 'courier', monospace;
+	font-size: 12px;
+}
+
+#links {
+	float: top;
+}
+
+#links a, input {
+	display: none;
+}
+
+#sessionControls {
+	float: top;
+}
+
+#pubControls input {
+	display: inline;
+}
+
+#publishForm {
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#deviceManagerControls {
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+	
+#action a {
+	display:none;
+}
+
+#localview {
+	float: left;	
+	width: 250px;
+}
+
+div.controls {
+	width:220px;
+	padding:10 0 10 0;
+	font-size: 14px;
+}
+
+.videobar {
+	float: top;
+}
+
+.videobar-left {
+	float: left;	
+	width: 250px;
+}
+
+.smalltype {
+	font-size: 80%;
+	padding-bottom: 6px;
+}
+
+.description {
+	font-size: 90%;
+	padding-top: 6px;
+}
+
+#controls {
+	float: left;
+	text-align: left;
+	padding-right: 10px;
+}
+
+#publisherControls {
+	display: none;
+}
+
+#push-to-talk {
+	display: none;
+}
+
+#manageDevicesBtn {
+	display:none;
+}
+
+#manageDevicesDiv {
+	display:none;
+	position:absolute;
+	width:200px;
+	left:280px;
+	background-color:DDD;
+	padding:10px;
+	border:4px;
+}
+
+#manageDevicesDiv h1{
+     font-size:18px;
+ }
+ #manageDevicesDiv label{
+    width:100%;
+    display: block;
+    margin-top:-4px;
+ }
+ #manageDevicesDiv img{
+     display: block;
+     margin:auto;
+ }
+ #manageDevicesDiv a{
+     font-size: small;
+     display: block;
+     margin-top:-12px;
+ }
+ #manageDevicesDiv input{
+     margin-top:2px;
+ }
+ #gainControl{
+     width:30px;
+     margin-top:20px;
+ }
+ #manageDevicesDiv .volume{
+     display:inline-block;
+     position: relative;
+     vertical-align:top;
+     height:20px;
+     width:0;
+     height:10px;
+     background-color:lime;
+     margin-top:10px;
+ }
+
+#devicePanelContainer {
+	position: absolute;
+	left: 250px;
+	top: 10px;
+	display:none;
+}
+
+#devicePanelCloseButton {
+	position: relative;
+	z-index: 10;
+	margin-left: 285px;
+	margin-right: 12px;
+	padding: 3px;
+	text-align: center;
+	font-size: 11px;
+	background-color: lightgrey;
+}
+
+#devicePanelBackground {
+	background-color: lightgrey;
+	width: 340px;
+	height: 230px;
+}
+
+#devicePanelInset #devicePanel {
+	position: relative;
+	top: -74px;
+	left: -9px;
+}
+
+a.settingsClose:link,
+a.settingsClose:visited,
+a.settingsClose:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+table {
+	clear: both;
+}
+
+td {
+	vertical-align: top;
+	padding-right: 15px;
+}
+
+.publisherContainer {
+	float: left;
+}
+
+.subscriberContainer {
+	width: 264px;
+	margin-left: 4px;
+	float:left;
+}
+
+#login {
+	background-color:#999;
+	border:thin solid #000;
+	width:400px;
+	padding:5px;
+}
+
+#login input {
+	display: inline;
+	border: thin solid #000;
+}
+
+#connectionsContainer {
+	clear:both;
+	background-color:#CCC;
+	width:400px;
+}
+
+.swfContainer {
+	float:left;
+	width: 320;
+	margin-left: 5px;
+}
+
+#recorderElement {
+	clear:both;
+	float:left;
+}
+
+#playerElement {
+	clear:both;
+	float:left;
+}
+
+.OT_subscriber {
+	float:left;
+}

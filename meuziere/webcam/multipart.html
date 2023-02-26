@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<meta charset=utf-8>
+<title>multipart</title>
+<script src="http://static.opentok.com/v1.1/js/TB.min.js"></script>
+<script>
+  var session = TB.initSession("153975e9d3ecce1d11baddd2c9d8d3c9d147df18");
+  session.connect("1127", "T1==cGFydG5lcl9pZD0xMTI3JnNpZz1jZjM1NTVkZTMwZTEwNmMxZmM1YzdhMWUyZWRjNmRkNTIzNjZhMDEwOnNlc3Npb25faWQ9MTUzOTc1ZTlkM2VjY2UxZDExYmFkZGQyYzlkOGQzYzlkMTQ3ZGYxOCZjcmVhdGVfdGltZT0xMzU2MTcxMjc3JnJvbGU9cHVibGlzaGVyJm5vbmNlPTEzNTYxNzEyNzcuMDMyMjE4OTE4OTI0OTA=");
+  session.addEventListener("sessionConnected", sessionConnectedHandler);
+  function sessionConnectedHandler(event) {
+    subscribeToStreams(event.streams);
+    session.publish();
+  }
+
+  session.addEventListener("streamCreated", streamCreatedHandler);
+  function streamCreatedHandler(event) {
+    subscribeToStreams(event.streams);
+  }
+
+  function subscribeToStreams(streams) {
+    for (i = 0; i < streams.length; i++) {
+      var stream = streams[i];
+      if (stream.connection.connectionId != session.connection.connectionId) {
+        session.subscribe(stream);
+      }
+    }
+  }
+  
+  TB.addEventListener("exception", exceptionHandler);
+  function exceptionHandler(event) {
+    alert("Exception: " + event.code + "::" + event.message);
+  }
+</script>

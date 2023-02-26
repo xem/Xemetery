@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+    <title>OpenTok Simple Example</title>
+		<script src="http://static.opentok.com/v1.1/js/TB.min.js"></script>
+		<script>
+			// La session ( = n° salle ), la clé API ( = n° projet ) et le token ( = n° utilisateur) sont générés depuis https://dashboard.tokbox.com
+
+      // Connexion à une session
+      var session = TB.initSession("2_MX4yMjA2NDc5Mn4xMjcuMC4wLjF-VGh1IERlYyAyMCAxMTowNTozOCBQU1QgMjAxMn4wLjgyMjM1MzR-");
+
+      // Identification du projet par un token et une clé API
+      session.connect("22064792", "T1==cGFydG5lcl9pZD0yMjA2NDc5MiZzaWc9OWE4NTUxYWVjYzJkN2EzY2M1ZGU5MzI4M2YxOWU3NDg4Mjk0ODI2MzpzZXNzaW9uX2lkPTJfTVg0eU1qQTJORGM1TW40eE1qY3VNQzR3TGpGLVZHaDFJRVJsWXlBeU1DQXhNVG93TlRvek9DQlFVMVFnTWpBeE1uNHdMamd5TWpNMU16Ui0mY3JlYXRlX3RpbWU9MTM1NjAzMDMzNSZleHBpcmVfdGltZT0xMzU4NjIyMzM1JnJvbGU9cHVibGlzaGVyJmNvbm5lY3Rpb25fZGF0YT0mbm9uY2U9NTEyMDQ1");
+
+			// Si la connexion a réussi
+      session.addEventListener("sessionConnected", sessionConnectedHandler);
+			function sessionConnectedHandler(event) {
+				// S'inscrire aux flux de la session
+        subscribeToStreams(event.streams);
+        // Publier son propre flux
+				session.publish();
+			}
+
+			// Si le flux a pu être créé
+      session.addEventListener("streamCreated", streamCreatedHandler);
+			function streamCreatedHandler(event) {
+				// S'inscrire aux flux de la session
+        subscribeToStreams(event.streams);
+			}
+
+			// Inscription aux flux
+      function subscribeToStreams(streams) {
+				for (i = 0; i < streams.length; i++) {
+					var stream = streams[i];
+					if (stream.connection.connectionId != session.connection.connectionId) {
+						session.subscribe(stream);
+					}
+				}
+			}
+      
+      // Et en cas d'erreur
+      TB.addEventListener("exception", exceptionHandler);
+			function exceptionHandler(event) {
+        // Afficher une alerte
+				alert("Exception: " + event.code + "::" + event.message);
+			}
+		</script>
+  </head>
+  <body>
+  </body>
+</html>

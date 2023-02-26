@@ -1,0 +1,52 @@
+<!doctype html>
+<head>
+  <meta charset=utf-8>
+  <title>Reader</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -moz-box-sizing: border-box; }
+    html, body { height: 100%; font-family: Arial; }
+    #menu { width: 300px; height: 100%; padding: 25px; float: left; border-right: 1px solid #000; }
+    #articles { height: 100%; padding: 25px; overflow-y: scroll; }
+    .article { border: 1px solid #000; padding: 25px; overflow: hidden; width: 75%; }
+  </style>
+</head>
+<body>
+  <div id="menu">
+    <a href="#">Hide</a>
+    <br>
+    <a href="#">New feed</a>
+  </div>
+  <div id="articles">
+    <h1>A list apart</h1>
+    <br>
+  </div>
+  <div>
+  </div>
+  <script>
+    var url = "http://www.alistapart.com/feed/rss.xml";
+    var articles = document.getElementById("articles");
+    var xhr = new XMLHttpRequest;
+    xhr.open('GET', "proxy.php?url=" + url);
+    xhr.send();
+    xhr.onload = function(){
+      var response = xhr.response;
+      var parser = new DOMParser();
+      var xml = parser.parseFromString(response, "text/xml");
+      console.log(xml);
+      var items = xml.getElementsByTagName("item");
+      var item, title, link, description;
+      for(var i in items){
+        if(!isNaN(i)){
+          item = items[i];
+          title = item.getElementsByTagName("title")[0].firstChild.nodeValue;
+          link = item.getElementsByTagName("link")[0].firstChild.nodeValue;
+          description = item.getElementsByTagName("description")[0].firstChild.nodeValue;
+          console.log(title);
+          console.log(link);
+          console.log(description);
+          articles.innerHTML += "<div class='article'><h2><a href='" + link + "' target='_blank'>" + title + "</a></h2><br>" + description + "</div><br>";
+        }
+      }
+    }
+  </script>
+</body>

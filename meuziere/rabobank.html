@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Rabobank Learning Suite</title>
+</head>
+<body class="loggedOut"   >
+  <h1>Fausse page login</h1>
+  <form class="loginForm" action="http://rabobank.lms.crossknowledge.com/login_trainee.php" method="post" id="Login">
+        <div class="loginFormBox pie">
+          <table>
+            <tr>
+              <th>
+                <div><label for="fldUserName">Login:</label></div>
+              </th>
+              <td>
+                <input type="text" name="login" id="fldUserName" value="" tabindex="1" />
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <label for="fldPassword">Password:</label>
+              </th>
+              <td>
+                <input type="password" name="pass" id="fldPassword" value="" tabindex="2" />
+                <input type="checkbox" onclick="SetPasswordRemember(this)"  id="cookiesOn" class="cookiesOn" value="1" tabindex="3" />
+                <label for="cookiesOn" class="labelCookiesOn" style="font-weight:normal;">Remember my password</label>
+              </td>
+            </tr>
+            
+            <tr class="loginLanguage">
+              <th>
+                <label for="fldLanguage">Language:</label>
+              </th>
+              <td>
+                <select name="langcode" id="fldLanguage" tabindex="4">
+                  <option selected value="en-GB">English [en-GB]</option><option value="nl-NL">Nederlands [nl-NL]</option>
+                </select>
+              </td>
+            </tr>
+            
+          </table>
+        </div>
+        <input type="hidden" name="SavePasswordInCookie" id="SavePasswordInCookie" value="N" />
+        <div class="loginSubmit pie pieFix">
+          <input type="submit" name="submitButtonName" class="buttonSubmit" value="Log in" tabindex="5"/>
+        </div>
+				      </form>
+</body>
+
+</html>

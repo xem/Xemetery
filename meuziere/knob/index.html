@@ -1,0 +1,99 @@
+﻿<!doctype html>
+
+<link rel="stylesheet" href="style.css">
+
+<div class="panel panel_top">
+
+  <div class="panel_item_container">
+    <img src="logo_flux.png" width="62">
+  </div>
+  
+  <div class="panel_item_container">
+    <div id="knob1" class="QM_knob_big"></div>
+    <input type="range" id="knob1range" min="0" max="100">
+  </div>
+  
+  <div class="panel_item_container">
+    <img src="button_power_on.png" id="relief_power" width=70>
+    <br>
+    <input type="checkbox" id="relief_power_checkbox" checked>
+  </div>
+
+</div>
+
+<div class="panel panel_bottom">
+
+  <div class="panel_item_container">
+    <div id="knob2" class="QM_knob_small"></div>
+    <label id="knob2value"></label>
+    <br>
+    <input type="range" id="knob2range" min="-13" max="13">
+  </div>
+
+  <div class="panel_item_container">
+    <div id="knob3" class="QM_knob_small"></div>
+    <label id="knob3value"></label>
+    <br>
+    <input type="range" id="knob3range" min="-13" max="13">
+  </div>
+
+  <div class="panel_item_container">
+    <div id="knob4" class="QM_knob_small"></div>
+    <label id="knob4value"></label>
+    <br>
+    <input type="range" id="knob4range" min="-13" max="13">
+  </div>
+</div>
+
+<script src=miniknob.js></script>
+
+<script>
+
+// Knobs
+
+var knob1 = new MiniKnob("knob1", 0, 1, "#fff", 
+  function(n){
+    var value = Math.floor(n * 100);
+    document.querySelector("#knob1range").value = value; 
+  }
+);
+
+var knob2 = new MiniKnob("knob2", 0.5, 0, "#00BEC4",
+  function(n){
+    var value = ((n - 0.5) * 26);
+    document.querySelector("#knob2value").innerHTML = "LOW <span style='color:#00BEC4'>" + ((n > 0 ? "+" : "") + value.toFixed(1) + "dB") + "</span>";
+    document.querySelector("#knob2range").value = value;
+  }
+);
+  
+var knob3 = new MiniKnob("knob3", 0.5, 0, "#5B6AFF",
+  function(n){
+    var value = ((n - 0.5) * 26);
+    document.querySelector("#knob3value").innerHTML = "MIDDLE <span style='color:#5B6AFF'>" + ((n > 0 ? "+" : "") + value.toFixed(1) + "dB") + "</span>";
+    document.querySelector("#knob3range").value = value;
+  }
+);
+
+var knob4 = new MiniKnob("knob4", 0.5, 0, "#00BEC4",
+  function(n){
+    var value = ((n - 0.5) * 26);
+    document.querySelector("#knob4value").innerHTML = "HIGH <span style='color:#00BEC4'>" + ((n > 0 ? "+" : "") + value.toFixed(1) + "dB") + "</span>";
+    document.querySelector("#knob4range").value = value;
+  }
+);
+
+// Power button
+document.querySelector("#relief_power").onclick = function(){
+  var image = document.querySelector("#relief_power");
+  var checkbox = document.querySelector("#relief_power_checkbox");
+  if(checkbox.checked){
+    checkbox.checked = false;
+    image.src = "button_power_off.png";
+  }
+  else {
+    checkbox.checked = true;
+    image.src = "button_power_on.png";
+  }
+}
+
+</script>

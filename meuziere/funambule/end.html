@@ -1,0 +1,16 @@
+<h1 id=h1></h1>
+<h2 id=h2></h1>
+<h2 onclick="location='game.html#retry'">Retry ?</h2>
+</div>
+
+<style>
+* { background: #000; color: #fff; text-align: center; font-family: arial; }
+h1 { line-height: 30vh; font-size: 20vmin; margin: 10vmin 0 0; }
+h3 { line-height: 10vh; font-size: 5vmin; }
+h2 { line-height: 10vh; font-size: 10vmin; }
+</style>
+
+<script>
+h1.innerHTML = location.hash.slice(1);
+h2.innerHTML = location.hash.slice(1) == "FALL" ? "Tilt your head to stay balanced" : "";
+</script>

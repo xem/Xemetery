@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>L'attribut contenteditable</title>
+	<style>
+		html { background: #eee; }
+		body { width: 700px; margin: 40px auto; padding: 40px; background: #fff; font-family: Calibri; text-align: justify; }
+		p, div, li { margin: 2em 0; }
+		p[contenteditable], div[contenteditable], style[contenteditable], script[contenteditable] { border: 1px dotted red; padding: 1em; }
+		script, #js_div { display: block; white-space: pre; font-family: monospace; background: #ddeeff; color: #112233; }
+	</style>
+</head>
+<body>
+	<h1>L'attribut contenteditable</h1>
+	<p>L'attribut <b>contenteditable</b> permet de rendre le contenu de n'importe quel élément HTML éditable avec le clavier et/ou la souris.</p>
+	<p>Cet attribut fait partie des <a href="http://dev.w3.org/html5/markup/global-attributes.html">attributs globaux HTML5</a>, ce qui signifie qu'il peut potentiellement être appliqué à tous les éléments HTML5. Il fait également partie de ces fonctionnalités qui ont existé dans les navigateurs bien avant d'avoir été standardisées par le W3C. En effet, <a href="http://caniuse.com/contenteditable">on retrouve cet attribut</a> sur des navigateurs aussi anciens qu'IE 5 et Firefox 3! C'est d'ailleurs Microsoft qui l'a créé.</p>
+	<p>Pour l'utiliser, rien de plus simple: tout comme vous pouvez appliquer un attribut <b>id</b> ou <b>class</b> à un élément HTML, vous pouvez appliquer <b>contenteditable="true"</b>, ou tout simplement <b>contenteditable</b>. Il est à noter que cet attribut est hérité par défaut. La valeur <b>contenteditable="inherit"</b> est donc complètement inutile. Par contre, si vous voulez rendre un élément éditable mais pas ses descendants, ceux-ci doivent avoir <b>contenteditable="false"</b>.
+	<p contenteditable><b>Exemple:</b> cliquer sur ce paragraphe pour éditer le texte qui s'y trouve.</p>
+	<hr>
+	<p>Voici maintenant la liste tant attendue des trucs de dingue concernant <b>contenteditable</b>:</p>
+	<ul>
+		<li>
+		  Comme on l'a vu plus haut, on peut rendre un élément non éditable alors que son parent est éditable. L'élément non éditable pourra toutefois être sélectionné, déplacé et supprimé.
+			<p contenteditable><b>Exemple:</b> Dans ce paragraphe éditable, on ne peut pas éditer <b contenteditable="false">ce texte en gras</b> mais on peut le supprimer et le déplacer à l'aide de la souris.</p>
+			Sur Firefox, on ne peut pas déplacer du texte d'un bloc éditable à un autre bloc éditable. C'est un bug.
+		</li>
+		<li>
+			Firefox permet de redimensionner les images qui ont l'attribut <b>contenteditable</b> (ou qui en héritent)<br><br>
+			<b>Exemple:</b><br>
+			<p contenteditable> Cliquez sur cette image <img src="http://placehold.it/200x50"> pour la redimensionner.</p>
+		</li>
+		<li>
+			On peut insérer n'importe quel code HTML dans un élément éditable
+			<div contenteditable><b>Exemple:</b> copiez-collez ci-dessous<br><br>- Le contenu d'une autre page Web:<br><br><br><br>- Le contenu d'un document Word ou Excel:<br><br><br><br></div>
+		</li>
+		<li>
+			Grâce à cet attribut, on peut faire des éditeurs WYSIWYG ultra-complets, comme <a href="http://ckeditor.com/demo#full">CKEditor</a>.
+		</li>
+		<li>
+			On peut aussi avoir accès à un bloc-notes d'appoint en tapant <b>data:text/html, &lt;html contenteditable></b> dans la barre d'adresse de son navigateur (ou en cliquant <a href="data:text/html, <html contenteditable>" target="_blank">ici</a>).<br>
+			On doit cette astuce à <a href="https://coderwall.com/p/lhsrcq">Jose Jesus Perez Aguinaga</a>.<br>
+			Vous trouverez <a href="https://news.ycombinator.com/item?id=5135194" target="_blank">ici</a> de nombreuses variations de ce bloc-botes. 
+	  </li>
+		<li>Rendre un élément <b>style</b> visible et éditable peut mener à un éditeur auto-récursif assez dingue, étant donné que vous pouvez editer en direct le style du bloc dans lequel vous écrivez:<br><br>
+		  <style spellcheck="false" contenteditable>style {
+	display: block;          /* afficher les blocs <style> */
+	white-space: pre;        /* présentation */
+	font-family: monospace;  /* typographie */
+	background: #ddeeff;     /* couleur de fond */
+	color: #112233;          /* couleur de texte */
+}</style>
+		</li>
+		<li>
+		  On peut aussi rendre les éléments <b>script</b> visibles et éditables. Toutefois, le code JavaScript n'est pas réexécuté automatiquement à chaque modification.<br><br>
+			<script contenteditable>console.log("Log unique");</script>
+			<br>
+			Mais JavaScript, justement, permet de détecter les changements qui ont lieu dans un élément <b>script</b> et exécuter son contenu.<br><br>
+			<script id="js" contenteditable>// Ce bloc script a l'id "js".
+var js = document.getElementById("js");
+js.onkeyup = function(){
+	eval(js.innerText);
+}
+console.log("Log à chaque modification");</script>
+			<br>
+			Cela fonctionne très bien sur Chrome et IE 10. Firefox et IE9 sont hélas capricieux et il est compliqué de leur faire exécuter du code JS à chaque modification d'un élément <b>script</b>... A vrai dire, je ne suis même pas sûr que ça soit possible. Affaire à suivre...
+		</li>
+	</ul>
+  <br>
+    <br>
+	A bientôt!
+	<br>
+  <b>@MaximeEuziere</b>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>JS Mini Minifier</title>
+    <link rel=stylesheet href="style.css">
+  </head>
+  <body>
+    <h1>JS Mini Minifier v0.7</h1>
+    <textarea id=code spellcheck=false></textarea>
+    <br>
+    <br>
+    <h4>Minifier's JS code:</h4>
+    <h5>(Call this function with one parameter: a string containing the JS code)</h5>
+    <pre id=js>
+function minify(c){
+  return c.replace(/(\/\*[^]*?\*\/|\/\/.*|\s)+/gm,' ')
+          .replace(/^ |;? ?$|; *(})| *([\[\]\(\)\{\};,.=?:<>+\-*\/%&|~!]) */g,'$1$2')
+          .replace(/(var [^{(=.;]*?);var /g, "$1,")
+          .replace(/(var [^{(=.;]*?);var /g, "$1,")
+          .replace(/(var [^{(=.;]*?);var /g, "$1,")
+          .replace(/(var [^{(=.;]*?);var /g, "$1,")
+}
+    </pre>
+    <br>
+    <br>
+    <button id=minify>Minify!</button>
+    <br>
+    <br>
+    <br>
+    By <a href="http://twitter.com/MaximeEuziere">Maxime Euzière</a> for <a href="http://140byt.es">140byt.es</a> - <a href="https://gist.github.com/xem/5476454">See Gist</a> - <a href="http://github.com/xem/miniMinifier">Fork me on Github</a>
+    
+    <script src="js.js"></script>
+  </body>
+</html>

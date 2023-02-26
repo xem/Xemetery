@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<meta charset='utf-8'/>
+<title>Qwant Maps iFrame</title>
+<script src='mapbox-gl.js'></script>
+<link href='mapbox-gl.css' rel='stylesheet'>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  font-family: arial;
+  font-size: 12px;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.marker {
+  background-image: url('icons/pin.png');
+  background-size: cover;
+  width: 33px;
+  height: 41px;
+  cursor: pointer;
+  margin: -20px 0 0;
+}
+
+.marker div {
+  font-size: 18px;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff;
+  color: red;
+  text-align: center;
+  width: 300px;
+  margin-left: calc(-150px + 16px);
+  margin-top: 45px;
+}
+
+a {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
+
+a img {
+  width: 30px;
+  height: 30px;
+}
+
+</style>
+
+<body>
+
+  <div id='map'></div>
+  <a href="//qwant.com/maps" target="_blank">
+    <img src="icons/qwant-logo.svg">
+  </a>
+  
+  <script>
+  
+  onload = function(){
+  
+    // Mapbox's map
+    // ============
+    
+    
+    // Read hash #map=zoom/lat/lng
+    var hash = window.location.hash;
+    var zoomInfo = [0,0,0,""];
+    if(hash.indexOf("#map=") == 0){
+      zoomInfo = hash.slice(5).split("/");
+    }
+    
+    // New Map
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'https://www.qwant.com/maps/style.json?lang=fr',
+      center: [+zoomInfo[2], +zoomInfo[1]],
+      zoom: +zoomInfo[0],
+      language: "fr",
+      unit: 'metric',
+    });
+    
+    map.on('load', () => {
+      
+      // Add marker
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.innerHTML = "<div>" + decodeURI(zoomInfo.slice(3).join("/")) + "</div>";
+      
+      var marker = new mapboxgl.Marker(el)
+      .setLngLat([zoomInfo[2], zoomInfo[1]])
+      .addTo(map);
+      
+      // Zoom
+      map.addControl(new mapboxgl.NavigationControl({showCompass: false, visualizePitch: false, showZoom: true}), 'top-right');
+      
+      // OSM PoIs
+      ['poi-level-3', 'poi-level-2', 'poi-level-1', 'poi-level-street-furniture'].map(poi => {
+        map.setLayoutProperty(poi, 'visibility', 'visible');
+      });
+      
+    
+    })
+
+  }
+  
+  </script>
+
+</body>

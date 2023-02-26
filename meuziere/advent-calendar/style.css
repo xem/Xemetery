@@ -1,0 +1,361 @@
+@font-face {
+  font-family: 'Qwant-Icon-Font';
+  src: url('img/Qwant-Icon-Font.ttf') format('truetype');
+}
+
+
+* { margin: 0; padding: 0; border: 0; box-sizing: border-box; user-select: none; -moz-user-select: none; -webkit-user-select: none; }
+p { margin: 20px 0 }
+img { max-width: 100%; max-height: 300px; }
+body { overflow: auto; }
+.wrapper { margin-top: 0 }
+header { background: url("img/background-calendar.jpg") no-repeat center center; height: 380px; }
+.title a { color: #4894A6;  }
+.logo { width: 233px; height: 242px; background: url("img/logo-qwant-junior-calendar.png"); position: absolute; top: 20px; left: 50%; margin-left: -60px; }
+footer { text-align: center; background: url("img/bubble-footer.jpg") repeat-x #F0F9FE; padding: 40px 0 20px; }
+footer p { margin: 10px 0; }
+footer a { color: #975ab2 }
+footer img { vertical-align: middle; margin: 20px 20px 20px 0; }
+.wrapper { padding-bottom: 0 }
+.sidebar { position: fixed !important; top: 0; }
+.snow_container { height: 380px; overflow: hidden; position: relative; }
+.title { width: 780px; background: #fff; border-radius: 20px; box-shadow: 0 0 0 10px  rgba(255,255,255,.5); padding: 50px 30px; margin: -100px auto 0; text-align: center; position: relative; line-height: 21px; max-width: 100%;}
+.discover { margin: 0 0 20px }
+.title p { margin: 20px 0 10px; }
+.popin { opacity: 0; position: fixed; text-align: center; top: -8000px; left: 0; xheight: 830px; overflow: auto; background: #fff; transition: 1s; padding: 0 50px; font-family: arial; z-index: 1000; }
+.popin.visible { opacity: 1;  top: -130px; }
+.popin li a { color: #975ab2; font-weight: bold; }
+.popin h2 { font-size: 20px; }
+.popin li { padding: 5px; font-size: 16px; line-height: 24px; }
+.popin li.correct, .popin li.wrong { cursor: pointer; }
+.popin input { padding: 10px; margin: 10px; display: block; }
+#popinclose { cursor: pointer; width: 100%; height: 30px; opacity: 0; height: 30px; position: absolute; top: -5000px; right: 70px; z-index: 2000; text-align: center; padding: 5px 0 0;  transition: 1s; background: #fff; color: #4894A6; text-align: right; font-weight: bold; padding: 30px 145px; }
+#popinclose.visible { top: -178px; opacity: 1; }
+#popinclose.visible.final { top: 0; opacity: 1; }
+.container { width: 1200px; height: 700px; background: #fff; position: relative; perspective: 800px; margin: -22px auto 0;  }
+.camera, .camera * { transform-style: preserve-3d }
+.camera { position: absolute; top: 50%; left: 50%; width: 1px; height: 1px; z-index: 1; }
+.cube { position: absolute; width: 0; height: 0; z-index: 100; transition: transform 1s; cursor: pointer }
+.face { position: absolute; width: 130px; height: 130px; transform-origin: 50% 50%; padding: 10px; text-align: left; color: #fff; font-weight: bold; font-size: 20px; }
+.front { background-size: 18px, 130px !important }
+
+#cube1 .top, #cube5 .top, #cube9 .top, #cube13 .top, #cube17 .top, #cube21 .top, #cube25 .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/1.jpg")}
+#cube1 .bottom, #cube5 .bottom, #cube9 .bottom, #cube13 .bottom, #cube17 .bottom, #cube21, #cube25 .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/1.jpg") }
+#cube1 .left , #cube5 .left , #cube9 .left , #cube13 .left , #cube17 .left , #cube21 .left , #cube25 .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/1.jpg") }
+#cube1 .right, #cube5 .right, #cube9 .right, #cube13 .right, #cube17 .right, #cube21 .right, #cube25 .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/1.jpg") }
+#cube1 .front, #cube5 .front, #cube9 .front, #cube13 .front, #cube17 .front, #cube21 .front, #cube25 .front { transform: translateZ(65px); background: url("img/vignettes-defaut/1.jpg") }
+#cube1 .back, #cube5 .back, #cube9 .back, #cube13 .back, #cube17 .back, #cube21 .back, #cube25 .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes-defaut/1.jpg") }
+
+#cube2 .top, #cube6 .top, #cube10 .top, #cube14 .top, #cube18 .top, #cube22 .top, #cube26 .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/2.jpg")}
+#cube2 .bottom, #cube6 .bottom, #cube10 .bottom, #cube14 .bottom, #cube18 .bottom, #cube22 .bottom, #cube26 .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/2.jpg") }
+#cube2 .left , #cube6 .left , #cube10 .left , #cube14 .left , #cube18 .left , #cube22 .left , #cube26 .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/2.jpg") }
+#cube2 .right, #cube6 .right, #cube10 .right, #cube14 .right, #cube18 .right, #cube22 .right, #cube26 .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/2.jpg") }
+#cube2 .front, #cube6 .front, #cube10 .front, #cube14 .front, #cube18 .front, #cube22 .front, #cube26 .front { transform: translateZ(65px); background: url("img/vignettes-defaut/2.jpg") }
+#cube2 .back, #cube6 .back, #cube10 .back, #cube14 .back, #cube18 .back, #cube22 .back, #cube26 .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes-defaut/2.jpg") }
+
+#cube3 .top, #cube7 .top, #cube11 .top, #cube15 .top, #cube19 .top, #cube23 .top, #cube27 .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/3.jpg")}
+#cube3 .bottom, #cube7 .bottom, #cube11 .bottom, #cube15 .bottom, #cube19 .bottom, #cube23 .bottom, #cube27 .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/3.jpg") }
+#cube3 .left , #cube7 .left , #cube11 .left , #cube15 .left , #cube19 .left , #cube23 .left , #cube27 .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/3.jpg") }
+#cube3 .right, #cube7 .right, #cube11 .right, #cube15 .right, #cube19 .right, #cube23 .right, #cube27 .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/3.jpg") }
+#cube3 .front, #cube7 .front, #cube11 .front, #cube15 .front, #cube19 .front, #cube23 .front, #cube27 .front { transform: translateZ(65px); background: url("img/vignettes-defaut/3.jpg") }
+#cube3 .back, #cube7 .back, #cube11 .back, #cube15 .back, #cube19 .back, #cube23 .back, #cube27 .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes-defaut/3.jpg") }
+
+#cube4 .top, #cube8 .top, #cube12 .top, #cube16 .top, #cube20 .top, #cube24 .top, #cube28 .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/4.jpg")}
+#cube4 .bottom, #cube8 .bottom, #cube12 .bottom, #cube16 .bottom, #cube20 .bottom, #cube24 .bottom, #cube28 .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes-defaut/4.jpg") }
+#cube4 .left , #cube8 .left , #cube12 .left , #cube16 .left , #cube20 .left , #cube24 .left , #cube28 .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/4.jpg") }
+#cube4 .right, #cube8 .right, #cube12 .right, #cube16 .right, #cube20 .right, #cube24 .right, #cube28 .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes-defaut/4.jpg") }
+#cube4 .front, #cube8 .front, #cube12 .front, #cube16 .front, #cube20 .front, #cube24 .front, #cube28 .front { transform: translateZ(65px); background: url("img/vignettes-defaut/4.jpg") }
+#cube4 .back, #cube8 .back, #cube12 .back, #cube16 .back, #cube20 .back, #cube24 .back, #cube28 .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes-defaut/4.jpg") }
+
+
+#cube3:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/1.jpg")}
+#cube3:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/1.jpg") }
+#cube3:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/1.jpg") }
+#cube3:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/1.jpg") }
+#cube3:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/1.png") no-repeat 10px 10px, url("img/vignettes/1.jpg") }
+#cube3:not(.disabled) .back { transform: translateZ(-65px) rotateZ(180deg); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/1.jpg") }
+
+#cube4:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/2.jpg")}
+#cube4:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/2.jpg") }
+#cube4:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/2.jpg") }
+#cube4:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/2.jpg") }
+#cube4:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/2.png") no-repeat 10px 10px, url("img/vignettes/2.jpg") }
+#cube4:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/2.jpg") }
+
+#cube5:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/3.jpg")}
+#cube5:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/3.jpg") }
+#cube5:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/3.jpg") }
+#cube5:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/3.jpg") }
+#cube5:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/3.png") no-repeat 10px 10px, url("img/vignettes/3.jpg") }
+#cube5:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/3.jpg") }
+
+#cube6:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/4.jpg")}
+#cube6:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/4.jpg") }
+#cube6:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/4.jpg") }
+#cube6:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/4.jpg") }
+#cube6:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/4.png") no-repeat 10px 10px, url("img/vignettes/4.jpg") }
+#cube6:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/4.jpg") }
+
+#cube7:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/5.jpg")}
+#cube7:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/5.jpg") }
+#cube7:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/5.jpg") }
+#cube7:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/5.jpg") }
+#cube7:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/5.png") no-repeat 10px 10px, url("img/vignettes/5.jpg") }
+#cube7:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/5.jpg") }
+
+#cube8:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/6.jpg")}
+#cube8:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/6.jpg") }
+#cube8:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/6.jpg") }
+#cube8:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/6.jpg") }
+#cube8:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/6.png") no-repeat 10px 10px, url("img/vignettes/6.jpg") }
+#cube8:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/6.jpg") }
+
+#cube9:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/7.jpg")}
+#cube9:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/7.jpg") }
+#cube9:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/7.jpg") }
+#cube9:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/7.jpg") }
+#cube9:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/7.png") no-repeat 10px 10px, url("img/vignettes/7.jpg") }
+#cube9:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/7.jpg") }
+
+#cube10:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/8.jpg")}
+#cube10:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/8.jpg") }
+#cube10:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/8.jpg") }
+#cube10:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/8.jpg") }
+#cube10:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/8.png") no-repeat 10px 10px, url("img/vignettes/8.jpg") }
+#cube10:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/8.jpg") }
+
+#cube11:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/9.jpg")}
+#cube11:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/9.jpg") }
+#cube11:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/9.jpg") }
+#cube11:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/9.jpg") }
+#cube11:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/9.png") no-repeat 10px 10px, url("img/vignettes/9.jpg") }
+#cube11:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/9.jpg") }
+
+#cube12:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/10.jpg")}
+#cube12:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/10.jpg") }
+#cube12:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/10.jpg") }
+#cube12:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/10.jpg") }
+#cube12:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/10.png") no-repeat 10px 10px, url("img/vignettes/10.jpg") }
+#cube12:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/10.jpg") }
+
+#cube13:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/11.jpg")}
+#cube13:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/11.jpg") }
+#cube13:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/11.jpg") }
+#cube13:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/11.jpg") }
+#cube13:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/11.png") no-repeat 10px 10px, url("img/vignettes/11.jpg") }
+#cube13:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/11.jpg") }
+
+#cube14:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/12.jpg")}
+#cube14:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/12.jpg") }
+#cube14:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/12.jpg") }
+#cube14:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/12.jpg") }
+#cube14:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/12.png") no-repeat 10px 10px, url("img/vignettes/12.jpg") }
+#cube14:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/12.jpg") }
+
+#cube15:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/13.jpg")}
+#cube15:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/13.jpg") }
+#cube15:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/13.jpg") }
+#cube15:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/13.jpg") }
+#cube15:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/13.png") no-repeat 10px 10px, url("img/vignettes/13.jpg") }
+#cube15:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/13.jpg") }
+
+#cube16:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/14.jpg")}
+#cube16:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/14.jpg") }
+#cube16:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/14.jpg") }
+#cube16:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/14.jpg") }
+#cube16:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/14.png") no-repeat 10px 10px, url("img/vignettes/14.jpg") }
+#cube16:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/14.jpg") }
+
+#cube17:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/15.jpg")}
+#cube17:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/15.jpg") }
+#cube17:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/15.jpg") }
+#cube17:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/15.jpg") }
+#cube17:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/15.png") no-repeat 10px 10px, url("img/vignettes/15.jpg") }
+#cube17:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/15.jpg") }
+
+#cube18:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/16.jpg")}
+#cube18:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/16.jpg") }
+#cube18:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/16.jpg") }
+#cube18:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/16.jpg") }
+#cube18:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/16.png") no-repeat 10px 10px, url("img/vignettes/16.jpg") }
+#cube18:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/16.jpg") }
+
+#cube19:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/17.jpg")}
+#cube19:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/17.jpg") }
+#cube19:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/17.jpg") }
+#cube19:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/17.jpg") }
+#cube19:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/17.png") no-repeat 10px 10px, url("img/vignettes/17.jpg") }
+#cube19:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/17.jpg") }
+
+#cube20:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/18.jpg")}
+#cube20:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/18.jpg") }
+#cube20:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/18.jpg") }
+#cube20:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/18.jpg") }
+#cube20:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/18.png") no-repeat 10px 10px, url("img/vignettes/18.jpg") }
+#cube20:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/18.jpg") }
+
+#cube21:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/19.jpg")}
+#cube21:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/19.jpg") }
+#cube21:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/19.jpg") }
+#cube21:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/19.jpg") }
+#cube21:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/19.png") no-repeat 10px 10px, url("img/vignettes/19.jpg") }
+#cube21:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/19.jpg") }
+
+#cube22:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/20.jpg")}
+#cube22:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/20.jpg") }
+#cube22:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/20.jpg") }
+#cube22:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/20.jpg") }
+#cube22:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/20.png") no-repeat 10px 10px, url("img/vignettes/20.jpg") }
+#cube22:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/20.jpg") }
+
+#cube23:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/21.jpg")}
+#cube23:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/21.jpg") }
+#cube23:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/21.jpg") }
+#cube23:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/21.jpg") }
+#cube23:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/21.png") no-repeat 10px 10px, url("img/vignettes/21.jpg") }
+#cube23:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/21.jpg") }
+
+#cube24:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/22.jpg")}
+#cube24:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/22.jpg") }
+#cube24:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/22.jpg") }
+#cube24:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/22.jpg") }
+#cube24:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/22.png") no-repeat 10px 10px, url("img/vignettes/22.jpg") }
+#cube24:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/22.jpg") }
+
+#cube25:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/23.jpg")}
+#cube25:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/23.jpg") }
+#cube25:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/23.jpg") }
+#cube25:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/23.jpg") }
+#cube25:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/23.png") no-repeat 10px 10px, url("img/vignettes/23.jpg") }
+#cube25:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/23.jpg") }
+
+#cube26:not(.disabled) .top { transform: translateY(-65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/24.jpg")}
+#cube26:not(.disabled) .bottom { transform: translateY(65px) rotateX(90deg); background: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("img/vignettes/24.jpg") }
+#cube26:not(.disabled) .left { transform: translateX(-65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/24.jpg") }
+#cube26:not(.disabled) .right { transform: translateX(65px) rotateY(90deg); background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url("img/vignettes/24.jpg") }
+#cube26:not(.disabled) .front { transform: translateZ(65px); background: url("img/chiffre/24.png") no-repeat 10px 10px, url("img/vignettes/24.jpg") }
+#cube26:not(.disabled) .back { transform: translateZ(-65px); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("img/vignettes/24.jpg") }
+
+
+#cube3 .front { background: url("img/chiffre/1.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg") }
+#cube4 .front { background: url("img/chiffre/2.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg") }
+#cube5 .front { background: url("img/chiffre/3.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg") }
+#cube6 .front { background: url("img/chiffre/4.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg") }
+#cube7 .front { background: url("img/chiffre/5.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg") }
+#cube8 .front { background: url("img/chiffre/6.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg") }
+#cube9 .front { background: url("img/chiffre/7.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg") }
+#cube10 .front { background: url("img/chiffre/8.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg") }
+#cube11 .front { background: url("img/chiffre/9.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg") }
+#cube12 .front { background: url("img/chiffre/10.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg"); background-size: 30px, 130px !important }
+#cube13 .front { background: url("img/chiffre/11.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg"); background-size: 30px, 130px !important }
+#cube14 .front { background: url("img/chiffre/12.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg"); background-size: 30px, 130px !important }
+#cube15 .front { background: url("img/chiffre/13.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg"); background-size: 30px, 130px !important }
+#cube16 .front { background: url("img/chiffre/14.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg"); background-size: 30px, 130px !important }
+#cube17 .front { background: url("img/chiffre/15.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg"); background-size: 30px, 130px !important }
+#cube18 .front { background: url("img/chiffre/16.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg"); background-size: 30px, 130px !important }
+#cube19 .front { background: url("img/chiffre/17.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg"); background-size: 30px, 130px !important }
+#cube20 .front { background: url("img/chiffre/18.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg"); background-size: 30px, 130px !important }
+#cube21 .front { background: url("img/chiffre/19.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg"); background-size: 30px, 130px !important }
+#cube22 .front { background: url("img/chiffre/20.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg"); background-size: 30px, 130px !important }
+#cube23 .front { background: url("img/chiffre/21.png") no-repeat 10px 10px, url("img/vignettes-defaut/3.jpg"); background-size: 30px, 130px !important }
+#cube24 .front { background: url("img/chiffre/22.png") no-repeat 10px 10px, url("img/vignettes-defaut/4.jpg"); background-size: 30px, 130px !important }
+#cube25 .front { background: url("img/chiffre/23.png") no-repeat 10px 10px, url("img/vignettes-defaut/1.jpg"); background-size: 30px, 130px !important }
+#cube26 .front { background: url("img/chiffre/24.png") no-repeat 10px 10px, url("img/vignettes-defaut/2.jpg"); background-size: 30px, 130px !important }
+
+
+.snow { background: url(img/neige.png); background-size: 100%; position: absolute; left: 50%; transform: translateX(-50%) translateZ(-200px); }
+.snow.near { width: 2000px; height: 1520px; }
+.snow.far { width: 1500px; height: 1520px; }
+.billboard { width: 431px; height: 135px; background: #38365d; position: relative; top: 52px; left: 121px; color: #fff; padding: 30px; transition: transform .5s .2s; }
+.billboard p { margin: 10px 0 0; line-height: 20px; }
+.billboard img { vertical-align: baseline }
+
+.popin iframe { margin: 20px 0 40px }
+.popin-left { float: left; width: 380px; }
+.popin-left img { margin: 30px 0 0 60px }
+.popin-right { padding-left: 380px; }
+.popin h3 { color: #493084; margin: 20px 0 20px 30px; font-weight: bold; text-align: left; }
+.popin ol { padding: 0 0 0 23px; text-align: left; list-style: none; }
+.popin ol b { display: inline-block; width: 25px; text-align: right }
+.popin ol span { display: inline-block; width: calc(100% - 40px); vertical-align: top; }
+.popin ol span b { width: auto; }
+.popin-info h3 { margin: 10px 0;color: #000; }
+.popin-info { background: url("img/mapmonde.png") no-repeat 30px center #fff5e6; border: 1px solid #ffebcd; width: 545px; margin: 30px auto; padding: 30px 30px 30px 168px; position: relative; text-align: left; line-height: 20px; }
+.popin-info.full { padding: 15px 30px 20px 168px; }
+.popin-info a { color: #4fa2b5 }
+.popin-info ul { margin: 15px 20px 0; }
+.popin-info li { line-height: 18px; padding: 2px }
+.popin-tomorrow { margin: 40px auto 20px; display: block }
+.popin-carousel { width: 1000px; margin: 40px auto; }
+.popin-carousel-scroll { width: 900px; overflow: hidden; margin: 10px; position: relative; height: 156px; }
+.popin-carousel-left, .popin-carousel-right, .popin-carousel-scroll {  display: inline-block; vertical-align: middle; }
+.popin-carousel-left, .popin-carousel-right { cursor: pointer; }
+.popin-carousel-scroll-inner { left: 0; transition: left .5s; position: relative; }
+.return-popin { color: #4894A6; text-align: center; font-weight: bold; cursor: pointer; margin: 0 0 60px;}
+
+@media (max-width: 1300px) {
+  .container {
+    margin: -50px auto 0 -50px;
+    transform: scale(0.82);
+    transform-origin: center top;
+  }
+}
+
+@media (max-width: 1100px) {
+  .container {
+    margin: -60px auto 0 -120px;
+    transform: scale(0.70);
+    transform-origin: center top;
+  }
+}
+
+@media (max-width: 960px) {
+  .container {
+    display: none;
+  }
+}
+
+.popin_answer_wrong, .popin_answer_correct { opacity: 0;  margin: 50px auto; width: 500px; padding: 20px; line-height: 23px; transition: opacity .5s; }
+.popin_answer_wrong a, .popin_answer_correct a { color: #4894A6; font-weight: bold; }
+.popin_answer_wrong h2, .popin_answer_correct h2 { margin: 10px 0 15px; }
+.popin_answer_correct { position: absolute; left: 50%; margin-left: -250px; }
+.popin .quiz ol { margin-left: 5px; }
+.popin .tick { background: url("img/quiz/puce1.jpg"); width: 17px; height: 17px; display: inline-block; margin: -3px 10px 0 0; vertical-align: middle; }
+.popin .tick.active { background: url("img/quiz/puce2.jpg"); }
+.popin-right p { text-align: left; font-size: 16px; padding-left: 30px; font-weight: bold; }
+
+.mail { margin: 0 auto 30px; }
+.mail h2 { margin: 0 auto 15px; }
+.mail input { border: 2px solid #333; }
+
+#popin24 { text-align: center; width: 100%; }
+#popin24 .popin-right { text-align: left; }
+#popin24 .toggle-switch input {
+    position: absolute;
+    margin-left: -9999px;
+}
+#popin24 hr { margin: 30px auto; width: 200px; }
+#popin24 .lots { font-size: 18px; color: #888; }
+#popin24 .lots h4 { font-size: 26px; color: #000; font-weight: bold; margin: 10px auto; }
+
+#captcha { display: inline }
+.edu__register_page__legal_text {
+    color: #707a8a;
+    font-size: 0.92em;
+    line-height: 19px;
+    text-align: justify;
+	width: 670px;
+	margin: 50px auto;
+}
+
+.edu__register_page__tos .toggle-switch { margin: 0 auto; text-align: center;}
+.edu__register_page__step__description, .edu__register_page__step__input { float: none; margin: 0 auto }
+.popin-left.form { text-align: right }
+.popin-left.form img { margin: 0 20px 0 0 }
+.popin-right.form { padding: 15px 300px 0 0; font-size: 16px; line-height: 24px }
+.popin-right.form input { display: inline-block; margin: 10px 0 0 0; padding-left: 20px; font-size: 18px; width: 400px; }
+.button--icon { padding: 8px 26px 9px 16px;}
+.popin.final { top: 0; width: 100%; }
+.button--icon:disabled { opacity: 0.5 }
+input { user-select: text !important; -moz-user-select: text !important; -webkit-user-select: text !important; }
+.submit:disabled { cursor: not-allowed !important; }

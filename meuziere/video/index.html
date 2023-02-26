@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Video Player</title>
+    <link rel="stylesheet" href="style.min.css">
+    <script>document.createElement("video");</script>
+  </head>
+  <body>
+    <video id="video" preload>
+      <source src="oceans-clip.mp4"/>
+      <source type="video/ogg; codecs=theora,vorbis" src="oceans-clip.ogg"/>
+      <!-- insert Flash fallback here ... or not! -->
+      Please update your browser!
+    </video>
+    <div id="controls">
+      <div id="play" class="button pause"></div>
+      <div id="sound">
+        <div id="mute" class="button unmute"></div>
+        <div id="volume">
+          <div id="volumelevel"></div>
+        </div>
+      </div>
+      <div id="timeline">
+        <div id="time">0:00 / 0:00</div>
+        <div id="position">
+          <div id="preload"></div>
+          <div id="currentposition"></div>
+        </div>
+      </div>
+      <div id="fullscreen" class="button fullscreen"></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="width: 800px; border: 1px solid #000; padding: 20px; margin: auto; text-align: left; font-size: 14px;">
+      <b>Cross-browser/cross-device notes:</b>
+      <br>
+      - The video must have no poster attribute in order to work on iOS 3.
+      <br>
+      - The video's autoplay attribute is ignored by iOS and Android 2.2. Both need a JavaScript play() to launch the video. On iOS, the video can't be played until the user touches the screen (native or custom play button).
+      <br>
+      - The first video source must be a MP4 video in order to work on iOS 3, and it mustn't have a type attribute in order to work on Android 2.2. MP4 is the only format working on iOS 3+ and IE9+. It also works on Safari 3+, Chrome 5+ and Android 2.2+.
+      <br>
+      - Next source(s) should have a type attribute.
+      <br>
+      - The second video source is Ogg because it works on older Firefox (3.5+) and Opera (10.5+) than WebM. WebM isn't an useful fallback for Ogg but it can replace it as the second track.
+      <br>
+      - A flash fallback should be provided for older browsers.
+      <br>
+      - A text (or any HTML) fallback should be provided for older browsers without a recent Flash version.
+      <br>
+      - Firefox won't fallback to Flash or HTML if there's only a MP4 source. Workaround: replace the video tag with the flash object in the DOM.
+      <br>
+      - iPhone can't display embedded videos: they can only be played fullscreen.
+      <br>
+      - In fullscreen, iOS can't display HTML over the video (custom controls, subtitles...)
+      <br>
+      <br>
+      <b>List of methods, properties, events:</b>
+      <br>
+      <a href="http://www.w3schools.com/tags/ref_av_dom.asp">http://www.w3schools.com/tags/ref_av_dom.asp</a>
+    </div>
+    <script src="script.min.js"></script>
+  </body>
+</html>

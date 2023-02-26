@@ -1,0 +1,272 @@
+﻿<script src="weather.js"></script>
+
+<div id="weather_container">
+  <div id="weather_days">
+    
+  </div>
+  <div id="weather_info">
+    <div id="weather_info_place"></div>
+    <div id="weather_info_day"></div>
+    <div id="weather_info_icon"></div>
+    <div id="weather_info_temps">
+      <div id="weather_info_max"></div>
+      <div id="weather_info_min"></div>
+    </div>
+    <div id="weather_info_other">
+      <div>
+        <div class="weather_info_other_label">Humidity</div>
+        <div id="weather_info_humidity"></div>
+      </div>
+      <div>
+        <div class="weather_info_other_label">Pressure</div>
+        <div id="weather_info_pressure"></div>
+      </div>
+      <div>
+        <div class="weather_info_other_label">Rain</div>
+        <div id="weather_info_rain"></div>
+      </div>
+      <div>
+        <div class="weather_info_other_label">Wind</div>
+        <div id="weather_info_wind"></div>
+      </div>
+    </div>
+    <div class="weather_tabs">
+      <div id="weather_tab_temperature" class="current" onclick="weather_show_temperatures()">Temperature</div>
+      <div id="weather_tab_rain" onclick="weather_show_rain()">Rain</div>
+    </div>
+  </div>
+  <div id="weather_hour_highlight"></div>
+  <div id="weather_hours"></div>
+  <div id="weather_icons"></div>
+  <div id="weather_temps"></div>
+  <div id="weather_rain" class="hidden"></div>
+  <div id="weather_hour_click"></div>
+</div>
+
+<script>
+
+onload = function(){
+
+  weather_days.innerHTML = '<div class="weather_day current" id="day_0" onclick="show_day(0)"><div class="weather_day_icon">' + weather.data.currentWeather.main.weather.iconId + '</div><div class="weather_day_name">Today</div><div class="weather_day_max">' + Math.round(weather.data.currentWeather.main.temperatures.max - 273.15) + '°C</div><div class="weather_day_min">' + Math.round(weather.data.currentWeather.main.temperatures.min - 273.15) + '°C min</div></div>';
+  
+  for(var i in weather.data.forecastFive){
+    weather_days.innerHTML += '<div class="weather_day" id="day_' + i + '" onclick="show_day(' + i + ')"><div class="weather_day_icon">' + weather.data.forecastFive[i].main.weather.iconId + '</div><div class="weather_day_name">' + ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][weather.data.forecastFive[i].main.day] + '</div><div class="weather_day_max">' + Math.round(weather.data.forecastFive[i].main.temperatures.max - 273.15) + '°C</div><div class="weather_day_min">' + Math.round(weather.data.forecastFive[i].main.temperatures.min - 273.15) + '°C min</div></div>';
+  }
+  
+  show_day(0);
+  
+}
+
+var weather_day = 0;
+
+var show_day = function(n){
+
+  weather_day = n;
+
+  document.querySelector(".weather_day.current").classList.remove("current");
+  document.querySelector("#day_" + n).classList.add("current");
+
+  var day_data = n == 0 ? weather.data.currentWeather : weather.data.forecastFive[n];
+  
+  // Place
+  weather_info_place.innerHTML = weather.data.localisation.city + ", " + weather.data.localisation.country.toUpperCase();
+
+  // Day
+  weather_info_day.innerHTML = n == 0 ? "Today" : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][weather.data.forecastFive[n].main.day];
+  
+  // Temperatures
+  // ------------
+  var temp = [];
+
+  // Default scale
+  var min = 99;
+  var max = -99;
+  
+  for(var i = 0; i < 8; i++){
+    temp[i] = Math.round(day_data.list[i].temperature - 273.15);
+    if(temp[i] < min) min = temp[i];
+    if(temp[i] > max) max = temp[i];
+  }
+
+  // A total height of 85px is available to represent all the temperature range
+  // If all the temperatures are positive the minimum is 0°C
+  // If all the temperatures are negative the maximum is 0°C
+  // In the div, y=0 represents the max and y=85 represents the min.
+  // dh is the height of 1°C
+  dh = 80 / (max - Math.min(min, 0));
+   
+  // y0 is computed and represents the position of 0°C
+  y0 = max * dh;
+  
+  
+  // Rain
+  // ----
+  var rain = [];
+
+  // Default scale
+  var rain_min = 0;
+  var rain_max = 10;
+  
+  for(var i = 0; i < 8; i++){
+    rain[i] = Math.round(day_data.list[i].rain * 10);
+    if(rain[i] > rain_max) rain_max = rain[i];
+  }
+
+  // A total height of 85px is available to represent all the rain range
+  // Tthe minimum is 0°C
+  // In the div, y=0 represents the max and y=85 represents the min.
+  // rain_dh is the height of 1mm
+  rain_dh = 80 / rain_max;
+   
+  // rain_y0 represents the position of 0mm
+  rain_y0 = rain_max * rain_dh;
+
+  // Draw each column
+  weather_icons.innerHTML = "";
+  weather_temps.innerHTML = "";
+  weather_rain.innerHTML = "";
+  weather_hours.innerHTML = "";
+  weather_hour_click.innerHTML = "";
+  
+  for(i = 0; i < 8; i++){
+    
+    // Icons
+    weather_icons.innerHTML += "<div style='left: " + (53 * i) + "px'>" + day_data.list[i].weather.iconId + "</div>";
+    
+    // Temperatures
+    weather_temps.innerHTML += "<div style='left: " + (53 * i) + "px; top: " + ((temp[i] < 0 ? max : (max - temp[i])) * dh + 35) + "px; height: " + (Math.abs(temp[i]) * dh + 1) + "px; ' class='" + (temp[i] < 0 ? "negative" : "positive") + "'><span class='" + ((temp[i] == max || temp[i] == min) ? "minmax" : "") + "'>" + temp[i] + "°</span></div>";
+    
+    // Hours
+    weather_hours.innerHTML += "<div style='left: " + (53 * i) + "px'>" + day_data.list[i].hour + "H</div>";
+    
+    // Rain
+    weather_rain.innerHTML += "<div style='left: " + (53 * i) + "px; top: " + ((rain[i] < 0 ? rain_max : (rain_max - rain[i])) * rain_dh + 35) + "px; height: " + (Math.abs(rain[i]) * rain_dh + 1) + "px; ' class='" + (rain[i] < 0 ? "negative" : "positive") + "'><span class='" + ((rain[i] == rain_max) ? "minmax" : "") + "'>" + rain[i] + "mm</span></div>";
+    
+    // Clickable area 
+    weather_hour_click.innerHTML += "<div class='weather_hour' id='weather_hour_" + i + "' style='left: " + (53 * i) + "px' onclick='show_hour(" + i + ")'></div>";
+  }
+  
+  // Show the info for the default hour for that day
+  if(n == 0){
+    show_hour(0);
+  }
+  else {
+    var current_hour = day_data.main.hour;
+    var current_hour_index = 0;
+    for(var i = 0; i < 8; i++){
+      if(day_data.list[i].hour == day_data.main.hour){
+        show_hour(i);
+      }
+    }
+  }
+}
+
+var weather_hour = 0;
+
+var show_hour = function(n){
+
+  var current_hour = document.querySelector(".weather_hour.current");
+  if(current_hour){
+    current_hour.classList.remove("current");
+  }
+  weather_hour_highlight.style.left = (10 + n * 53) + "px";
+
+  weather_hour = n;
+
+  var hour_data = weather_day == 0 ? weather.data.currentWeather.list[n] : weather.data.forecastFive[weather_day].list[n];
+  
+  // Icon
+  weather_info_icon.innerHTML = hour_data.weather.iconId; // + ": " + hour_data.weather.status;
+  
+  // Max
+  weather_info_max.innerHTML = Math.round(hour_data.temperature - 273.15) + "°C";
+  
+  // Min
+  weather_info_min.innerHTML = "";
+  
+  // Humidity
+  weather_info_humidity.innerHTML = hour_data.humidity + "%";
+  
+  // Pressure
+  weather_info_pressure.innerHTML = Math.round(hour_data.pressure) + "hPa";
+  
+  // Rain
+  weather_info_rain.innerHTML = Math.round(hour_data.rain * 10) + "mm";
+  
+  // Wind
+  weather_info_wind.innerHTML = Math.round(hour_data.wind) + "km/h";
+}
+
+weather_show_temperatures = function(){
+  weather_tab_temperature.classList.add("current");
+  weather_tab_rain.classList.remove("current");
+  weather_temps.classList.remove("hidden");
+  weather_rain.classList.add("hidden");
+}
+
+weather_show_rain = function(){
+  weather_tab_temperature.classList.remove("current");
+  weather_tab_rain.classList.add("current");
+  weather_rain.classList.remove("hidden");
+  weather_temps.classList.add("hidden");
+}
+</script>
+
+<style>
+* { font-family: arial; box-sizing: border-box; }
+
+#weather_container { width: 633px; height: 400px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; padding: 0 0 0 25px; position: relative; }
+#weather_container { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;  user-select: none; }
+
+#weather_days { float: right; width: 180px; height: 405px; border-left: 1px solid #eee; }
+.weather_day { height: 80px; border-top: 1px solid #eee; padding: 15px 20px; cursor: pointer; }
+.weather_day:first-child { border: none }
+.weather_day.current { background: #ddd }
+
+.weather_day_icon { float: left; width: 18px; height: 28px; margin: 0 20px 0 0; }
+.weather_day_name { font-size: 11px; text-transform: uppercase; color: #5c6f84; font-weight: 600; margin: 0 0 8px 0; }
+.weather_day_max { font-size: 16px; color: #353c52; float: left; margin: 0 10px 0 0; }
+.weather_day_min { font-size: 13px; color: #353c52; float: left; position: relative; top: 2px; }
+
+.weather_tabs { position: absolute; bottom: 0; left: 0; width: 100%; }
+.weather_tabs > div { float: left; font-size: 14px; color: #5c6f84; margin: 0 20px 0 0; padding: 0 0 5px 0; cursor: pointer; }
+.weather_tabs > div.current { color: #353c52; border-bottom: 2px solid; }
+
+#weather_info { width: 400px; height: 200px; border-bottom: 1px solid #eee; padding: 15px 0; position: relative; }
+#weather_info_place { font-size: 24px; color: #353c52; }
+#weather_info_day { font-size: 14px; color: #5c6f84; margin: 5px 0 15px; }
+#weather_info_icon { width: 82px; height: 72px; float: left; }
+#weather_info_temps { width: 140px; height: 72px; float: left; }
+#weather_info_max { font-size: 38px; color: #353c52; margin: 0 0 10px; }
+#weather_info_min { font-size: 16px; color: #353c52; }
+#weather_info_other > div { width: 60px; height: 25px; margin: 0 20px 20px 0; padding: 0 0 0 8px; float: left; border-left: 2px solid #f4f6fa; }
+.weather_info_other_label { font-size: 11px; text-transform: uppercase; color: #5c6f84; }
+#weather_info_pressure, #weather_info_rain, #weather_info_wind, #weather_info_humidity { font-size: 13px; color: #353c52; font-weight: 600; }
+
+#weather_hour_highlight { width: 50px; height: 175px; background: #ddd; position: absolute; bottom: 20px; left: 10px; transition: left .2s; }
+
+#weather_hours { width: 400px; height: 25px; position: relative; padding: 5px 0 0; }
+#weather_hours div { position: absolute; font-size: 13px; text-align: center; width: 22px; }
+
+#weather_icons { width: 400px; height: 33px; position: relative; }
+#weather_icons > div { position: absolute; font-size: 20px; padding: 2px 0 0; }
+
+#weather_temps { width: 400px; height: 120px; position: relative; }
+#weather_temps.hidden { display: none; }
+#weather_temps div { position: absolute; width: 23px; border-radius: 2px; }
+#weather_temps div.positive { background: linear-gradient(#ffd331, #ffeb5d); }
+#weather_temps div.negative { background: linear-gradient(#a6d6fd, #50a5eb); }
+#weather_temps div span { position: absolute; top: -25px; text-align: center; width: 30px; }
+#weather_temps div span.minmax { font-weight: 600; }
+
+#weather_rain { width: 400px; height: 120px; position: relative; }
+#weather_rain.hidden { display: none; }
+#weather_rain div { position: absolute; width: 23px; border-radius: 2px; }
+#weather_rain div.positive { background: linear-gradient(#a6d6fd, #50a5eb); }
+#weather_rain div span { position: absolute; top: -25px; left: -15px; text-align: center; width: 50px; }
+#weather_rain div span.minmax { font-weight: 600; }
+
+#weather_hour_click { position: absolute; bottom: 15px; left: 15px; width: 425px; height: 180px; }
+.weather_hour { float: left; width: 53px; height: 180px; cursor: pointer; }
+
+</style>
